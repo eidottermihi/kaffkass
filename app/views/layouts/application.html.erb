@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>KaffKass - <%= @title || "Unbekannt" %></title>
+  <%= stylesheet_link_tag "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<div id="container">
+  <div id="header">
+    <h1>KaffKass</h1>
+  </div>
+  <div id="userbar">
+    <% if user_signed_in? %>
+        <%= link_to "logout", logout_path, method: :delete, class: "navigation" %>
+    <% else %>
+        <%= link_to "login", login_path, class:"navigation" %>
+    <% end %>
+  </div>
+  <% if flash[:notice] %>
+    <div id="notice"><%= flash[:notice] %></div>
+  <% end %>
+  <div id="content">
+    <% if flash[:alert] %>
+        <div id="alert"><%= flash[:alert] %></div>
+    <% end %>
+    <%= yield %>
+  </div>
+  <div id="footer">
+    <p>Studienarbeit Web Engineering, WS 2012/2013, Hochschule München<br/>
+      Matthias Karl - Michael Prankl</p>
+  </div>
+</div>
+
+
+</body>
+</html>

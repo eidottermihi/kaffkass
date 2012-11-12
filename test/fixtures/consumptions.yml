@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  day: 2012-11-08
+  numberOfCups: 1
+  flagTouched: false
+
+two:
+  day: 2012-11-08
+  numberOfCups: 1
+  flagTouched: false

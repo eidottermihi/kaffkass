@@ -1,0 +1,82 @@
+// Place all the styles related to the home controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+
+$coffee1: #874A41;
+$coffee2: #8F4A00;
+$coffee3: #7A450C;
+$cyan1: #04A7B0;
+$cyan2: #9FE9ED;
+
+$coffee: $coffee2;
+$cyan: $cyan2;
+
+* {
+  margin: 0;
+}
+
+body {
+  background-color: #DDD;
+}
+
+#container {
+  width: 700px;
+  margin: 0 auto;
+}
+
+#header {
+  background-color: $coffee;
+  color: #FFF;
+  text-align: center;
+  padding: 15px;
+}
+
+#userbar {
+  background-color: $coffee;
+  color: #FFF;
+  text-align: right;
+  padding: 2px;
+}
+
+a.navigation{
+  color: #FFF;
+  text-decoration: none;
+}
+
+a.navigation:hover{
+  color: #FFF;
+  text-decoration: underline;
+}
+
+a.navigation:link a.navigation:visited a.navigation:active{
+  color: #FFF;
+}
+
+#content {
+  border: 2px solid $coffee;
+  padding: 10px;
+  background-color: #FFF;
+  min-height: 250px;
+}
+
+#notice{
+  border: 1px solid $coffee;
+  background-color: #FFF;
+  padding: 3px;
+  text-align: center;
+}
+
+#alert {
+  border: 1px solid red;
+  background-color: #FFF;
+  padding: 3px;
+}
+
+#footer {
+  background-color: $coffee;
+  text-align: center;
+  color: #FFF;
+  font-size: 0.8em;
+}

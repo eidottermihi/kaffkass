@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  location: MyText
+  time: 2012-11-08 12:25:31
+  description: MyText
+
+two:
+  location: MyText
+  time: 2012-11-08 12:25:31
+  description: MyText
