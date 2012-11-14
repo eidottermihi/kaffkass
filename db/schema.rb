@@ -14,10 +14,10 @@
 ActiveRecord::Schema.define(:version => 20121111130404) do
 
   create_table "bills", :force => true do |t|
-    t.decimal  "value",         :precision => 5, :scale => 2
+    t.float    "value"
     t.boolean  "isPaid"
-    t.datetime "created_at",                                  :null => false
-    t.datetime "updated_at",                                  :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
     t.integer  "user_id"
     t.integer  "coffee_box_id"
   end
@@ -43,10 +43,10 @@ ActiveRecord::Schema.define(:version => 20121111130404) do
 
   create_table "expenses", :force => true do |t|
     t.string   "item"
-    t.decimal  "value",         :precision => 5, :scale => 2
+    t.float    "value"
     t.date     "date"
-    t.datetime "created_at",                                  :null => false
-    t.datetime "updated_at",                                  :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
     t.integer  "user_id"
     t.integer  "coffee_box_id"
   end
@@ -81,10 +81,10 @@ ActiveRecord::Schema.define(:version => 20121111130404) do
   end
 
   create_table "price_of_coffees", :force => true do |t|
-    t.decimal  "price",         :precision => 5, :scale => 2
+    t.float    "price"
     t.date     "date"
-    t.datetime "created_at",                                  :null => false
-    t.datetime "updated_at",                                  :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
     t.integer  "coffee_box_id"
   end
 
