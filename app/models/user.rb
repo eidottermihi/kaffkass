@@ -4,10 +4,6 @@ class User < ActiveRecord::Base
   validates :lastname, :presence => true
   validates :email, :presence => true, :uniqueness => true
 
-  #Passwort
-  has_secure_password
-
-
   ## Beziehungen
   # Rechnungen
   has_many(:bills)
