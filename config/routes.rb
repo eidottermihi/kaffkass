@@ -1,12 +1,4 @@
 Kaffkass::Application.routes.draw do
-  ## Login / Logout
-  get "login" => "sessions#new", as: "login"
-  post "session" => "sessions#create", as: "sessions"
-  delete "logout" => "sessions#destroy", as: "logout"
-
-  ## Registrierung
-  resource :users, only: [:new, :create]
-
   get "test/test"
 
   get "home" => "home#home"

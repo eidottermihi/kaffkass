@@ -12,11 +12,7 @@
     <h1>KaffKass</h1>
   </div>
   <div id="userbar">
-    <% if user_signed_in? %>
-        <%= link_to "logout", logout_path, method: :delete, class: "navigation" %>
-    <% else %>
-        <%= link_to "login", login_path, class:"navigation" %>
-    <% end %>
+    Userbar
   </div>
   <% if flash[:notice] %>
     <div id="notice"><%= flash[:notice] %></div>
