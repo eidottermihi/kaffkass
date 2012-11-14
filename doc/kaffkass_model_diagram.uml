@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>RailsDependency</ID>
+  <OriginalElement>#kaffkass</OriginalElement>
+  <nodes>
+    <node x="710.0" y="697.1666666666667">Expense</node>
+    <node x="355.0" y="455.75">User</node>
+    <node x="710.0" y="418.0">Bill</node>
+    <node x="710.0" y="169.0">ModelOfConsumption</node>
+    <node x="710.0" y="866.1666666666667">Participation</node>
+    <node x="0.0" y="465.75">CoffeeBox</node>
+    <node x="741.0" y="568.1666666666667">Holiday</node>
+    <node x="710.0" y="0.0">Consumption</node>
+    <node x="410.5" y="943.4166666666667">PriceOfCoffee</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="User" target="Holiday">
+      <point x="137.5" y="22.416666666666742" />
+      <point x="-51.0" y="-0.0" />
+    </edge>
+    <edge source="CoffeeBox" target="Consumption">
+      <point x="137.5" y="-108.9375" />
+      <point x="355.0" y="32.25" />
+      <point x="-82.0" y="-32.25" />
+    </edge>
+    <edge source="User" target="Participation">
+      <point x="137.5" y="112.08333333333337" />
+      <point x="-82.0" y="-22.25" />
+    </edge>
+    <edge source="User" target="Expense">
+      <point x="137.5" y="67.25" />
+      <point x="-82.0" y="-32.25" />
+    </edge>
+    <edge source="User" target="Bill">
+      <point x="137.5" y="-22.41666666666663" />
+      <point x="-82.0" y="27.25" />
+    </edge>
+    <edge source="CoffeeBox" target="Expense">
+      <point x="137.5" y="46.6875" />
+      <point x="355.0" y="793.9166666666667" />
+      <point x="-82.0" y="32.25" />
+    </edge>
+    <edge source="CoffeeBox" target="User">
+      <point x="137.5" y="15.5625" />
+      <point x="-137.5" y="67.25" />
+    </edge>
+    <edge source="CoffeeBox" target="PriceOfCoffee">
+      <point x="137.5" y="108.9375" />
+      <point x="355.0" y="987.9166666666667" />
+      <point x="-82.0" y="-0.0" />
+    </edge>
+    <edge source="CoffeeBox" target="ModelOfConsumption">
+      <point x="137.5" y="-77.8125" />
+      <point x="355.0" y="221.25" />
+      <point x="-82.0" y="-52.25" />
+    </edge>
+    <edge source="User" target="CoffeeBox">
+      <point x="-137.5" y="-67.25" />
+      <point x="137.5" y="-15.5625" />
+    </edge>
+    <edge source="User" target="ModelOfConsumption">
+      <point x="137.5" y="-67.25" />
+      <point x="-82.0" y="52.25" />
+    </edge>
+    <edge source="CoffeeBox" target="Bill">
+      <point x="137.5" y="-46.6875" />
+      <point x="355.0" y="445.25" />
+      <point x="-82.0" y="-27.25" />
+    </edge>
+    <edge source="CoffeeBox" target="Participation">
+      <point x="137.5" y="77.8125" />
+      <point x="355.0" y="932.9166666666667" />
+      <point x="-82.0" y="22.25" />
+    </edge>
+    <edge source="User" target="Consumption">
+      <point x="137.5" y="-112.08333333333337" />
+      <point x="-82.0" y="32.25" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.46058879392212726" x="437.0" y="516.5" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Association fields</Category>
+    <Category>Migration fields</Category>
+  </Categories>
+</Diagram>
+
