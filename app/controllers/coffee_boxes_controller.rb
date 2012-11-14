@@ -19,4 +19,15 @@ class CoffeeBoxesController < ApplicationController
       render "new"
     end
   end
+
+  def show
+    @coffee_box = CoffeeBox.find(params[:id])
+    if @coffee_box
+      render "show"
+    else
+      flash[:alert] = "Kaffeerunde nicht vorhanden."
+      redirect_to coffee_boxes_path
+    end
+
+  end
 end

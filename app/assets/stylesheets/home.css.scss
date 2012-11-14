@@ -54,20 +54,20 @@ body {
   color: $white;
   padding-left: 2px;
   padding-right: 2px;
-  font-style: bold;
 }
 
-a.navigation{
+a.navibar{
   color: $white;
   text-decoration: none;
 }
 
-a.navigation:hover{
-  color: $white;
-  text-decoration: underline;
+a.navibar:hover{
+  color: $black;
+//text-decoration: underline;
+  background-color: $white;
 }
 
-a.navigation:link a.navigation:visited a.navigation:active{
+a.navibar:link a.navibar:visited a.navibar:active{
   color: $white;
 }
 
@@ -81,7 +81,8 @@ a.navigation:link a.navigation:visited a.navigation:active{
 }
 
 #content {
-  border: 2px solid $coffee;
+  border-left: 2px solid $coffee;
+  border-right: 2px solid $coffee;
   padding: 10px;
   background-color: $white;
   min-height: 250px;
