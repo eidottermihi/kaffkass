@@ -11,8 +11,13 @@
   <div id="header">
     <h1>KaffKass</h1>
   </div>
-  <div id="userbar">
-    meine kaffeerunden / kaffeerunden suchen / :email: login / logout
+  <div id="navibar">
+    <span id="navigationbar">
+        meine kaffeerunden / kaffeerunden suchen
+    </span>
+    <span id="userbar">
+     / :email: login / logout
+    </span>
   </div>
   <% if flash[:notice] %>
     <div id="notice"><%= flash[:notice] %></div>
