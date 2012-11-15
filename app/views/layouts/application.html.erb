@@ -20,7 +20,10 @@
     </span>
   </div>
   <% if flash[:notice] %>
-    <div id="notice"><%= flash[:notice] %></div>
+      <div id="notice">
+        <%= flash[:notice] %>
+        <span id="notice-x">X</span>
+      </div>
   <% end %>
   <div id="content">
     <% if flash[:alert] %>

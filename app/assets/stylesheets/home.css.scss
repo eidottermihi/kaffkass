@@ -2,8 +2,6 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-
-
 $coffee1: #874A41;
 $coffee2: #8F4A00;
 $coffee3: #7A450C;
@@ -20,7 +18,6 @@ $black: #000;
 
 $coffee: $dark_coffee1;
 $cyan: $cyan2;
-
 
 * {
   margin: 0;
@@ -56,18 +53,18 @@ body {
   padding-right: 2px;
 }
 
-a.navibar{
+a.navibar {
   color: $white;
   text-decoration: none;
 }
 
-a.navibar:hover{
+a.navibar:hover {
   color: $black;
-//text-decoration: underline;
+  //text-decoration: underline;
   background-color: $white;
 }
 
-a.navibar:link a.navibar:visited a.navibar:active{
+a.navibar:link a.navibar:visited a.navibar:active {
   color: $white;
 }
 
@@ -75,7 +72,7 @@ a.navibar:link a.navibar:visited a.navibar:active{
   text-align: left;
 }
 
-#userbar{
+#userbar {
   text-align: right;
   float: right;
 }
@@ -88,11 +85,19 @@ a.navibar:link a.navibar:visited a.navibar:active{
   min-height: 250px;
 }
 
-#notice{
+#notice {
   border: 1px solid $coffee;
   background-color: $white;
   padding: 3px;
   text-align: center;
+}
+
+#notice-x {
+  float: right;
+  &:hover {
+    font-weight: bold;
+    color: red;
+  }
 }
 
 #alert {
