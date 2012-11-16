@@ -16,7 +16,13 @@
         meine kaffeerunden / <%= link_to "kaffeerunde suchen", coffee_boxes_path, :class => "navibar" %>
     </span>
     <span id="userbar">
-     / :email: login / logout
+      <% if current_user %>
+        <%= link_to "#{current_user.email}", account_path, :class => "navibar" %>
+          / <%= link_to "logout", logout_path, :class => "navibar" %>
+      <% else %>
+          <%= link_to "login", login_path, :class => "navibar" %>
+          / <%= link_to "registrieren", signup_path, :class => "navibar" %>
+      <% end %>
     </span>
   </div>
   <% if flash[:notice] %>

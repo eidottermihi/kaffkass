@@ -1,4 +1,7 @@
+# encoding: utf-8
 class CoffeeBoxesController < ApplicationController
+
+  before_filter :require_user, :only => [:new, :create]
 
   def index
     @coffee_boxes = CoffeeBox.all
@@ -28,6 +31,19 @@ class CoffeeBoxesController < ApplicationController
       flash[:alert] = "Kaffeerunde nicht vorhanden."
       redirect_to coffee_boxes_path
     end
+  end
 
+  def edit
+    @coffee_box = CoffeeBox.find(params[:id])
+    render "edit"
+  end
+
+  def update
+    @coffee_box = CoffeeBox.find(params[:id])
+    if @coffee_box.update_attributes(params[:coffee_box])
+      redirect_to coffee_box_path(@coffee_box), :notice => "Änderungen erfolgreich gespeichert."
+    else
+      render "edit"
+    end
   end
 end

@@ -22,7 +22,7 @@ Kaffkass::Application.routes.draw do
   resources :coffee_boxes
 
   # Root wird auf Home#home geroutet
-  #root :to => 'home#home'
+  root :to => 'home#home'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
