@@ -1,7 +1,7 @@
 # app/views/shared/_error_messages.html.erb
 <% if target.errors.any? %>
-  <div id="errorExplanation">
-    <h2><%= pluralize(target.errors.count, "error") %> prohibited this record from being saved:</h2>
+  <div id="errors">
+    <h2><%= pluralize(target.errors.count, "Error") %> verhinderten, dass die Daten gespeichert werden konnten:</h2>
     <ul>
       <% target.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>

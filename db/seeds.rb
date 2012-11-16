@@ -11,8 +11,8 @@
 # Automatisches einspielen von Testdaten per rake db:seed
 
 # User
-user_admin = User.create(firstname: "Admin", lastname: "Adminstrator", email: "admin@admin.com")
-user_user = User.create(firstname: "User", lastname: "Username", email: "user@user.com")
+user_admin = User.create(firstname: "Admin", lastname: "Adminstrator", email: "admin@admin.com", password: "cisco", password_confirmation: "cisco", admin: "true")
+user_user = User.create(firstname: "User", lastname: "Username", email: "user@user.com", password: "cisco", password_confirmation: "cisco")
 
 # Kaffeerunden
 kf1 = CoffeeBox.create(location: "Zr. 205", time: "2012-01-01 09:00:00", description: "Gemütliche Kaffeerunde!")

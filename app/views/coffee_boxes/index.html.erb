@@ -18,11 +18,13 @@
             <td><%= coffee_box.location %></td>
             <td><%= coffee_box.time %></td>
             <td>
-              <!-- Wieder einfügen, wenn Admin CoffeeBox zugeordnet werden kann -->
-              <%#= coffee_box.admin.lastname %> <%#= coffee_box.admin.firstname %>
+              <%= coffee_box.admin.lastname %>, <%= coffee_box.admin.firstname %>
             </td>
             <td>
-              <%= link_to "anzeigen", coffee_box_path(coffee_box.id)%>
+              <%= link_to "anzeigen", coffee_box_path(coffee_box)%>
+              <% if can? :update, coffee_box   %>
+                <%= link_to "bearbeiten", edit_coffee_box_path(coffee_box) %>
+              <% end %>
             </td>
           </tr>
       <% end %>
