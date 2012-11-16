@@ -1,11 +1,15 @@
 class User < ActiveRecord::Base
+  #Authlogic: defining that this is the model to use for logging in and out
+  acts_as_authentic do |c|
+  end # block optional
+
   # Validierung
   validates :firstname, :presence => true
   validates :lastname, :presence => true
   validates :email, :presence => true, :uniqueness => true
 
   #Passwort
-  has_secure_password
+  #has_secure_password
 
 
   ## Beziehungen

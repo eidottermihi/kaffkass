@@ -1,10 +1,23 @@
 Kaffkass::Application.routes.draw do
-  get "test/test"
+  #authlogic
+  resources :user_sessions
 
-  get "home" => "home#home"
+  match 'login' => "user_sessions#new",      :as => :login
+  match 'logout' => "user_sessions#destroy", :as => :logout
+
+  resources :users  # give us our some normal resource routes for users
+  resource :user, :as => 'account'  # a convenience route
+
+  match 'signup' => 'users#new', :as => :signup
+  #--------
+
+  #get "test/test"
+
+ # get "home" => "home#home"
+
 
   # Root wird auf Home#home geroutet
-  root :to => 'home#home'
+  #root :to => 'home#home'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
