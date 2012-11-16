@@ -25,18 +25,20 @@ class Ability
     #   can :update, Article, :published => true
     #
     # See the wiki for details: https://github.com/ryanb/cancan/wiki/Defining-Abilities
-    user ||= User.new ## user ist "leeeres" Userobjekt, wenn current_user nil ist
-    if user.id.nil?
+
+    # user wird von Cancan automatisch per Aufruf von current_user befüllt
+    if user.nil?
       ### Gast
       ## Accountverwaltung
       # Gast kann sich registrieren und anmelden
       can [:new, :create], User
       can [:new, :create], UserSession
+      ## Kaffeerunden
       # Gast kann Liste von Kaffeerunden anzeigen
       can :index, CoffeeBox
     elsif user.admin?
       ### Admin
-      ## Admin kann ALLES bearbeiten
+      ## Admin darf ALLES
       can :manage, :all
     else
       ### User
@@ -45,7 +47,6 @@ class Ability
       can [:edit, :update, :destroy, :show], User, :id => user.id
       # User kann sich abmelden
       can [:destroy], UserSession
-
       ## Kaffeerunden
       # User kann seine eigenen Kaffeerunden komplett bearbeiten (Bedingung: user_id der CoffeeBox ist gleich ID des angemeldeten Users)
       can :manage, CoffeeBox, :user_id => user.id
