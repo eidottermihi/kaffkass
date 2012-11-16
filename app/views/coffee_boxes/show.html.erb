@@ -5,6 +5,7 @@
 <p>Location: <%= @coffee_box.location %></p>
 <p>Uhrzeit: <%= @coffee_box.time %></p>
 <p>Beschreibung: <%= @coffee_box.description %></p>
+<p>Ersteller: <%= @coffee_box.admin.email %></p>
 
 
 <%= link_to "Zurück zur Liste", coffee_boxes_path %>

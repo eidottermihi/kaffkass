@@ -1,7 +1,8 @@
 # encoding: utf-8
 class CoffeeBoxesController < ApplicationController
 
-  before_filter :require_user, :only => [:new, :create]
+  #before_filter :require_user, :only => [:new, :create]
+  load_and_authorize_resource
 
   def index
     @coffee_boxes = CoffeeBox.all
@@ -14,11 +15,12 @@ class CoffeeBoxesController < ApplicationController
 
   def create
     @coffee_box = CoffeeBox.new(params[:coffee_box])
+    # Admin der Kaffeerunde ist Ersteller der Kaffeerunde
+    @coffee_box.admin=current_user
     if @coffee_box.save
       flash[:notice] = "Kaffeerunde erfolgreich angelegt."
       redirect_to coffee_boxes_path
     else
-      flash[:alert] = "Konnte nicht gespeichert werden."
       render "new"
     end
   end
