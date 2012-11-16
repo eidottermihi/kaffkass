@@ -2,15 +2,21 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-
-
 $coffee1: #874A41;
 $coffee2: #8F4A00;
 $coffee3: #7A450C;
+$dark_coffee1: #663813;
 $cyan1: #04A7B0;
 $cyan2: #9FE9ED;
 
-$coffee: $coffee2;
+$bg_grey: #DDD;
+
+$lime: #8C9900;
+
+$white: #FFF;
+$black: #000;
+
+$coffee: $dark_coffee1;
 $cyan: $cyan2;
 
 * {
@@ -18,65 +24,91 @@ $cyan: $cyan2;
 }
 
 body {
-  background-color: #DDD;
+  background-color: $bg_grey;
+  font-family: arial, verdana, sans-serif;
 }
 
 #container {
-  width: 700px;
+  width: 800px;
   margin: 0 auto;
 }
 
 #header {
+  background: image-url('header.gif');
+  background-repeat: repeat-x;
   background-color: $coffee;
-  color: #FFF;
+  color: $white;
   text-align: center;
-  padding: 15px;
+  height: 75px;
+  h1 {
+    font-size: 3em;
+    font-style: italic;
+  }
 }
 
-#userbar {
+#navibar {
   background-color: $coffee;
-  color: #FFF;
-  text-align: right;
-  padding: 2px;
+  color: $white;
+  padding-left: 2px;
+  padding-right: 2px;
 }
 
-a.navigation{
-  color: #FFF;
+a.navibar {
+  color: $white;
   text-decoration: none;
 }
 
-a.navigation:hover{
-  color: #FFF;
-  text-decoration: underline;
+a.navibar:hover {
+  color: $black;
+  //text-decoration: underline;
+  background-color: $white;
 }
 
-a.navigation:link a.navigation:visited a.navigation:active{
-  color: #FFF;
+a.navibar:link a.navibar:visited a.navibar:active {
+  color: $white;
+}
+
+#navigationbar {
+  text-align: left;
+}
+
+#userbar {
+  text-align: right;
+  float: right;
 }
 
 #content {
-  border: 2px solid $coffee;
+  border-left: 2px solid $coffee;
+  border-right: 2px solid $coffee;
   padding: 10px;
-  background-color: #FFF;
+  background-color: $white;
   min-height: 250px;
 }
 
-#notice{
+#notice {
   border: 1px solid $coffee;
-  background-color: #FFF;
+  background-color: $white;
   padding: 3px;
   text-align: center;
 }
 
+#notice-x {
+  float: right;
+  &:hover {
+    font-weight: bold;
+    color: red;
+  }
+}
+
 #alert {
   border: 1px solid red;
-  background-color: #FFF;
+  background-color: $white;
   padding: 3px;
 }
 
 #footer {
   background-color: $coffee;
   text-align: center;
-  color: #FFF;
+  color: $white;
   font-size: 0.8em;
 }

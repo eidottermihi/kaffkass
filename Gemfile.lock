@@ -107,7 +107,6 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
-  authlogic
   bcrypt-ruby (~> 3.0.0)
   coffee-rails (~> 3.2.1)
   jquery-rails

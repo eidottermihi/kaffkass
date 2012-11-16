@@ -11,11 +11,19 @@
   <div id="header">
     <h1>KaffKass</h1>
   </div>
-  <div id="userbar">
-    Userbar
+  <div id="navibar">
+    <span id="navigationbar">
+        meine kaffeerunden / <%= link_to "kaffeerunde suchen", coffee_boxes_path, :class => "navibar" %>
+    </span>
+    <span id="userbar">
+     / :email: login / logout
+    </span>
   </div>
   <% if flash[:notice] %>
-    <div id="notice"><%= flash[:notice] %></div>
+      <div id="notice">
+        <%= flash[:notice] %>
+        <span id="notice-x">X</span>
+      </div>
   <% end %>
   <div id="content">
     <% if flash[:alert] %>

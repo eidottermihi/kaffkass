@@ -1,0 +1,10 @@
+<% @title = "Kaffeerunde anzeigen" %>
+
+<h2>Details zur Kaffeerunde</h2>
+
+<p>Location: <%= @coffee_box.location %></p>
+<p>Uhrzeit: <%= @coffee_box.time %></p>
+<p>Beschreibung: <%= @coffee_box.description %></p>
+
+
+<%= link_to "Zurück zur Liste", coffee_boxes_path %>

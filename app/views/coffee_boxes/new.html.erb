@@ -1,0 +1,17 @@
+<% @title = "Kaffeerunde erstellen" %>
+<h2>Neue Kaffeerunde anlegen</h2>
+<%= form_for @coffee_box do |f| %>
+    <p>
+      <%= f.label :location, "Location"%>
+      <%= f.text_field :location  %>
+    </p>
+    <p>
+      <%= f.label :time, "Uhrzeit" %>
+      <%= f.time_select :time%>
+    </p>
+    <p>
+      <%= f.label :description, "Beschreibung" %>
+      <%= f.text_area :description %>
+    </p>
+    <%= f.submit %>
+<% end %>

@@ -15,4 +15,8 @@ class CoffeeBox < ActiveRecord::Base
   has_many(:consumptions)
   # Kaffeepreis
   has_many(:price_of_coffees)
+
+  #Validierungen
+  validates :location, :presence => true
+  validates :time, :presence => true
 end

@@ -16,6 +16,11 @@ Kaffkass::Application.routes.draw do
  # get "home" => "home#home"
 
 
+  #get "coffeebox/new" => "coffee_box#new"
+  #post "coffeebox" => "coffee_box#create"
+
+  resources :coffee_boxes
+
   # Root wird auf Home#home geroutet
   #root :to => 'home#home'
 

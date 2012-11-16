@@ -1,0 +1,40 @@
+<% @title = "Kaffeerunde suchen" %>
+<h2>Kaffeerunden</h2>
+<% if @coffee_boxes.size > 0 %>
+    <table>
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Location</th>
+        <th>Uhrzeit</th>
+        <th>Verwalter</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @coffee_boxes.each do |coffee_box| %>
+          <tr>
+            <td><%= coffee_box.id %></td>
+            <td><%= coffee_box.location %></td>
+            <td><%= coffee_box.time %></td>
+            <td>
+              <!-- Wieder einfügen, wenn Admin CoffeeBox zugeordnet werden kann -->
+              <%#= coffee_box.admin.lastname %> <%#= coffee_box.admin.firstname %>
+            </td>
+            <td>
+              <%= link_to "anzeigen", coffee_box_path(coffee_box.id)%>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+    <p>Nicht fündig geworden? Starte doch eine <%= link_to "eigene Kaffeerunde", new_coffee_box_path %>!</p>
+<% else %>
+    <p>
+      Keine Kaffeerunden vorhanden.<br/>
+      Starte doch eine <%= link_to "eigene Kaffeerunde", new_coffee_box_path %>!
+    </p>
+
+<% end %>
+
+
