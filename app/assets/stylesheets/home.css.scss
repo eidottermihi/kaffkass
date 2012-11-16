@@ -106,6 +106,12 @@ a.navibar:link a.navibar:visited a.navibar:active {
   padding: 3px;
 }
 
+#errors {
+  border: 2px solid red;
+  background-color: $white;
+  padding: 3px;
+}
+
 #footer {
   background-color: $coffee;
   text-align: center;
