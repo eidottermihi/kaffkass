@@ -1,0 +1,17 @@
+de:
+  activerecord:
+    models:
+      coffee_box: "Kaffeerunde"
+      user: "Benutzer"
+    attributes:
+      coffee_box:
+        location: "Ort"
+        time: "Uhrzeit"
+        admin: "Verwalter"
+        description: "Beschreibung"
+      user:
+        firstname: "Vorname"
+        lastname: "Nachname"
+        password: "Passwort"
+        password_confirmation: "Passwortbestätigung"
+        email: "Email"

@@ -3,12 +3,16 @@
 <%= form_for @coffee_box do |f| %>
     <%= field_set_tag "Kaffeerunde" do %>
         <ol>
-          <li><%= f.label :location, "Location" %>
+          <li><%= f.label :location %>
             <%= f.text_field :location %></li>
-          <li><%= f.label :time, "Uhrzeit" %>
+          <li><%= f.label :time %>
             <%= f.time_select :time %></li>
-          <li><%= f.label :description, "Beschreibung" %>
+          <li><%= f.label :description %>
             <%= f.text_area :description %></li>
+          <li>
+            <%= label_tag :price, "Tassenpreis" %>
+            <%= number_field_tag :price, 1.00 , :min => 0.01, :step => 0.01 %> €
+          </li>
           <li><%= f.submit %></li>
         </ol>
 

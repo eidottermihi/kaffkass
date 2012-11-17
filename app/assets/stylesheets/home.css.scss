@@ -95,6 +95,7 @@ a.navibar:link a.navibar:visited a.navibar:active {
 }
 
 #notice-x {
+  cursor: pointer;
   float: right;
   &:hover {
     font-weight: bold;
@@ -123,7 +124,7 @@ a.navibar:link a.navibar:visited a.navibar:active {
 
 form {
   fieldset {
-    background-color: $bg_grey;
+    background-color: $light_brown;
     margin-bottom: 10px;
     ol {
       margin: 0;
@@ -138,8 +139,9 @@ form {
   legend {
     padding: 0 2px;
     font-weight: bold;
+    color: $white;
     border: 1px solid $black;
-    background-color: $white;
+    background-color: $coffee;
   }
   label {
     vertical-align: top;
@@ -147,6 +149,26 @@ form {
     display: inline-block;
     width: 20%;
   }
+}
+
+.achtel {
+  width: 12.5%;
+}
+
+.fuenftel {
+  width: 20%;
+}
+
+.viertel{
+  width: 25%;
+}
+
+.drittel{
+  width: 33%;
+}
+
+.haelfte{
+  width: 50%;
 }
 
 #ktable {

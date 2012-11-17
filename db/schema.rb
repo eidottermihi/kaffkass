@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121116194746) do
+ActiveRecord::Schema.define(:version => 20121117154009) do
 
   create_table "bills", :force => true do |t|
     t.float    "value"
@@ -82,7 +82,6 @@ ActiveRecord::Schema.define(:version => 20121116194746) do
 
   create_table "price_of_coffees", :force => true do |t|
     t.float    "price"
-    t.date     "date"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
     t.integer  "coffee_box_id"

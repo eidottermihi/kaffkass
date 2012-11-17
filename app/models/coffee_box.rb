@@ -1,4 +1,5 @@
 class CoffeeBox < ActiveRecord::Base
+  ## Beziehungen
   # Admin
   belongs_to :admin, :class_name => "User", foreign_key: "user_id"
   # Zwischtabelle für Teilnehmer
@@ -16,7 +17,17 @@ class CoffeeBox < ActiveRecord::Base
   # Kaffeepreis
   has_many(:price_of_coffees)
 
-  #Validierungen
+  ## Validierungen
   validates :location, :presence => true
   validates :time, :presence => true
+
+
+  ## Methoden
+  def current_coffee_price
+    self.price_of_coffees.order("created_at DESC").first.price
+  end
+
+  def current_coffe_price_object
+    self.price_of_coffees.order("created_at DESC").first
+  end
 end

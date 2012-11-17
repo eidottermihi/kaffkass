@@ -52,6 +52,8 @@ class Ability
       can :manage, CoffeeBox, :user_id => user.id
       # User kann alle Kaffeerunden betrachten und Liste anzeigen
       can [:show, :index], CoffeeBox
+      # User kann an Kaffeerunde teilnehmen / sich abmelden
+      can [:participate, :unparticipate], CoffeeBox
     end
   end
 end

@@ -25,4 +25,14 @@ class User < ActiveRecord::Base
   has_many(:holidays)
   # Konsummodell
   has_many(:model_of_consumptions)
+
+
+  ## Methoden
+  def fullname
+    "#{firstname} #{lastname}"
+  end
+
+  def fullname_lastname_first
+    "#{lastname}, #{firstname}"
+  end
 end

@@ -7,6 +7,7 @@
         <th>ID</th>
         <th>Location</th>
         <th>Uhrzeit</th>
+        <th>Akt. Tassenpreis</th>
         <th>Verwalter</th>
         <th></th>
       </tr>
@@ -22,14 +23,24 @@
           <% count += 1 %>
             <td><%= coffee_box.id %></td>
             <td><%= coffee_box.location %></td>
-            <td><%= coffee_box.time %></td>
+            <td><%= l coffee_box.time, format: :very_short %></td>
+            <td><%= number_to_currency coffee_box.current_coffee_price, :unit => "&euro;", :separator => ",", :precision => 2 %></td>
             <td>
-              <%= coffee_box.admin.lastname %>, <%= coffee_box.admin.firstname %>
+              <%= coffee_box.admin.fullname_lastname_first %>
             </td>
             <td>
               <%= link_to "anzeigen", coffee_box_path(coffee_box)%>
               <% if can? :update, coffee_box   %>
                 <%= link_to "bearbeiten", edit_coffee_box_path(coffee_box) %>
+              <% end %>
+              <% if can? :destroy, coffee_box %>
+                <%= link_to "löschen", coffee_box, confirm: "Wirklich löschen?", method: :delete %>
+              <% end %>
+              <% if can? :participate, coffee_box and !coffee_box.users.exists?(current_user.id) %>
+                <%= link_to "teilnehmen", participate_path(coffee_box) %>
+              <% end %>
+              <% if can? :unparticipate, coffee_box and coffee_box.users.exists?(current_user.id)%>
+                  <%= link_to "abmelden", unparticipate_path(coffee_box) %>
               <% end %>
             </td>
           </tr>

@@ -1,5 +1,17 @@
-# Sample localization file for English. Add more files in this directory for other locales.
-# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
-
 en:
-  hello: "Hello world"
+  activerecord:
+    models:
+      coffee_box: "Coffeebox"
+      user: "User"
+    attributes:
+      coffee_box:
+        location: "Location"
+        time: "Time"
+        admin: "Administrator"
+        description: "Description"
+      user:
+        firstname: "Firstname"
+        lastname: "Lastname"
+        password: "Password"
+        password_confirmation: "Password confirmation"
+        email: "Email"
