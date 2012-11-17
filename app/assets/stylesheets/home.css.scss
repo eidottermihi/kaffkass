@@ -9,6 +9,8 @@ $dark_coffee1: #663813;
 $cyan1: #04A7B0;
 $cyan2: #9FE9ED;
 
+$light_brown: #FFEDCC;
+
 $bg_grey: #DDD;
 
 $lime: #8C9900;
@@ -117,4 +119,51 @@ a.navibar:link a.navibar:visited a.navibar:active {
   text-align: center;
   color: $white;
   font-size: 0.8em;
+}
+
+form {
+  fieldset {
+    background-color: $bg_grey;
+    margin-bottom: 10px;
+    ol {
+      margin: 0;
+      padding: 0;
+    }
+    li {
+      list-style: none;
+      padding: 5px;
+      margin: 0;
+    }
+  }
+  legend {
+    padding: 0 2px;
+    font-weight: bold;
+    border: 1px solid $black;
+    background-color: $white;
+  }
+  label {
+    vertical-align: top;
+    line-height: 1.8;
+    display: inline-block;
+    width: 20%;
+  }
+}
+
+#ktable {
+  border-collapse: collapse;
+  border: 1px solid $bg_grey;
+  margin: 5px;
+  tr.alt {
+    background-color: $light_brown;
+  }
+  td {
+    border: 1px solid $bg_grey;
+    padding: 2px;
+  }
+  th {
+    background-color: $coffee;
+    color: $white;
+    border: 2px solid $bg_grey;
+    padding: 5px;
+  }
 }

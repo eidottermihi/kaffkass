@@ -1,16 +1,16 @@
 <%= render "shared/error_messages", :target => @coffee_box %>
+
 <%= form_for @coffee_box do |f| %>
-    <p>
-      <%= f.label :location, "Location"%>
-      <%= f.text_field :location  %>
-    </p>
-    <p>
-      <%= f.label :time, "Uhrzeit" %>
-      <%= f.time_select :time%>
-    </p>
-    <p>
-      <%= f.label :description, "Beschreibung" %>
-      <%= f.text_area :description %>
-    </p>
-    <%= f.submit %>
+    <%= field_set_tag "Kaffeerunde" do %>
+        <ol>
+          <li><%= f.label :location, "Location" %>
+            <%= f.text_field :location %></li>
+          <li><%= f.label :time, "Uhrzeit" %>
+            <%= f.time_select :time %></li>
+          <li><%= f.label :description, "Beschreibung" %>
+            <%= f.text_area :description %></li>
+          <li><%= f.submit %></li>
+        </ol>
+
+    <% end %>
 <% end %>

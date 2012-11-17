@@ -1,7 +1,7 @@
 <% @title = "Kaffeerunde suchen" %>
 <h2>Kaffeerunden</h2>
 <% if @coffee_boxes.size > 0 %>
-    <table>
+    <table id="ktable">
       <thead>
       <tr>
         <th>ID</th>
@@ -12,8 +12,14 @@
       </tr>
       </thead>
       <tbody>
+      <% count = 0 %>
       <% @coffee_boxes.each do |coffee_box| %>
-          <tr>
+          <% if count.even? %>
+            <tr>
+          <% else %>
+            <tr class="alt">
+          <% end %>
+          <% count += 1 %>
             <td><%= coffee_box.id %></td>
             <td><%= coffee_box.location %></td>
             <td><%= coffee_box.time %></td>
