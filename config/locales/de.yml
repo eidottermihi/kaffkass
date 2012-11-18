@@ -15,3 +15,6 @@ de:
         password: "Passwort"
         password_confirmation: "Passwortbestätigung"
         email: "Email"
+  text:
+    consumption_model: "Sie können für die Teilnahme an Kaffeerunden ein \"Konsummodell\" hinterlegen. Damit wird für die Kaffeerunde ihr Konsum in Form von Tassen pro Tag automatisch anhand einer Wochentabelle vorbelegt."
+    no_consumption_model: "Ich verzichte auf ein Konsummodell. Ich werde meine Tassenkonsum für diese Kaffeerunde wöchentlich manuell eintragen."

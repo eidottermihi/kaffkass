@@ -53,7 +53,7 @@ class Ability
       # User kann alle Kaffeerunden betrachten und Liste anzeigen
       can [:show, :index], CoffeeBox
       # User kann an Kaffeerunde teilnehmen / sich abmelden
-      can [:participate, :unparticipate], CoffeeBox
+      can [:participate, :unparticipate, :new_participate], CoffeeBox
     end
   end
 end

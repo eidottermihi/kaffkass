@@ -19,7 +19,10 @@ Kaffkass::Application.routes.draw do
   #get "coffeebox/new" => "coffee_box#new"
   #post "coffeebox" => "coffee_box#create"
 
-  resources :coffee_boxes
+  resources :coffee_boxes do
+    resources :model_of_consumptions, :only => [:create, :destroy]
+  end
+  match 'coffee_boxes/:id/new_participate' => 'coffee_boxes#new_participate', :as => :new_participate
   match 'coffee_boxes/:id/participate' => 'coffee_boxes#participate', :as => :participate
   match 'coffee_boxes/:id/unparticipate' => 'coffee_boxes#unparticipate', :as => :unparticipate
 

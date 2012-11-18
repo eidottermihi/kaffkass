@@ -13,9 +13,9 @@ class CoffeeBox < ActiveRecord::Base
   # Ausgaben zur Kaffeerunde
   has_many(:expenses)
   # Verbrauch
-  has_many(:consumptions)
-  # Kaffeepreis
-  has_many(:price_of_coffees)
+  has_many :consumptions
+  # Kaffeepreis (Einträge werden gelöscht wenn Kaffeerunde gelöscht wird)
+  has_many :price_of_coffees, dependent: :destroy
 
   ## Validierungen
   validates :location, :presence => true
@@ -23,11 +23,41 @@ class CoffeeBox < ActiveRecord::Base
 
 
   ## Methoden
+
+  # Gibt den aktuellen Tassenpreis als Zahl zurück
   def current_coffee_price
     self.price_of_coffees.order("created_at DESC").first.price
   end
 
+  # Gibt den aktuellen Tassenpreis als Objekt der Klasse PriceOfCoffee zurück.
   def current_coffe_price_object
     self.price_of_coffees.order("created_at DESC").first
+  end
+
+  # Führt eine Anmeldung durch. Gibt true zurück, wenn Anmeldung erfolgreich war. Bei einer erfolgreichen Anmeldung
+  # existiert ein Eintrag in der Tabelle Participations.
+  def do_participate(user)
+    if self.users.exists?(user.id)
+      # User ist bereits angemeldet
+      return false
+    else
+      # User ist noch nicht angemeldet
+      self.participations.create(is_active: true, user_id: user.id)
+      return true
+    end
+  end
+
+  # Führt eine Abmeldung durch. Gibt true zurück, wenn die Abmeldung erfolgreich war. Nach einer erfolgreichen Abmeldung
+  # existiert in der Tabelle Participations kein Eintrag mehr.
+  def do_unparticipate(user)
+    if self.users.exists?(user.id)
+      # User ist aktuell angemeldet, Abmeldung kann erfolgen
+      # Participation löschen
+      self.users.delete(user)
+      return true
+    else
+      # User ist nicht angemeldet
+      return false
+    end
   end
 end

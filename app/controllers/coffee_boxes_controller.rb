@@ -64,21 +64,26 @@ class CoffeeBoxesController < ApplicationController
     redirect_to coffee_boxes_path, :notice => "Kaffeerunde wurde gelöscht."
   end
 
+  def new_participate
+    @coffee_box = CoffeeBox.find(params[:id])
+    @model_of_consumption = ModelOfConsumption.new
+  end
+
   def participate
     @coffee_box = CoffeeBox.find(params[:id])
-    if @coffee_box.users.exists?(current_user.id)
-      #@coffee_box.users.delete(current_user.id)
-      redirect_to coffee_boxes_path, :alert => "Sie sind bereits für diese Kaffeerunde angemeldet."
+    if @coffee_box.do_participate current_user
+      redirect_to new_participate_path(@coffee_box, ModelOfConsumption.new)
     else
-      # Neue Teilnahme erzeugen
-      @coffee_box.participations << Participation.create(user_id: current_user.id, coffee_box_id: @coffee_box.id, is_active: true)
-      redirect_to coffee_boxes_path, :notice => "Sie wurden für die Kaffeerunde angemeldet."
+      redirect_to coffee_boxes_path, :alert => "Sie sind bereits für diese Kaffeerunde angemeldet."
     end
-
-    #redirect_to coffee_boxes_path, :notice => "participate"
   end
 
   def unparticipate
-
+    @coffee_box = CoffeeBox.find(params[:id])
+    if @coffee_box.do_unparticipate current_user
+      redirect_to coffee_boxes_path, :notice => "Erfolgreich abgemeldet."
+    else
+      redirect_to coffee_boxes_path, :notice => "Nicht möglich."
+    end
   end
 end
