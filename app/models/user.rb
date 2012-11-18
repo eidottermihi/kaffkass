@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+
   #Authlogic: defining that this is the model to use for logging in and out
   acts_as_authentic do |c|
   end # block optional
@@ -34,5 +35,20 @@ class User < ActiveRecord::Base
 
   def fullname_lastname_first
     "#{lastname}, #{firstname}"
+  end
+
+  def deliver_activation_instructions!
+    reset_persistence_token!
+    Notifier.activation_instructions(self).deliver
+  end
+
+  def deliver_welcome!
+    reset_persistence_token!
+    Notifier.welcome(self).deliver
+  end
+
+  def activate!
+    self.active = true
+    save
   end
 end

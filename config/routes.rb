@@ -9,6 +9,9 @@ Kaffkass::Application.routes.draw do
   resource :user, :as => 'account'  # a convenience route
 
   match 'signup' => 'users#new', :as => :signup
+
+  #email
+  match '/activate/:activation_code', :controller => 'activations', :action => 'create' , :as => :activate
   #--------
 
   #get "test/test"
