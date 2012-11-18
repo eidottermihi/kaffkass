@@ -1,0 +1,47 @@
+<%= render "shared/error_messages", :target => @model_of_consumption %>
+
+<h2>Anmeldung Kaffeerunde</h2>
+<p>Location: <%= @coffee_box.location %></p>
+<p>Uhrzeit: <%= l @coffee_box.time, format: :very_short %></p>
+
+<p><%= t "text.consumption_model" %></p>
+
+<%= form_for [@coffee_box, @model_of_consumption] do |f| %>
+    <fieldset>
+      <legend>Konsummodell hinterlegen</legend>
+      <table id="consumption_table">
+        <thead>
+        <tr>
+          <th>Mo</th>
+          <th>Di</th>
+          <th>Mi</th>
+          <th>Do</th>
+          <th>Fr</th>
+          <th>Sa</th>
+          <th>So</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td><%= f.number_field :mo, :min => 0, :step => 1 %></td>
+          <td><%= f.number_field :tue, :min => 0, :step => 1 %></td>
+          <td><%= f.number_field :wed, :min => 0, :step => 1 %></td>
+          <td><%= f.number_field :th, :min => 0, :step => 1 %></td>
+          <td><%= f.number_field :fr, :min => 0, :step => 1 %></td>
+          <td><%= f.number_field :sa, :min => 0, :step => 1 %></td>
+          <td><%= f.number_field :su, :min => 0, :step => 1 %></td>
+          <td>Anzahl Tassen</td>
+        </tr>
+        </tbody>
+      </table>
+      <p id="no_consumption_model"><%= check_box_tag :no_consumption_model %>
+        <%= label_tag :no_consumption_model, t("text.no_consumption_model") %>
+      </p>
+
+
+      <p><%= f.submit %></p>
+    </fieldset>
+
+
+<% end %>

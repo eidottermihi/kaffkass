@@ -15,3 +15,6 @@ en:
         password: "Password"
         password_confirmation: "Password confirmation"
         email: "Email"
+  text:
+    consumption_model: "You can specify a consumption model for coffee boxes. A consumption model predefines your consumption of coffee cups per day on a weekly basis."
+    no_consumption_model: "I don't want a consumption model for this coffee box. I will enter my coffee consumption manually for every week and day."
