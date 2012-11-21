@@ -1,4 +1,6 @@
 Kaffkass::Application.routes.draw do
+  resources :consumptions
+
   #authlogic
   resources :user_sessions
 

@@ -1,0 +1,43 @@
+<h1>Listing consumptions</h1>
+
+<table>
+  <tr>
+    <th>Datum</th>
+    <th>Menge</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+  <% @consumptions.each do |consumption| %>
+      <tr>
+        <td><%= consumption.day %></td>
+        <td><%= consumption.numberOfCups %></td>
+        <td><%= link_to 'Show', consumption %></td>
+        <td><%= link_to 'Show', consumption %></td>
+        <td><%= link_to 'Edit', edit_consumption_path(consumption) %></td>
+        <td><%= link_to 'Destroy', consumption, confirm: 'Are you sure?', method: :delete %></td>
+      </tr>
+  <% end %>
+</table>
+
+<br/>
+
+<%= link_to 'New Consumption', new_consumption_path %>
+
+<div id="calendar">
+  <h2 id="mont">
+    <%= link_to "<", :month => (@date.beginning_of_month-1).strftime("%Y/%m") %>
+    <%= h @date.strftime("%B %Y") %>
+    <%= link_to ">", :month => (@date.end_of_month+1).strftime("%Y/%m") %>
+  </h2>
+  <%= calendar_for @consumptions, year: @date.year, month: @date.month do |calendar| %>
+      <%= calendar.head('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday') %>
+      <%= calendar.day(:day_method => :day) do |date, consumptions| %>
+          <%= date.day %>
+            <%for consumption in consumptions %>
+                <%= link_to 'Edit', edit_consumption_path(consumption) %>
+            <%end%>
+      <% end %>
+  <% end %>
+</div>

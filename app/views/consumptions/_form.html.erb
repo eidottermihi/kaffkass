@@ -1,0 +1,13 @@
+<%= simple_form_for(@consumption) do |f| %>
+  <%= f.error_notification %>
+    <%= field_set_tag "Consumption" do %>
+        <ol>
+          <li><%= f.label :day %>
+            <%= f.date_select :day %></li>
+          <li><%= f.label :numberOfCups %>
+            <%= f.text_field :numberOfCups %></li>
+          <li><%= f.submit %></li>
+        </ol>
+
+    <% end %>
+<% end %>

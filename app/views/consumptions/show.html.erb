@@ -1,0 +1,8 @@
+<h2>Details zum Konsum</h2>
+
+<p>Datum: <%= @consumption.day %></p>
+<p>Menge: <%= @consumption.numberOfCups %></p>
+
+
+<%= link_to 'Edit', edit_consumption_path(@consumption) %> |
+<%= link_to 'Back', consumptions_path %>
