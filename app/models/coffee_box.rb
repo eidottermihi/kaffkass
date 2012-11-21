@@ -49,6 +49,7 @@ class CoffeeBox < ActiveRecord::Base
 
   # Führt eine Abmeldung durch. Gibt true zurück, wenn die Abmeldung erfolgreich war. Nach einer erfolgreichen Abmeldung
   # existiert in der Tabelle Participations kein Eintrag mehr.
+  # @param [User] user der abgemeldet werden soll
   def do_unparticipate(user)
     if self.users.exists?(user.id)
       # User ist aktuell angemeldet, Abmeldung kann erfolgen
@@ -59,5 +60,18 @@ class CoffeeBox < ActiveRecord::Base
       # User ist nicht angemeldet
       return false
     end
+  end
+
+  # Liefert eine Liste mit allen Kaffeerunden zurück, für die der übergebene User angemeldet ist.
+  # Hinweis: Klassenmethode
+  # @param [User] user
+  def self.get_coffee_boxes(user)
+    user = User.find(user.id)
+    participations = user.participations.where(is_active: true)
+    coffee_boxes = Array.new
+    participations.each {
+      |p| coffee_boxes.append p.coffee_box
+    }
+    return coffee_boxes
   end
 end

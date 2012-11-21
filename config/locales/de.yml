@@ -3,6 +3,7 @@ de:
     models:
       coffee_box: "Kaffeerunde"
       user: "Benutzer"
+      user_session: "Anmeldung"
     attributes:
       coffee_box:
         location: "Ort"
@@ -15,6 +16,10 @@ de:
         password: "Passwort"
         password_confirmation: "Passwortbestätigung"
         email: "Email"
+      user_session:
+        email: "Email"
+        password: "Passwort"
+        remember_me: "Dauerhaft angemeldet bleiben"
   text:
     consumption_model: "Sie können für die Teilnahme an Kaffeerunden ein \"Konsummodell\" hinterlegen. Damit wird für die Kaffeerunde ihr Konsum in Form von Tassen pro Tag automatisch anhand einer Wochentabelle vorbelegt."
     no_consumption_model: "Ich verzichte auf ein Konsummodell. Ich werde meine Tassenkonsum für diese Kaffeerunde wöchentlich manuell eintragen."

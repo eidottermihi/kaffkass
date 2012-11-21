@@ -1,15 +1,11 @@
-# app/views/user_sessions/new.html.erb
-<h1>Login</h1>
+<%= render "shared/error_messages", :target => @user_session %>
 
-<%= form_for @user_session, :as => :user_session, :url => { :action => "create" } do |f| %>
-    <%= render "shared/error_messages", :target => @user_session %>
-    <%= f.label :email %><br />
-    <%= f.text_field :email %><br />
-    <br />
-    <%= f.label :password %><br />
-    <%= f.password_field :password %><br />
-    <br />
-    <%= f.check_box :remember_me %><%= f.label :remember_me %><br />
-    <br />
-    <%= f.submit "Login" %>
+<%= form_for @user_session do |f| %>
+    <%= field_set_tag "Login" do %>
+      <%= f.label :email %><%= f.text_field :email %><br />
+      <%= f.label :password %><%= f.password_field :password %><br />
+      <br />
+      <%= f.check_box :remember_me %><%= f.label :remember_me %><br />
+      <%= f.submit "Login" %>
+    <% end %>
 <% end %>

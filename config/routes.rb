@@ -28,6 +28,7 @@ Kaffkass::Application.routes.draw do
   match 'coffee_boxes/:id/new_participate' => 'coffee_boxes#new_participate', :as => :new_participate
   match 'coffee_boxes/:id/participate' => 'coffee_boxes#participate', :as => :participate
   match 'coffee_boxes/:id/unparticipate' => 'coffee_boxes#unparticipate', :as => :unparticipate
+  match 'my_coffee_boxes' => 'coffee_boxes#my_coffee_boxes', :as => :my_coffee_boxes
 
   # Root wird auf Home#home geroutet
   root :to => 'home#home'

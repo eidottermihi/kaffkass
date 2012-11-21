@@ -86,4 +86,8 @@ class CoffeeBoxesController < ApplicationController
       redirect_to coffee_boxes_path, :notice => "Nicht möglich."
     end
   end
+
+  def my_coffee_boxes
+    @coffee_boxes = CoffeeBox.get_coffee_boxes current_user
+  end
 end

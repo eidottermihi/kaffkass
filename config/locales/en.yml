@@ -3,6 +3,7 @@ en:
     models:
       coffee_box: "Coffeebox"
       user: "User"
+      user_session: "Login"
     attributes:
       coffee_box:
         location: "Location"
@@ -15,6 +16,10 @@ en:
         password: "Password"
         password_confirmation: "Password confirmation"
         email: "Email"
+      user_session:
+        email: "Email"
+        password: "Password"
+        remember_me: "Remember me"
   text:
     consumption_model: "You can specify a consumption model for coffee boxes. A consumption model predefines your consumption of coffee cups per day on a weekly basis."
     no_consumption_model: "I don't want a consumption model for this coffee box. I will enter my coffee consumption manually for every week and day."

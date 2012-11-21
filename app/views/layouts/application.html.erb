@@ -13,7 +13,7 @@
   </div>
   <div id="navibar">
     <span id="navigationbar">
-        meine kaffeerunden / <%= link_to "kaffeerunde suchen", coffee_boxes_path, :class => "navibar" %>
+        <%= link_to "meine kaffeerunden", my_coffee_boxes_path, :class => "navibar" %> / <%= link_to "kaffeerunde suchen", coffee_boxes_path, :class => "navibar" %>
     </span>
     <span id="userbar">
       <% if current_user %>
