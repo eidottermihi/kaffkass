@@ -50,4 +50,5 @@ Kaffkass::Application.configure do
       :authentication => :login,
       :enable_starttls_auto => true #This line is must to ensure the tls for Gmail
   }
+
 end

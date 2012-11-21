@@ -4,8 +4,7 @@ class Notifier < ActionMailer::Base
     @user = user
     @url  = "http://example.com/login"
     mail(to: user.email, from: 'no-reply@kaffkass.com',
-         subject: "Activation Instructions",
-         body:   activate_path(user.persistence_token))
+         subject: "Activation Instructions")
   end
 
   def welcome(user)

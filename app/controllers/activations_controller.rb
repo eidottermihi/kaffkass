@@ -7,9 +7,8 @@ class ActivationsController < ApplicationController
     #TODO: mit Fehler umgehen
     if @user.activate!
       flash[:notice] = "Your account has been activated!"
-      UserSession.create(@user, false) # Log user in manually
       @user.deliver_welcome!
-      redirect_to account_url
+      redirect_to login_path
     else
       render :action => :new
     end
