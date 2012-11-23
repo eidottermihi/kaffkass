@@ -1,5 +1,7 @@
-<%= simple_form_for(@consumption) do |f| %>
-  <%= f.error_notification %>
+<%= render "shared/error_messages", :target => @consumption %>
+
+<%= form_for [@coffee_box, @consumption] do |f| %>
+
     <%= field_set_tag "Consumption" do %>
         <ol>
           <li><%= f.label :day %>
