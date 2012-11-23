@@ -64,15 +64,10 @@ class CoffeeBoxesController < ApplicationController
     redirect_to coffee_boxes_path, :notice => "Kaffeerunde wurde gelöscht."
   end
 
-  def new_participate
-    @coffee_box = CoffeeBox.find(params[:id])
-    @model_of_consumption = ModelOfConsumption.new
-  end
-
   def participate
     @coffee_box = CoffeeBox.find(params[:id])
     if @coffee_box.do_participate current_user
-      redirect_to new_participate_path(@coffee_box, ModelOfConsumption.new)
+      redirect_to new_coffee_box_model_of_consumption_path(@coffee_box), :notice => t("notice.participate_sucessful")
     else
       redirect_to coffee_boxes_path, :alert => "Sie sind bereits für diese Kaffeerunde angemeldet."
     end

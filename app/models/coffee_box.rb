@@ -74,4 +74,12 @@ class CoffeeBox < ActiveRecord::Base
     }
     return coffee_boxes
   end
+
+  # Liefert das Konsummodell für den User für die aktuelle Kaffeerunde zurück, oder nil wenn
+  # kein Konsummodell hinterlegt ist.
+  # @param [User] user der aktuell angemeldete User
+  def get_consumption_model(user)
+    consumption_model = ModelOfConsumption.where(:user_id => user.id, :coffee_box_id => self.id).limit(1).first
+    return consumption_model
+  end
 end
