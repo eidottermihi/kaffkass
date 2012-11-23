@@ -7,5 +7,9 @@
 <p>Beschreibung: <%= @coffee_box.description %></p>
 <p>Ersteller: <%= @coffee_box.admin.email %></p>
 
-
+<% if @coffee_box.get_consumption_model(current_user) %>
+    <%= link_to "Zum hinterlegten Konsummodell", coffee_box_model_of_consumption_path(@coffee_box, @coffee_box.get_consumption_model(current_user)) %>
+<% else %>
+    <%= link_to "Konsummodell hinterlegen", new_coffee_box_model_of_consumption_path(@coffee_box) %>
+<% end %>
 <%= link_to "Zurück zur Liste", coffee_boxes_path %>

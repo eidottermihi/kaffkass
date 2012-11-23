@@ -1,0 +1,33 @@
+<%= render "shared/error_messages", :target => @model_of_consumption %>
+
+<%= form_for [@coffee_box, @model_of_consumption] do |f| %>
+    <%= field_set_tag "Konsummodell bearbeiten" do %>
+        <table id="consumption_table">
+          <thead>
+          <tr>
+            <th>Mo</th>
+            <th>Di</th>
+            <th>Mi</th>
+            <th>Do</th>
+            <th>Fr</th>
+            <th>Sa</th>
+            <th>So</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td><%= f.number_field :mo, :min => 0, :step => 1 %></td>
+            <td><%= f.number_field :tue, :min => 0, :step => 1 %></td>
+            <td><%= f.number_field :wed, :min => 0, :step => 1 %></td>
+            <td><%= f.number_field :th, :min => 0, :step => 1 %></td>
+            <td><%= f.number_field :fr, :min => 0, :step => 1 %></td>
+            <td><%= f.number_field :sa, :min => 0, :step => 1 %></td>
+            <td><%= f.number_field :su, :min => 0, :step => 1 %></td>
+            <td>Anzahl Tassen</td>
+          </tr>
+          </tbody>
+        </table>
+        <p><%= f.submit %></p>
+    <% end %>
+<% end %>

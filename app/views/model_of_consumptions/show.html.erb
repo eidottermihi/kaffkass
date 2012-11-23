@@ -1,0 +1,34 @@
+<% @title = "Konsummodell anzeigen" %>
+
+<h2>Konsummodell</h2>
+<p>Kaffeerunde: <%= @coffee_box.location %>, <%= l @coffee_box.time, format: :very_short %></p>
+<table id="ktable">
+  <thead>
+  <tr>
+    <th>Mo</th>
+    <th>Di</th>
+    <th>Mi</th>
+    <th>Do</th>
+    <th>Fr</th>
+    <th>Sa</th>
+    <th>So</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td><%= @model_of_consumption.mo %></td>
+    <td><%= @model_of_consumption.tue %></td>
+    <td><%= @model_of_consumption.wed %></td>
+    <td><%= @model_of_consumption.th %></td>
+    <td><%= @model_of_consumption.fr %></td>
+    <td><%= @model_of_consumption.sa %></td>
+    <td><%= @model_of_consumption.su %></td>
+    <td>Anzahl Tassen</td>
+  </tr>
+  </tbody>
+</table>
+
+
+<%= link_to "Bearbeiten", edit_coffee_box_model_of_consumption_path(@coffee_box, @model_of_consumption) %>
+<%= link_to "Löschen", coffee_box_model_of_consumption_path(@coffee_box, @model_of_consumption), method: :delete%>

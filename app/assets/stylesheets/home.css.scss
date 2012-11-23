@@ -111,9 +111,13 @@ a.navibar:link a.navibar:visited a.navibar:active {
 }
 
 #errors {
-  border: 2px solid red;
-  background-color: $white;
+  border: 1px solid red;
+  background-color: $bg_grey;
   padding: 3px;
+}
+
+.field_with_errors {
+  border: 1px solid red;
 }
 
 #footer {
