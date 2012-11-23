@@ -4,6 +4,7 @@ en:
       coffee_box: "Coffeebox"
       user: "User"
       user_session: "Login"
+      model_of_consumption: "Consumption model"
     attributes:
       coffee_box:
         location: "Location"
@@ -20,6 +21,18 @@ en:
         email: "Email"
         password: "Password"
         remember_me: "Remember me"
+      model_of_consumption:
+        mo: "Monday"
+        tue: "Tuesday"
+        wed: "Wednesday"
+        th: "Thursday"
+        fr: "Friday"
+        sa: "Saturday"
+        su: "Sunday"
   text:
     consumption_model: "You can specify a consumption model for coffee boxes. A consumption model predefines your consumption of coffee cups per day on a weekly basis."
     no_consumption_model: "I don't want a consumption model for this coffee box. I will enter my coffee consumption manually for every week and day."
+  notice:
+    participate_sucessful: "You successfully registered for this coffee box."
+  alert:
+    participate_unsucessful: "You are already registered for this coffee box!"
