@@ -3,6 +3,7 @@ class ConsumptionsController < ApplicationController
   # GET /consumptions.json
   def index
     @coffee_box = CoffeeBox.find(params[:coffee_box_id])
+    @consumption = Consumption.new
     @consumptions = current_user.consumptions.where(coffee_box_id:@coffee_box).all
     #Monat im Kalender setzen oder verändern
     @date = params[:month]? Date.parse(params[:month]): Date.today
@@ -38,6 +39,10 @@ class ConsumptionsController < ApplicationController
   def edit
     @coffee_box = CoffeeBox.find(params[:coffee_box_id])
     @consumption = current_user.consumptions.find(params[:id])
+    respond_to do |format|
+      format.js
+      format.html # new.html.erb
+    end
   end
 
   # POST /consumptions
@@ -65,8 +70,9 @@ class ConsumptionsController < ApplicationController
     @coffee_box = CoffeeBox.find(params[:coffee_box_id])
     respond_to do |format|
       if @consumption.update_attributes(params[:consumption])
-        format.html { redirect_to  redirect_to coffee_box_consumptions_path, notice: 'Consumption was successfully updated.' }
+        format.html { redirect_to coffee_box_consumptions_path, notice: 'Consumption was successfully updated.' }
         format.json { head :no_content }
+        format.js
       else
         format.html { render action: "edit" }
         format.json { render json: @consumption.errors, status: :unprocessable_entity }

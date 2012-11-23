@@ -1,0 +1,3 @@
+$("#form > form").remove();
+$("#form").append("<%= escape_javascript(render(:partial => "form"))%>").fadeIn();
+

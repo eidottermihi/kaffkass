@@ -1,11 +1,11 @@
 <%= render "shared/error_messages", :target => @consumption %>
 
-<%= form_for [@coffee_box, @consumption] do |f| %>
+<%= form_for([@coffee_box, @consumption],remote:true) do |f| %>
 
     <%= field_set_tag "Consumption" do %>
         <ol>
           <li><%= f.label :day %>
-            <%= f.date_select :day %></li>
+            <%= f.text_field :day, disabled:'true'%></li>
           <li><%= f.label :numberOfCups %>
             <%= f.text_field :numberOfCups %></li>
           <li><%= f.submit %></li>

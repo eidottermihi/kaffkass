@@ -13,7 +13,8 @@
   </div>
   <div id="navibar">
     <span id="navigationbar">
-        <%= link_to "meine kaffeerunden", my_coffee_boxes_path, :class => "navibar" %> / <%= link_to "kaffeerunde suchen", coffee_boxes_path, :class => "navibar" %>
+        <%= link_to "meine kaffeerunden", my_coffee_boxes_path, :class => "navibar" %>
+      / <%= link_to "kaffeerunde suchen", coffee_boxes_path, :class => "navibar" %>
     </span>
     <span id="userbar">
       <% if current_user %>
@@ -25,12 +26,14 @@
       <% end %>
     </span>
   </div>
+
   <% if flash[:notice] %>
       <div id="notice">
         <%= flash[:notice] %>
         <span id="notice-x">X</span>
       </div>
   <% end %>
+
   <div id="content">
     <% if flash[:alert] %>
         <div id="alert"><%= flash[:alert] %></div>

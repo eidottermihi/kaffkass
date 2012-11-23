@@ -23,6 +23,21 @@
 
 <br/>
 
+<div id="form">
+  <%= form_for([@coffee_box, @consumption]) do |f| %>
+
+      <%= field_set_tag "Consumption" do %>
+          <ol>
+            <li><%= f.label :day %>
+              <%= f.text_field :day, disabled:'true'%></li>
+            <li><%= f.label :numberOfCups %>
+              <%= f.text_field :numberOfCups,disabled:'true' %></li>
+          </ol>
+
+      <% end %>
+  <% end %>
+</div>
+
 <%= link_to 'New Consumption', new_coffee_box_consumption_path(@coffee_box,@consumption) %>
 
 <div id="calendar">
@@ -36,7 +51,7 @@
       <%= calendar.day(:day_method => :day) do |date, consumptions| %>
           <%= date.day %>
             <%for consumption in consumptions %>
-              <%= link_to 'Edit', edit_coffee_box_consumption_path(@coffee_box,consumption) %>
+              <%= link_to 'Edit', edit_coffee_box_consumption_path(@coffee_box,consumption),remote:true %>
             <%end%>
       <% end %>
   <% end %>
