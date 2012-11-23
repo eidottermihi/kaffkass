@@ -1,5 +1,4 @@
 Kaffkass::Application.routes.draw do
-  resources :consumptions
 
   #authlogic
   resources :user_sessions
@@ -26,6 +25,7 @@ Kaffkass::Application.routes.draw do
 
   resources :coffee_boxes do
     resources :model_of_consumptions, :only => [:create, :destroy]
+    resources :consumptions
   end
   match 'coffee_boxes/:id/new_participate' => 'coffee_boxes#new_participate', :as => :new_participate
   match 'coffee_boxes/:id/participate' => 'coffee_boxes#participate', :as => :participate
