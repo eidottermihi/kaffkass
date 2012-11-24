@@ -13,8 +13,9 @@ class Consumption < ActiveRecord::Base
       @temp_consumption.coffee_box=coffee_box
       @temp_consumption.day = tmp
       @temp_consumption.numberOfCups = 0
-      @temp_consumption.save
+      current_user.consumptions << @temp_consumption
       end
+      current_user.save
     end while tmp <= to
   end
 
