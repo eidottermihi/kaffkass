@@ -2,14 +2,20 @@ class ConsumptionsController < ApplicationController
   # GET /consumptions
   # GET /consumptions.json
   def index
-    @coffee_box = CoffeeBox.find(params[:coffee_box_id])
-    @consumption = Consumption.new
-    @consumptions = current_user.consumptions.where(coffee_box_id:@coffee_box).all
     #Monat im Kalender setzen oder verändern
     @date = params[:month]? Date.parse(params[:month]): Date.today
+    @coffee_box = CoffeeBox.find(params[:coffee_box_id])
+    Consumption.new.createMonth(@date,current_user,@coffee_box)
+    @consumption = Consumption.new
+    @consumptions = current_user.consumptions.where(coffee_box_id:@coffee_box).all
+
+
+
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @consumptions }
+      format.js
     end
   end
 
@@ -71,7 +77,7 @@ class ConsumptionsController < ApplicationController
     respond_to do |format|
       if @consumption.update_attributes(params[:consumption])
         format.html { redirect_to coffee_box_consumptions_path, notice: 'Consumption was successfully updated.' }
-        format.json { head :no_content }
+        format.json { head :ok }
         format.js
       else
         format.html { render action: "edit" }

@@ -1,0 +1,12 @@
+<%= calendar_for @consumptions, year: @date.year, month: @date.month do |calendar| %>
+    <%= calendar.head('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday') %>
+    <%= calendar.day(:day_method => :day) do |date, consumptions| %>
+        <%= date.day %>
+        <%for consumption in consumptions %>
+            <div class="numberOfCups">
+              Cups: <br/>
+              <%= best_in_place consumption, :numberOfCups, path:coffee_box_consumption_path(@coffee_box,consumption), :html_attrs => {:maxlength => 5, :style => "width:1.5em" }  %>
+            </div>
+        <%end%>
+    <% end %>
+<% end %>

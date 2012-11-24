@@ -1,5 +1,6 @@
-<h1>Listing consumptions</h1>
+<h1 xmlns="http://www.w3.org/1999/html">Listing consumptions</h1>
 
+<!--
 <table>
   <tr>
     <th>Datum</th>
@@ -39,20 +40,13 @@
 </div>
 
 <%= link_to 'New Consumption', new_coffee_box_consumption_path(@coffee_box,@consumption) %>
-
+-->
+<br/>
 <div id="calendar">
-  <h2 id="mont">
-    <%= link_to "<", :month => (@date.beginning_of_month-1).strftime("%Y/%m") %>
-    <%= h @date.strftime("%B %Y") %>
-    <%= link_to ">", :month => (@date.end_of_month+1).strftime("%Y/%m") %>
-  </h2>
-  <%= calendar_for @consumptions, year: @date.year, month: @date.month do |calendar| %>
-      <%= calendar.head('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday') %>
-      <%= calendar.day(:day_method => :day) do |date, consumptions| %>
-          <%= date.day %>
-            <%for consumption in consumptions %>
-              <%= link_to 'Edit', edit_coffee_box_consumption_path(@coffee_box,consumption),remote:true %>
-            <%end%>
-      <% end %>
-  <% end %>
+  <div id="selectorField">
+   <table> <%= render 'selector' %> </table>
+  </div>
+  <div id="calendarField">
+  <%= render 'calendar' %>
+  </div>
 </div>

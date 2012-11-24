@@ -1,0 +1,5 @@
+<h2 id="mont">
+  <%= link_to "<", coffee_box_consumptions_path(:month => (@date.beginning_of_month-1).strftime("%Y/%m")) ,remote:true %>
+  <%= h @date.strftime("%B %Y") %>
+  <%= link_to ">", coffee_box_consumptions_path(:month => (@date.end_of_month+1).strftime("%Y/%m")),remote:true %>
+</h2>
