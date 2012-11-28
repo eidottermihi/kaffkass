@@ -27,4 +27,9 @@ $(document).ready(function () {
     $("#no_consumption_model[type='checkbox']").click(function() {
         $("[id^=model_of_consumption]").toggleDisabled()
     });
+
+    $("a.loader").click(function () {
+        window.alert("Hallo Karl");
+    });
+
 });
