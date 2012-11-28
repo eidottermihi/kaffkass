@@ -1,4 +1,5 @@
 class ModelOfConsumption < ActiveRecord::Base
+  attr_accessible :mo, :tue, :wed, :th, :fr, :sa, :su
   belongs_to(:coffee_box)
   belongs_to(:user)
 
