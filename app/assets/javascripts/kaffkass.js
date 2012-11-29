@@ -14,6 +14,7 @@
 })(jQuery);
 
 $(document).ready(function () {
+    $("#loadGif").hide();
     // Notification-Bar ausblenden, wenn das X angeklickt wird
     $("#notice-x").click(function () {
         $("#notice").slideUp("normal");
@@ -28,8 +29,9 @@ $(document).ready(function () {
         $("[id^=model_of_consumption]").toggleDisabled()
     });
 
-    $("a.loader").click(function () {
-        window.alert("Hallo Karl");
+    $(document).on("click","a.loader",function () {
+        $("#calendarField > table").remove();
+        $("#loadGif").show();
     });
 
 });
