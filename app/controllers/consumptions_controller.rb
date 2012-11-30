@@ -8,10 +8,6 @@ class ConsumptionsController < ApplicationController
     Consumption.new.createMonth(@date,current_user,@coffee_box)
     @consumption = Consumption.new
     @consumptions = current_user.consumptions.where(coffee_box_id:@coffee_box).all
-
-
-
-
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @consumptions }
@@ -74,6 +70,7 @@ class ConsumptionsController < ApplicationController
   def update
     @consumption = current_user.consumptions.find(params[:id])
     @coffee_box = CoffeeBox.find(params[:coffee_box_id])
+    @consumption.flagTouched = true
     respond_to do |format|
       if @consumption.update_attributes(params[:consumption])
         format.html { redirect_to coffee_box_consumptions_path, notice: 'Consumption was successfully updated.' }

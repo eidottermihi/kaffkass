@@ -71,15 +71,14 @@
 
 .numberOfCups{
   border: ridge;
-  display: block;
-  text-align: center;
-  margin:0px auto;
+  border-style: outset;
+  border-width: 1px;
+  border-color: #999;
+  text-align: right;
 }
 .best_in_place{
-
   display: block;
   text-align: center;
-  margin:0px auto;
   font-weight: bold;
 }
 
@@ -89,4 +88,17 @@ h2#mont{
 h2#mont a{
   text-decoration: none;
   color: #999 ;
+}
+
+
+#loadGif{
+  padding-top: 50px;
+  padding-bottom: 150px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#cupPng{
+  width: 15px
 }
