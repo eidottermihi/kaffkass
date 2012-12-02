@@ -6,7 +6,7 @@
 <p>Uhrzeit: <%= @coffee_box.time %></p>
 <p>Beschreibung: <%= @coffee_box.description %></p>
 <p>Ersteller: <%= @coffee_box.admin.email %></p>
-
+<%= link_to "Konsum bearbeiten", coffee_box_consumptions_path(@coffee_box)%>
 <% if @coffee_box.get_consumption_model(current_user) %>
     <%= link_to "Zum hinterlegten Konsummodell", coffee_box_model_of_consumption_path(@coffee_box, @coffee_box.get_consumption_model(current_user)) %>
 <% else %>
