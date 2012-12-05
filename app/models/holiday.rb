@@ -5,6 +5,8 @@ class Holiday < ActiveRecord::Base
   validates :from, :uniqueness => { scope: :user_id }
   validates :till, :uniqueness => { scope: :user_id }
 
+  validates :user_id, :presence => true
+
   # Erzeugt einen neuen Urlaub. Liefert true zurück, wenn der Urlaub gespeichert wurde, false ansonsten.
   # @param  [Holiday] holiday
   def self.new_holiday(holiday)

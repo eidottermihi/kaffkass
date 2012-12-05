@@ -41,7 +41,8 @@ class ModelOfConsumptionsController < ApplicationController
 
   def update
     @model_of_consumption = ModelOfConsumption.find(params[:id])
-    if @model_of_consumption.update_attributes(params[:model_of_consumption])
+
+    if ModelOfConsumption.update_model(@model_of_consumption, params[:model_of_consumption])
       redirect_to coffee_boxes_path, notice: "Update des Konsummodells erfolgreich."
     else
       render "edit"
