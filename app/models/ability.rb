@@ -54,6 +54,8 @@ class Ability
       can [:show, :index], CoffeeBox
       # User kann an Kaffeerunde teilnehmen / sich abmelden
       can [:participate, :unparticipate, :new_participate], CoffeeBox
+      # User kann für sich selbst Urlaub verwalten
+      can :manage, Holiday, :user_id => user.id
     end
   end
 end

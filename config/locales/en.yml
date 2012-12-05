@@ -5,6 +5,7 @@ en:
       user: "User"
       user_session: "Login"
       model_of_consumption: "Consumption model"
+      holiday: "Holidays"
     attributes:
       coffee_box:
         location: "Location"
@@ -29,9 +30,13 @@ en:
         fr: "Friday"
         sa: "Saturday"
         su: "Sunday"
+      holiday:
+        from: "From"
+        till: "Till"
   text:
     consumption_model: "You can specify a consumption model for coffee boxes. A consumption model predefines your consumption of coffee cups per day on a weekly basis."
     no_consumption_model: "I don't want a consumption model for this coffee box. I will enter my coffee consumption manually for every week and day."
+    holidays: "Set your holiday dates, so that your consumption models are disabled during your days off!"
   notice:
     participate_sucessful: "You successfully registered for this coffee box."
   alert:
