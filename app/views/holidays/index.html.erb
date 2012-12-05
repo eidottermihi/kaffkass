@@ -1,0 +1,30 @@
+<h1>Meine Urlaubstage</h1>
+
+<p><%= t "text.holidays" %></p>
+
+<table id="ktable">
+  <tr>
+    <th>Von</th>
+    <th>Bis</th>
+    <th colspan="3">Aktionen</th>
+  </tr>
+  <% if @holidays.length == 0 %>
+      <tr>
+        <td colspan="5">keine Einträge vorhanden</td>
+      </tr>
+  <% else %>
+      <% @holidays.each do |holiday| %>
+          <tr>
+            <td><%= l holiday.from %></td>
+            <td><%= l holiday.till %></td>
+            <td><%= link_to 'Show', user_holiday_path(current_user, holiday) %></td>
+            <td><%= link_to 'Edit', edit_user_holiday_path(current_user, holiday) %></td>
+            <td><%= link_to 'Destroy', user_holiday_path(current_user, holiday), confirm: 'Are you sure?', method: :delete %></td>
+          </tr>
+      <% end %>
+  <% end %>
+</table>
+
+<br/>
+
+<%= link_to 'Neuen Urlaub eintragen', new_user_holiday_path(@user) %>

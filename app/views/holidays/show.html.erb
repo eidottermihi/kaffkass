@@ -1,0 +1,4 @@
+<p>Von: <%= l @holiday.from %></p>
+<p>Bis: <%= l @holiday.till %></p>
+<%= link_to 'Edit', edit_user_holiday_path(@user, @holiday) %> |
+<%= link_to 'Back', user_holidays_path(@user) %>

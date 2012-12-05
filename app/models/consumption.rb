@@ -41,7 +41,7 @@ class Consumption < ActiveRecord::Base
       return model.fr
     elsif (date.wday == 6)
       return model.sa
-      elseif(date.wday == 0)
+    elsif(date.wday == 0)
       return model.su
     else
       return 0
