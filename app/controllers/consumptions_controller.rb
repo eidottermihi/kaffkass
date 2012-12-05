@@ -2,9 +2,14 @@ class ConsumptionsController < ApplicationController
   # GET /consumptions
   # GET /consumptions.json
   def index
+    @coffee_box = CoffeeBox.find(params[:coffee_box_id])
     #Monat im Kalender setzen oder verändern
     @date = params[:month]? Date.parse(params[:month]): Date.today
-    @coffee_box = CoffeeBox.find(params[:coffee_box_id])
+    #Keinen Monat anzeigen der vor dem erstellungdatum liegt
+    if(@date.month < @coffee_box.created_at.month && @date.year <= @coffee_box.created_at.year)
+      @date = @date>>1
+    end
+    #Consumptions für den Monat erzeugen
     Consumption.new.createMonth(@date,current_user,@coffee_box)
     @consumption = Consumption.new
     @consumptions = current_user.consumptions.where(coffee_box_id:@coffee_box).all
@@ -92,6 +97,17 @@ class ConsumptionsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to coffee_box_consumptions_url }
+      format.json { head :no_content }
+    end
+  end
+
+  def closeMonth
+    @date = params[:month]? Date.parse(params[:month]): Date.today
+    @coffee_box = CoffeeBox.find(params[:coffee_box_id])
+    #TODO: bill für user und coffebox erstellen --> alle consumptions für den Monat auf disabled
+
+    respond_to do |format|
+      format.html { redirect_to coffee_box_consumptions_url(month:@date.strftime("%Y/%m")) }
       format.json { head :no_content }
     end
   end

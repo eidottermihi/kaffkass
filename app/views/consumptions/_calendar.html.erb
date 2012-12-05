@@ -4,10 +4,17 @@
         <%= date.day %>
         <% for consumption in consumptions %>
             <% if @date.month == consumption.day.month %>
-                <div class="numberOfCups">
-                  <%= image_tag("cup.png", id: 'cupPng') %>
-                  <%= best_in_place consumption, :numberOfCups, path: coffee_box_consumption_path(@coffee_box, consumption), :html_attrs => {:maxlength => 5, :style => "width:1.5em"} %>
-                </div>
+                <% if !consumption.flagDisabled %>
+                    <div class="numberOfCups">
+                      <%= image_tag("cup.png", id: 'cupPng') %>
+                      <%= best_in_place consumption, :numberOfCups, path: coffee_box_consumption_path(@coffee_box, consumption), :html_attrs => {:maxlength => 5, :style => "width:1.5em"} %>
+                    </div>
+                <% else %>
+                    <div class="numberOfCupsDisabled">
+                      <%= image_tag("cup.png", id: 'cupPng') %> </br>
+                      <div id="inner"> <%=  consumption.numberOfCups %> </div>
+                    </div>
+                <% end %>
             <% end %>
         <% end %>
     <% end %>

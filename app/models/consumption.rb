@@ -8,20 +8,22 @@ class Consumption < ActiveRecord::Base
     tmp = from
     begin
       tmp += 1.day
-      if (!current_user.consumptions.where(coffee_box_id: coffee_box, day: tmp).exists?)
+      if (!current_user.consumptions.where(coffee_box_id: coffee_box, day: tmp).exists? && coffee_box.created_at < tmp+1)
         @temp_consumption = current_user.consumptions.build
         @temp_consumption.coffee_box=coffee_box
         @temp_consumption.flagTouched = false
         @temp_consumption.day = tmp
-        if (current_user.model_of_consumptions.where(coffee_box_id: coffee_box).exists?)
-          @model = current_user.model_of_consumptions.where(coffee_box_id: coffee_box).first;
-          @temp_consumption.numberOfCups = getCupsForWeekday(tmp, @model)
-        else
-          @temp_consumption.numberOfCups = 0
+        @temp_consumption.flagDisabled = false
+          if (current_user.model_of_consumptions.where(coffee_box_id: coffee_box).exists?)
+            @model = current_user.model_of_consumptions.where(coffee_box_id: coffee_box).first;
+            @temp_consumption.numberOfCups = getCupsForWeekday(tmp, @model)
+          else
+            @temp_consumption.numberOfCups = 0
+          end
+
+          current_user.consumptions << @temp_consumption
         end
-        current_user.consumptions << @temp_consumption
-      end
-      current_user.save
+        current_user.save
     end while tmp <= to
   end
 

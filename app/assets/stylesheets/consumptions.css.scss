@@ -88,6 +88,21 @@
   border-color: #999;
   text-align: right;
 }
+
+.numberOfCupsDisabled{
+  opacity: 0.5;
+  border: ridge;
+  border-style: outset;
+  border-width: 1px;
+  border-color: #999;
+  text-align: right;
+}
+
+.numberOfCupsDisabled #inner{
+  display: block;
+  text-align: center;
+}
+
 .best_in_place{
   display: block;
   text-align: center;
@@ -119,5 +134,10 @@ h2#mont a{
 }
 
 .transparent{
-  background: #ff0000;
+  opacity: 0.5;
+}
+
+#closeMonth{
+  text-align: right;
+  padding-bottom: 2px;
 }
