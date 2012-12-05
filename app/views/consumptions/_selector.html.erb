@@ -3,3 +3,4 @@
   <%= h @date.strftime("%B %Y") %>
   <%= link_to ">", coffee_box_consumptions_path(:month => (@date.end_of_month+1).strftime("%Y/%m")),remote:true, :class => "loader" %>
 </h2>
+<%= link_to "Monat abschließen", coffee_box_consumptions_path(:month => (@date.beginning_of_month-1).strftime("%Y/%m")), :id => "completeMonth" %>

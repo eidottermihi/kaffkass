@@ -26,6 +26,7 @@ Kaffkass::Application.routes.draw do
   resources :coffee_boxes do
     resources :model_of_consumptions
     resources :consumptions
+    resources :bills
   end
   match 'coffee_boxes/:id/new_participate' => 'coffee_boxes#new_participate', :as => :new_participate
   match 'coffee_boxes/:id/participate' => 'coffee_boxes#participate', :as => :participate

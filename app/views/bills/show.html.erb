@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Value:</b>
+  <%= @bill.value %>
+</p>
+
+<p>
+  <b>Ispaid:</b>
+  <%= @bill.isPaid %>
+</p>
+
+<p>
+  <b>Date:</b>
+  <%= @bill.date %>
+</p>
+
+
+<%= link_to 'Edit', edit_coffee_box_bill_path(@coffee_box,@bill) %> |
+<%= link_to 'Back', coffee_box_bills_path %>
