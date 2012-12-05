@@ -1,4 +1,5 @@
 $("#loadGif").hide();
+$("#calendarField > table").remove();
 $("#calendarField").append("<%= escape_javascript(render(:partial => "calendar"))%>").fadeIn();
 $("#selectorField ").children().remove();
 $("#selectorField").append("<%= escape_javascript(render(:partial => "selector"))%>").fadeIn();

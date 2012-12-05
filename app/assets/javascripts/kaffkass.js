@@ -30,7 +30,6 @@ $(document).ready(function () {
     });
 
     $(document).on("click","a.loader",function () {
-        $("#calendarField > table").remove();
         $("#loadGif").show();
     });
 
