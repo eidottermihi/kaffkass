@@ -1,4 +1,5 @@
 class ConsumptionsController < ApplicationController
+
   # GET /consumptions
   # GET /consumptions.json
   def index

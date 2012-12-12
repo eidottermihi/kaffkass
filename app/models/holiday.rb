@@ -20,6 +20,7 @@ class Holiday < ActiveRecord::Base
         if c.day.between? holiday.beginning, holiday.till
           # Consumption liegt im Urlaub
           c.flagDisabled=true
+          c.numberOfCups = 0
           c.save
         end
       end

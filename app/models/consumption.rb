@@ -18,13 +18,15 @@ class Consumption < ActiveRecord::Base
           # Für die Kaffeerunde existiert ein Konsummodell
           # Anzahl der Tassen vorbelegen
           @model = current_user.model_of_consumptions.where(coffee_box_id: coffee_box).first;
+          # TODO Kein Konsummodellm aber Urlaub, erstelle is_holiday(day, user)
           @temp_consumption.numberOfCups = getCupsForWeekday(tmp, @model)
-        elsif (current_user.holidays.where("beginning >= :day and till <= :day", { day: tmp }).exists?)
-          # Für den aktuellen Tag ist ein Urlaub hinterlegt
-          # Tag disablen, Tassen auf 0 setzen
-          # TODO Flag einführen, dass Tag mit Urlaub markiert (evtl. isHoliday)
-          @temp_consumption.numberOfCups = 0
-          @temp_consumption.flagDisabled = true
+          if (current_user.holidays.where("beginning >= :day and till <= :day", { day: tmp }).exists?)
+            # Für den aktuellen Tag ist ein Urlaub hinterlegt
+            # Tag disablen, Tassen auf 0 setzen
+            # TODO Flag einführen, dass Tag mit Urlaub markiert (evtl. isHoliday)
+            @temp_consumption.numberOfCups = 0
+            @temp_consumption.flagDisabled = true
+          end
         else
           @temp_consumption.numberOfCups = 0
         end
