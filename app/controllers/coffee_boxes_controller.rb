@@ -22,6 +22,7 @@ class CoffeeBoxesController < ApplicationController
     @coffee_box.admin=current_user
     # Tassenpreis speichern
     price = PriceOfCoffee.create(price: params[:price])
+    price.date = Date.today
     if @coffee_box.save
       @coffee_box.price_of_coffees << price
       flash[:notice] = "Kaffeerunde erfolgreich angelegt."

@@ -10,7 +10,7 @@ class Notifier < ActionMailer::Base
   def welcome(user)
     @user = user
     @url  = "http://example.com/login"
-    mail(to: "itgkarl@googlemail.com", from: 'no-reply@kaffkass.com',
+    mail(to: user.email, from: 'no-reply@kaffkass.com',
          return_path: 'system@example.com', subject: "Welcome to My Awesome Site")
   end
 
