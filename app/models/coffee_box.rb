@@ -1,3 +1,5 @@
+# encoding : utf-8
+
 class CoffeeBox < ActiveRecord::Base
   ## Beziehungen
   # Admin
@@ -42,6 +44,7 @@ class CoffeeBox < ActiveRecord::Base
       return false
     else
       # User ist noch nicht angemeldet
+      logger.debug "User[#{user.email}] meldet sich für CoffeeBox[ID=#{self.id}] an."
       self.participations.create(is_active: true, user_id: user.id)
       return true
     end
@@ -54,7 +57,14 @@ class CoffeeBox < ActiveRecord::Base
     if self.users.exists?(user.id)
       # User ist aktuell angemeldet, Abmeldung kann erfolgen
       # Participation löschen
+      logger.debug "User[ID=#{user.id}] meldet sich von CoffeeBox[ID=#{self.id}] ab."
       self.users.delete(user)
+      # Model löschen wenn vorhanden
+      ModelOfConsumption.where(coffee_box_id: self.id, user_id: user.id).all.each do |c|
+        logger.debug "Lösche ModelOfConsumption[ID=#{c.id}]."
+        c.destroy
+      end
+
       return true
     else
       # User ist nicht angemeldet

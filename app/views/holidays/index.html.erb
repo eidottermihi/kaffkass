@@ -15,7 +15,7 @@
   <% else %>
       <% @holidays.each do |holiday| %>
           <tr>
-            <td><%= l holiday.from %></td>
+            <td><%= l holiday.beginning %></td>
             <td><%= l holiday.till %></td>
             <td><%= link_to 'Show', user_holiday_path(current_user, holiday) %></td>
             <td><%= link_to 'Edit', edit_user_holiday_path(current_user, holiday) %></td>

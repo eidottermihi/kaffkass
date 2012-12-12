@@ -11,19 +11,27 @@ class Consumption < ActiveRecord::Base
       if (!current_user.consumptions.where(coffee_box_id: coffee_box, day: tmp).exists? && coffee_box.created_at < tmp+1)
         @temp_consumption = current_user.consumptions.build
         @temp_consumption.coffee_box=coffee_box
-        @temp_consumption.flagTouched = false
-        @temp_consumption.day = tmp
-        @temp_consumption.flagDisabled = false
-          if (current_user.model_of_consumptions.where(coffee_box_id: coffee_box).exists?)
-            @model = current_user.model_of_consumptions.where(coffee_box_id: coffee_box).first;
-            @temp_consumption.numberOfCups = getCupsForWeekday(tmp, @model)
-          else
-            @temp_consumption.numberOfCups = 0
-          end
-
-          current_user.consumptions << @temp_consumption
+        @temp_consumption.flagTouched= false
+        @temp_consumption.day= tmp
+        @temp_consumption.flagDisabled= false
+        if (current_user.model_of_consumptions.where(coffee_box_id: coffee_box).exists?)
+          # Für die Kaffeerunde existiert ein Konsummodell
+          # Anzahl der Tassen vorbelegen
+          @model = current_user.model_of_consumptions.where(coffee_box_id: coffee_box).first;
+          @temp_consumption.numberOfCups = getCupsForWeekday(tmp, @model)
+        elsif (current_user.holidays.where("beginning >= :day and till <= :day", { day: tmp }).exists?)
+          # Für den aktuellen Tag ist ein Urlaub hinterlegt
+          # Tag disablen, Tassen auf 0 setzen
+          # TODO Flag einführen, dass Tag mit Urlaub markiert (evtl. isHoliday)
+          @temp_consumption.numberOfCups = 0
+          @temp_consumption.flagDisabled = true
+        else
+          @temp_consumption.numberOfCups = 0
         end
-        current_user.save
+
+        current_user.consumptions << @temp_consumption
+      end
+      current_user.save
     end while tmp <= to
   end
 
@@ -41,7 +49,7 @@ class Consumption < ActiveRecord::Base
       return model.fr
     elsif (date.wday == 6)
       return model.sa
-    elsif(date.wday == 0)
+    elsif (date.wday == 0)
       return model.su
     else
       return 0

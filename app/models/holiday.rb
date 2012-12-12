@@ -2,7 +2,7 @@ class Holiday < ActiveRecord::Base
   belongs_to(:user)
 
   # Es darf maximal ein Holiday zu ein Start- und Enddatum vorhanden sein
-  validates :from, :uniqueness => { scope: :user_id }
+  validates :beginning, :uniqueness => { scope: :user_id }
   validates :till, :uniqueness => { scope: :user_id }
 
   validates :user_id, :presence => true
@@ -17,7 +17,7 @@ class Holiday < ActiveRecord::Base
     participations.each do |p|
       consumptions = Consumption.where(user_id: holiday.user_id, coffee_box_id: p.coffee_box).all
       consumptions.each do |c|
-        if c.day.between? holiday.from, holiday.till
+        if c.day.between? holiday.beginning, holiday.till
           # Consumption liegt im Urlaub
           c.flagDisabled=true
           c.save
