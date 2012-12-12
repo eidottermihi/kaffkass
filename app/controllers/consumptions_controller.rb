@@ -11,6 +11,8 @@ class ConsumptionsController < ApplicationController
     end
     #Consumptions für den Monat erzeugen
     Consumption.new.createMonth(@date,current_user,@coffee_box)
+    #TODO: Es muss noch ein neuer Preis für Kaffe-Box und Monat erstellt werden da sonst die Abrechnung nicht getätigt werden kann
+    #bzw. kann auch auf der View der Link gesperrt werden .. dieser muss eh noch gesperrt werden wenn der Monat abgerechnet ist ...
     @consumption = Consumption.new
     @consumptions = current_user.consumptions.where(coffee_box_id:@coffee_box).all
     respond_to do |format|
@@ -104,6 +106,7 @@ class ConsumptionsController < ApplicationController
   def closeMonth
     @date = params[:month]? Date.parse(params[:month]): Date.today
     @coffee_box = CoffeeBox.find(params[:coffee_box_id])
+    Bill.new.createBillsForMonth(@date, current_user, @coffee_box)
     #TODO: bill für user und coffebox erstellen --> alle consumptions für den Monat auf disabled
 
     respond_to do |format|

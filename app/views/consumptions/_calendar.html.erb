@@ -1,5 +1,5 @@
-<%= calendar_for @consumptions, year: @date.year, month: @date.month do |calendar| %>
-    <%= calendar.head('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday') %>
+<%= calendar_for @consumptions, year: @date.year, month: @date.month , first_day_of_week: 1 do |calendar| %>
+    <%= calendar.head('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday') %>
     <%= calendar.day(:day_method => :day) do |date, consumptions| %>
         <%= date.day %>
         <% for consumption in consumptions %>
