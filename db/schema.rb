@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121212124326) do
+ActiveRecord::Schema.define(:version => 20121216130952) do
 
   create_table "bills", :force => true do |t|
     t.float    "value"
@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(:version => 20121212124326) do
     t.integer  "user_id"
     t.integer  "coffee_box_id"
     t.boolean  "flagDisabled"
+    t.boolean  "flag_holiday"
   end
 
   create_table "expenses", :force => true do |t|

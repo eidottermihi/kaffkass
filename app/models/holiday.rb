@@ -2,8 +2,8 @@ class Holiday < ActiveRecord::Base
   belongs_to(:user)
 
   # Es darf maximal ein Holiday zu ein Start- und Enddatum vorhanden sein
-  validates :beginning, :uniqueness => { scope: :user_id }
-  validates :till, :uniqueness => { scope: :user_id }
+  validates :beginning, :uniqueness => {scope: :user_id}
+  validates :till, :uniqueness => {scope: :user_id}
 
   validates :user_id, :presence => true
 
@@ -17,14 +17,28 @@ class Holiday < ActiveRecord::Base
     participations.each do |p|
       consumptions = Consumption.where(user_id: holiday.user_id, coffee_box_id: p.coffee_box).all
       consumptions.each do |c|
-        if c.day.between? holiday.beginning, holiday.till
-          # Consumption liegt im Urlaub
-          c.flagDisabled=true
-          c.numberOfCups = 0
-          c.save
+        if not c.flagDisabled?
+        # Tag wurde noch nicht abgerechnet, d.h. noch nicht disabled
+          if c.day.between? holiday.beginning, holiday.till
+            # Consumption liegt im Urlaub
+            c.flag_holiday = true
+            c.numberOfCups = 0
+            c.save
+          end
         end
       end
     end
-  return true
+    return true
+  end
+
+  # Prüft, ob der übergebene Tag ein Urlaubstag des übergebenen Users ist.
+  # @param [Date] day der Tag
+  # @param [User] user der User
+  def self.is_holiday(day, user)
+    if user.holidays.where("beginning <= :day and till >= :day", {day: day}).exists?
+      return true
+    else
+      return false
+    end
   end
 end
