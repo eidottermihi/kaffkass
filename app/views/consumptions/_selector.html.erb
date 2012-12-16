@@ -4,5 +4,11 @@
   <%= link_to ">", coffee_box_consumptions_path(:month => (@date.end_of_month+1).strftime("%Y/%m")), remote: true, :class => "loader" %>
 </h2>
 <div id="closeMonth">
-<%= link_to "Monat abschließen", closeMonth_coffee_box_path(@coffee_box,:month => @date.strftime("%Y/%m")) %>
+  <%
+     #Logik ob link angezeigt werden soll
+     exists = @coffee_box.price_of_coffees.where(date: @date.beginning_of_month .. @date.end_of_month).exists?
+     next_month = @date>>1
+     exists_next_mont = @coffee_box.price_of_coffees.where(date:  next_month.beginning_of_month ..  next_month.end_of_month).exists?
+  %>
+  <%= link_to_if exists && !exists_next_mont, "Monat abschließen", closeMonth_coffee_box_path(@coffee_box, :month => @date.strftime("%Y/%m")) %>
 </div>
