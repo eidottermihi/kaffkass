@@ -1,0 +1,8 @@
+<p>Item: <%= @expense.item %></p>
+<p>Preis: <%= @expense.value %></p>
+<p>Datum: <%= l @expense.date %></p>
+<p>Abgerechnet: <%= @expense.flag_abgerechnet? ? "Ja" : "Nein" %></p>
+<p>Erfasst von: <%= @expense.user.email %></p>
+
+<%= link_to 'Bearbeiten', edit_coffee_box_expense_path(@coffee_box.id, @expense) %> |
+<%= link_to 'Zurück zu allen Ausgaben', coffee_box_expenses_path(@coffee_box.id) %>

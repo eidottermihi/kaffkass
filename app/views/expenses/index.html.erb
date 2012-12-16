@@ -1,0 +1,29 @@
+<h1>Ausgabenliste</h1>
+
+<table id="ktable">
+  <tr>
+    <th>Item</th>
+    <th>Preis</th>
+    <th>Datum</th>
+    <th>Abgerechnet</th>
+    <th>Erfasst von</th>
+    <th colspan="3"></th>
+  </tr>
+
+<% @expenses.each do |expense| %>
+  <tr>
+    <td><%= expense.item %></td>
+    <td><%= expense.value %></td>
+    <td><%= l expense.date %></td>
+    <td><%= expense.flag_abgerechnet? ? "Ja" : "Nein" %></td>
+    <td><%= expense.user.email %></td>
+    <td><%= link_to 'anzeigen', coffee_box_expense_path( @coffee_box.id, expense ) %></td>
+    <td><%= (expense.flag_abgerechnet? == false) ? (link_to 'bearbeiten', edit_coffee_box_expense_path( @coffee_box.id, expense )) : nil  %></td>
+    <td><%= (expense.flag_abgerechnet? == false) ? (link_to 'löschen', coffee_box_expense_path( @coffee_box.id, expense ), confirm: 'Wirklich löschen?', method: :delete) : nil %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'Neue Ausgabe eintragen', new_coffee_box_expense_path(@coffee_box) %>
