@@ -5,17 +5,17 @@ class ConsumptionsController < ApplicationController
   def index
     @coffee_box = CoffeeBox.find(params[:coffee_box_id])
     #Monat im Kalender setzen oder verändern
-    @date = params[:month]? Date.parse(params[:month]): Date.today
+    @date = params[:month] ? Date.parse(params[:month]) : Date.today
     #Keinen Monat anzeigen der vor dem erstellungdatum liegt
-    if(@date.month < @coffee_box.created_at.month && @date.year <= @coffee_box.created_at.year)
+    if (@date.month < @coffee_box.created_at.month && @date.year <= @coffee_box.created_at.year)
       @date = @date>>1
     end
     #Consumptions für den Monat erzeugen
-    Consumption.new.createMonth(@date,current_user,@coffee_box)
+    Consumption.new.createMonth(@date, current_user, @coffee_box)
     #TODO: Es muss noch ein neuer Preis für Kaffe-Box und Monat erstellt werden da sonst die Abrechnung nicht getätigt werden kann
     #bzw. kann auch auf der View der Link gesperrt werden .. dieser muss eh noch gesperrt werden wenn der Monat abgerechnet ist ...
     @consumption = Consumption.new
-    @consumptions = current_user.consumptions.where(coffee_box_id:@coffee_box).all
+    @consumptions = current_user.consumptions.where(coffee_box_id: @coffee_box).all
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @consumptions }
@@ -105,14 +105,18 @@ class ConsumptionsController < ApplicationController
   end
 
   def closeMonth
-    @date = params[:month]? Date.parse(params[:month]): Date.today
+    @date = params[:month] ? Date.parse(params[:month]) : Date.today
     @coffee_box = CoffeeBox.find(params[:coffee_box_id])
-    Bill.new.createBillsForMonth(@date, current_user, @coffee_box)
-    #TODO: bill für user und coffebox erstellen --> alle consumptions für den Monat auf disabled
-
+    #abschließen nur möglich wenn auch ein price besteht
+    if (@coffee_box.price_of_coffees.where(date: @date.beginning_of_month .. @date.end_of_month).exists?)
+      Bill.new.createBillForMonth(@date, current_user, @coffee_box)
+      PriceOfCoffee.new.createPriceForNextMonth(@date, @coffee_box)
+    end
     respond_to do |format|
-      format.html { redirect_to coffee_box_consumptions_url(month:@date.strftime("%Y/%m")) }
+      format.html { redirect_to coffee_box_consumptions_url(month: @date.strftime("%Y/%m")) }
       format.json { head :no_content }
     end
+
   end
+
 end
