@@ -12,4 +12,5 @@
 <% else %>
     <%= link_to "Konsummodell hinterlegen", new_coffee_box_model_of_consumption_path(@coffee_box) %>
 <% end %>
+<%= link_to "Ausgaben verwalten", coffee_box_expenses_path(@coffee_box) %>
 <%= link_to "Zurück zur Liste", coffee_boxes_path %>

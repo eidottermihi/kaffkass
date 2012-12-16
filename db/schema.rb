@@ -11,13 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121216130952) do
+ActiveRecord::Schema.define(:version => 20121216142729) do
 
   create_table "bills", :force => true do |t|
-    t.float    "value"
+    t.decimal  "value",         :precision => 8, :scale => 2
     t.boolean  "isPaid"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",                                  :null => false
+    t.datetime "updated_at",                                  :null => false
     t.integer  "user_id"
     t.integer  "coffee_box_id"
     t.date     "date"
@@ -46,12 +46,13 @@ ActiveRecord::Schema.define(:version => 20121216130952) do
 
   create_table "expenses", :force => true do |t|
     t.string   "item"
-    t.float    "value"
+    t.decimal  "value",            :precision => 8, :scale => 2
     t.date     "date"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",                                     :null => false
+    t.datetime "updated_at",                                     :null => false
     t.integer  "user_id"
     t.integer  "coffee_box_id"
+    t.boolean  "flag_abgerechnet"
   end
 
   create_table "holidays", :force => true do |t|
@@ -90,9 +91,9 @@ ActiveRecord::Schema.define(:version => 20121216130952) do
   end
 
   create_table "price_of_coffees", :force => true do |t|
-    t.float    "price"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.decimal  "price",         :precision => 8, :scale => 2
+    t.datetime "created_at",                                  :null => false
+    t.datetime "updated_at",                                  :null => false
     t.integer  "coffee_box_id"
     t.date     "date"
   end

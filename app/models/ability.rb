@@ -2,6 +2,7 @@
 class Ability
   include CanCan::Ability
 
+  # @param [User] user
   def initialize(user)
     # Define abilities for the passed in user here. For example:
     #
@@ -56,6 +57,9 @@ class Ability
       can [:participate, :unparticipate, :new_participate], CoffeeBox
       # User kann für sich selbst Urlaub verwalten
       can :manage, Holiday, :user_id => user.id
+
+      ## TODO Authorisierung für Expenses, Bills, Consumptions
     end
   end
+
 end
