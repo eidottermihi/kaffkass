@@ -1,46 +1,6 @@
 <h1 xmlns="http://www.w3.org/1999/html">Listing consumptions</h1>
 
-<!--
-<table>
-  <tr>
-    <th>Datum</th>
-    <th>Menge</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
 
-  <% @consumptions.each do |consumption| %>
-      <tr>
-        <td><%= consumption.day %></td>
-        <td><%= consumption.numberOfCups %></td>
-        <td><%= link_to 'Show', coffee_box_consumption_path(@coffee_box,consumption) %></td>
-        <td><%= link_to 'Show', coffee_box_consumption_path(@coffee_box,consumption) %></td>
-        <td><%= link_to 'Edit', edit_coffee_box_consumption_path(@coffee_box,consumption) %></td>
-        <td><%= link_to 'Destroy', coffee_box_consumption_path(@coffee_box,consumption), confirm: 'Are you sure?', method: :delete %></td>
-      </tr>
-  <% end %>
-</table>
-
-<br/>
-
-<div id="form">
-  <%= form_for([@coffee_box, @consumption]) do |f| %>
-
-      <%= field_set_tag "Consumption" do %>
-          <ol>
-            <li><%= f.label :day %>
-              <%= f.text_field :day, disabled:'true'%></li>
-            <li><%= f.label :numberOfCups %>
-              <%= f.text_field :numberOfCups,disabled:'true' %></li>
-          </ol>
-
-      <% end %>
-  <% end %>
-</div>
-
-<%= link_to 'New Consumption', new_coffee_box_consumption_path(@coffee_box,@consumption) %>
--->
 <br/>
 <div id="calendar">
   <div id="selectorField">
