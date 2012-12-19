@@ -12,6 +12,7 @@
 
 <% @bills.each do |bill| %>
   <tr>
+    <td><%= bill.userl %></td>
     <td><%= bill.value %></td>
     <td><%= bill.isPaid %></td>
     <td><%= bill.date %></td>

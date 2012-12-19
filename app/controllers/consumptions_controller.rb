@@ -1,49 +1,35 @@
 class ConsumptionsController < ApplicationController
 
+  before_filter :require_user, :only => [:index]
+
   # GET /consumptions
   # GET /consumptions.json
   def index
-    @coffee_box = CoffeeBox.find(params[:coffee_box_id])
-    #Monat im Kalender setzen oder verändern
-    @date = params[:month] ? Date.parse(params[:month]) : Date.today
-    #Keinen Monat anzeigen der vor dem erstellungdatum liegt
-    if (@date.month < @coffee_box.created_at.month && @date.year <= @coffee_box.created_at.year)
-      @date = @date>>1
-    end
-    #Consumptions für den Monat erzeugen
-    Consumption.new.createMonth(@date, current_user, @coffee_box)
-    #TODO: Es muss noch ein neuer Preis für Kaffe-Box und Monat erstellt werden da sonst die Abrechnung nicht getätigt werden kann
-    #bzw. kann auch auf der View der Link gesperrt werden .. dieser muss eh noch gesperrt werden wenn der Monat abgerechnet ist ...
-    @consumption = Consumption.new
-    @consumptions = current_user.consumptions.where(coffee_box_id: @coffee_box).all
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @consumptions }
-      format.js
+    #überprüfe ob der User an der Kaffeerunde teilnimmt
+    if (@current_user.participations.where(coffee_box_id: params[:coffee_box_id]).exists?)
+
+      @coffee_box = CoffeeBox.find(params[:coffee_box_id])
+      #Monat im Kalender setzen oder verändern
+      @date = params[:month] ? Date.parse(params[:month]) : Date.today
+      #Keinen Monat anzeigen der vor dem erstellungdatum liegt
+      if (@date.month < @coffee_box.created_at.month && @date.year <= @coffee_box.created_at.year)
+        @date = @date>>1
+      end
+      #Consumptions für den Monat erzeugen
+      Consumption.new.createMonth(@date, current_user, @coffee_box)
+      @consumption = Consumption.new
+      @consumptions = current_user.consumptions.where(coffee_box_id: @coffee_box).all
+      respond_to do |format|
+        format.html # index.html.erb
+        format.js
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to coffee_boxes_path, notice: 'You have to participate to the event' }
+      end
     end
   end
 
-  # GET /consumptions/1
-  # GET /consumptions/1.json
-  def show
-    @consumption = current_user.consumptions.find(params[:id])
-    @coffee_box = CoffeeBox.find(params[:coffee_box_id])
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @consumption }
-    end
-  end
-
-  # GET /consumptions/new
-  # GET /consumptions/new.json
-  def new
-    @consumption = current_user.consumptions.build
-    @coffee_box = CoffeeBox.find(params[:coffee_box_id])
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @consumption }
-    end
-  end
 
   # GET /consumptions/1/edit
   def edit
@@ -52,24 +38,6 @@ class ConsumptionsController < ApplicationController
     respond_to do |format|
       format.js
       format.html # new.html.erb
-    end
-  end
-
-  # POST /consumptions
-  # POST /consumptions.json
-  def create
-
-    @consumption = current_user.consumptions.build(params[:consumption])
-    @coffee_box = CoffeeBox.find(params[:coffee_box_id])
-    @consumption.coffee_box=@coffee_box
-    respond_to do |format|
-      if @consumption.save
-        format.html { redirect_to coffee_box_consumptions_path, notice: 'Consumption was successfully created.' }
-        format.json { render json: @consumption, status: :created, location: @consumption }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @consumption.errors, status: :unprocessable_entity }
-      end
     end
   end
 
@@ -91,18 +59,6 @@ class ConsumptionsController < ApplicationController
     end
   end
 
-  # DELETE /consumptions/1
-  # DELETE /consumptions/1.json
-  def destroy
-    @consumption = current_user.consumptions.find(params[:id])
-    @coffee_box = CoffeeBox.find(params[:coffee_box_id])
-    @consumption.destroy
-
-    respond_to do |format|
-      format.html { redirect_to coffee_box_consumptions_url }
-      format.json { head :no_content }
-    end
-  end
 
   def closeMonth
     @date = params[:month] ? Date.parse(params[:month]) : Date.today
