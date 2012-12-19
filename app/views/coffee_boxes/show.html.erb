@@ -14,3 +14,41 @@
 <% end %>
 <%= link_to "Ausgaben verwalten", coffee_box_expenses_path(@coffee_box) %>
 <%= link_to "Zurück zur Liste", coffee_boxes_path %>
+<br/>
+<hr/>
+<h2>Statistiken</h2>
+
+<script type="text/javascript" charset="utf-8">
+  $(function() {
+    new Highcharts.Chart({
+        chart: {
+            renderTo: "coffee_price_chart"
+        },
+        title: {
+            text: "Tassenpreis"
+        },
+        xAxis: {
+            type: "datetime"
+        },
+        yAxis: {
+            title: {
+                text: "Euro"
+            }
+        },
+        tooltip: {
+            formatter: function(){
+                return Highcharts.dateFormat("%e %b %Y", this.x) + ": <b>" +
+                        Highcharts.numberFormat(this.y, 2)+ "</b> €";
+            }
+        },
+        series: [{
+            name: "Tassenpreis",
+            pointInterval: <%= 1.month * 1000 %>,
+            pointStart : <%= @coffee_box.created_at.to_i * 1000 %>,
+            data: <%= @coffee_box.get_cup_price_data.inspect %>
+        }]
+
+    })
+  });
+</script>
+<div id="coffee_price_chart" style="width: 560px; height: 300px;"></div>

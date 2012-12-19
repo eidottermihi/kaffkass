@@ -92,4 +92,12 @@ class CoffeeBox < ActiveRecord::Base
     consumption_model = ModelOfConsumption.where(:user_id => user.id, :coffee_box_id => self.id).limit(1).first
     return consumption_model
   end
+
+  def get_cup_price_data
+    prices = Array.new
+    self.price_of_coffees.all.each do |p|
+      prices.append(p.price.to_f)
+    end
+    return prices
+  end
 end
