@@ -6,7 +6,7 @@
 <p>Uhrzeit: <%= @coffee_box.time %></p>
 <p>Beschreibung: <%= @coffee_box.description %></p>
 <p>Ersteller: <%= @coffee_box.admin.email %></p>
-<%= link_to "Konsum bearbeiten", coffee_box_consumptions_path(@coffee_box)%>
+<%= link_to "Konsum bearbeiten", coffee_box_consumptions_path(@coffee_box) %>
 <% if @coffee_box.get_consumption_model(current_user) %>
     <%= link_to "Zum hinterlegten Konsummodell", coffee_box_model_of_consumption_path(@coffee_box, @coffee_box.get_consumption_model(current_user)) %>
 <% else %>
@@ -19,36 +19,81 @@
 <h2>Statistiken</h2>
 
 <script type="text/javascript" charset="utf-8">
-  $(function() {
-    new Highcharts.Chart({
-        chart: {
-            renderTo: "coffee_price_chart"
-        },
-        title: {
-            text: "Tassenpreis"
-        },
-        xAxis: {
-            type: "datetime"
-        },
-        yAxis: {
-            title: {
-                text: "Euro"
-            }
-        },
-        tooltip: {
-            formatter: function(){
-                return Highcharts.dateFormat("%e %b %Y", this.x) + ": <b>" +
-                        Highcharts.numberFormat(this.y, 2)+ "</b> €";
-            }
-        },
-        series: [{
-            name: "Tassenpreis",
-            pointInterval: <%= 1.month * 1000 %>,
-            pointStart : <%= @coffee_box.created_at.to_i * 1000 %>,
-            data: <%= @coffee_box.get_cup_price_data.inspect %>
-        }]
 
-    })
-  });
+    $(function () {
+        // Coffee-Price Chart
+        new Highcharts.Chart({
+            chart:{
+                renderTo:"coffee_price_chart",
+                type:"spline"
+            },
+            title:{
+                text:"Tassenpreis"
+            },
+            xAxis:{
+                minPadding:0.05,
+                maxPadding:0.05,
+                type:"datetime"
+            },
+            yAxis:{
+                title:{
+                    text:"Euro"
+                },
+                min:0
+            },
+            tooltip:{
+                formatter:function () {
+                    return '<b>' + Highcharts.dateFormat('%b %Y', this.x) + ': </b>' + this.y + ' €';
+                }
+            },
+            series:[
+                {
+                    name:"Tassenpreis",
+                    data: <%= raw @coffee_box.get_cup_price_data.inspect %>
+                }
+            ]
+
+        })
+
+        // Coffee-Cup-Consume Chart
+        new Highcharts.Chart({
+            chart:{
+                renderTo:"coffee_cup_consume_chart",
+                type:"spline"
+            },
+            title:{
+                text:"Tassenkonsum"
+            },
+            xAxis:{
+                minPadding:0.05,
+                maxPadding:0.05,
+                type:"datetime"
+            },
+            yAxis:{
+                title:{
+                    text:"Tassenanzahl"
+                },
+                min:0
+            },
+            tooltip:{
+                formatter:function () {
+                    return '<b>' + Highcharts.dateFormat('%e. %b %y', this.x) + ': </b>' + this.y + ' Tassen am Tag';
+                }
+            },
+            series:[
+                {
+                    name:"Konsumierte Tassen am Tag",
+                    // TODO Parameter für Monatsauswahl
+                    data: <%= raw @coffee_box.get_coffee_cup_consume_data(12,2012).inspect %>
+                }
+            ]
+
+        })
+    });
 </script>
+
 <div id="coffee_price_chart" style="width: 560px; height: 300px;"></div>
+
+<br/>
+
+<div id="coffee_cup_consume_chart" style="width: 560px; height: 300px;"></div>

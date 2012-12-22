@@ -1,5 +1,5 @@
 <%= calendar_for @consumptions, year: @date.year, month: @date.month , first_day_of_week: 1 do |calendar| %>
-    <%= calendar.head('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday') %>
+    <%= calendar.head('Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Sonntag') %>
     <%= calendar.day(:day_method => :day) do |date, consumptions| %>
         <%= date.day %>
         <% for consumption in consumptions %>
@@ -8,6 +8,11 @@
                     <div class="numberOfCups">
                       <%= image_tag("cup.png", id: 'cupPng') %>
                       <%= best_in_place consumption, :numberOfCups, path: coffee_box_consumption_path(@coffee_box, consumption), :html_attrs => {:maxlength => 5, :style => "width:1.5em"} %>
+                    </div>
+                <% elsif consumption.flag_holiday %>
+                    <div class="numberOfCupsDisabled">
+                      <%= image_tag("sonne.JPG", id: 'sonneJpg')%> <br/>
+                      <div id="inner"> <%= consumption.numberOfCups %></div>
                     </div>
                 <% else %>
                     <div class="numberOfCupsDisabled">

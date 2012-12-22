@@ -28,12 +28,12 @@ class CoffeeBox < ActiveRecord::Base
 
   # Gibt den aktuellen Tassenpreis als Zahl zurück
   def current_coffee_price
-    self.price_of_coffees.order("created_at DESC").first.price
+    self.price_of_coffees.order("date DESC").first.price
   end
 
   # Gibt den aktuellen Tassenpreis als Objekt der Klasse PriceOfCoffee zurück.
   def current_coffe_price_object
-    self.price_of_coffees.order("created_at DESC").first
+    self.price_of_coffees.order("date DESC").first
   end
 
   # Führt eine Anmeldung durch. Gibt true zurück, wenn Anmeldung erfolgreich war. Bei einer erfolgreichen Anmeldung
@@ -80,7 +80,7 @@ class CoffeeBox < ActiveRecord::Base
     participations = user.participations.where(is_active: true)
     coffee_boxes = Array.new
     participations.each {
-      |p| coffee_boxes.append p.coffee_box
+        |p| coffee_boxes.append p.coffee_box
     }
     return coffee_boxes
   end
@@ -93,11 +93,41 @@ class CoffeeBox < ActiveRecord::Base
     return consumption_model
   end
 
+  # Liefert eine Array mit Daten zu den Tassenpreis der Kaffeerunde.
   def get_cup_price_data
     prices = Array.new
     self.price_of_coffees.all.each do |p|
-      prices.append(p.price.to_f)
+      price = Array.new
+      # X-Wert ist Zeitstempel, ab wann der Tassenpreis gültig ist (für Highcharts unformatiert in ms seit 1970, UTC)
+      x_value = p.date.to_time.utc.to_i * 1000
+      price.append(x_value)
+      # Y-Value ist der Preis
+      y_value = p.price.to_f
+      price.append(y_value)
+      prices.append(price)
     end
     return prices
   end
+
+  # Liefert ein Array mit Daten zum Tassenkonsum dieser Kaffeerunde für einen Monat.
+  def get_coffee_cup_consume_data(month, year)
+    day_min = Date.new(year, month, 1)
+    day_max = day_min.end_of_month
+    consumes = Array.new
+    c = self.consumptions.select("date(day) as day, sum(numberOfCups) as total_cups").where("day >= :day_min and day <= :day_max", {day_min: day_min, day_max: day_max}).group("date(day)")
+    c.each do |res|
+      consume = Array.new
+      # X-Wert ist Zeitstempel des Tages (in ms, UTC)
+      x_value = res.day.to_time.utc.to_i * 1000;
+      consume.append(x_value)
+      # Y-Wert ist die Anzahl der konsumierten Tassen an diesem Tag
+      y_value = res.total_cups
+      consume.append(y_value)
+
+      consumes.append(consume)
+    end
+    return consumes
+  end
+
+
 end

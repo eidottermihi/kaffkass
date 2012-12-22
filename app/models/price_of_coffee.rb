@@ -18,7 +18,7 @@ class PriceOfCoffee < ActiveRecord::Base
       price_of_coffee = PriceOfCoffee.new
       price_of_coffee.date=date>>1
       #TODO: stoße Berechnung des neuen Preises an
-      price_of_coffee.price= 1337
+      price_of_coffee.price= 0.1337
       price_of_coffee.coffee_box_id=coffee_box.id
       price_of_coffee.save
     end
