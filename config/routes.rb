@@ -1,5 +1,4 @@
 Kaffkass::Application.routes.draw do
-
   #authlogic
   resources :user_sessions
 
@@ -37,6 +36,8 @@ Kaffkass::Application.routes.draw do
   match 'my_coffee_boxes' => 'coffee_boxes#my_coffee_boxes', :as => :my_coffee_boxes
 
   match '/coffee_boxes/:coffee_box_id/closeMonth' => 'consumptions#closeMonth', :as => :closeMonth_coffee_box
+
+  get '/coffee_boxes/:coffee_box_id/consume_chart/:year/:month' => 'statistics#consume_chart', :as => :coffee_box_consume_chart
 
 
   # Root wird auf Home#home geroutet

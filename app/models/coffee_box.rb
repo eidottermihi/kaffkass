@@ -98,8 +98,8 @@ class CoffeeBox < ActiveRecord::Base
     prices = Array.new
     self.price_of_coffees.all.each do |p|
       price = Array.new
-      # X-Wert ist Zeitstempel, ab wann der Tassenpreis gültig ist (für Highcharts unformatiert in ms seit 1970, UTC)
-      x_value = p.date.to_time.utc.to_i * 1000
+      # X-Wert ist Zeitstempel, ab wann der Tassenpreis gültig ist (für Highcharts unformatiert in ms seit 1970, UTC) => Addiere 1 Stunden für Zeitzone Berlin
+      x_value = p.date.to_time.to_i * 1000 + (1000 * 60 * 60)
       price.append(x_value)
       # Y-Value ist der Preis
       y_value = p.price.to_f
@@ -117,8 +117,8 @@ class CoffeeBox < ActiveRecord::Base
     c = self.consumptions.select("date(day) as day, sum(numberOfCups) as total_cups").where("day >= :day_min and day <= :day_max", {day_min: day_min, day_max: day_max}).group("date(day)")
     c.each do |res|
       consume = Array.new
-      # X-Wert ist Zeitstempel des Tages (in ms, UTC)
-      x_value = res.day.to_time.utc.to_i * 1000;
+      # X-Wert ist Zeitstempel des Tages (in ms, UTC) => Addiere 1 Stunden für Zeitzone Berlin
+      x_value = res.day.to_time.to_i * 1000 + (1000 * 60 * 60)
       consume.append(x_value)
       # Y-Wert ist die Anzahl der konsumierten Tassen an diesem Tag
       y_value = res.total_cups
@@ -127,6 +127,52 @@ class CoffeeBox < ActiveRecord::Base
       consumes.append(consume)
     end
     return consumes
+  end
+
+  # Liefert einen Hash mit zwei Arrays. Der Hash enthält für jeden abgerechneten Monat die Summe aller Einnahmen und
+  # die Summe aller Ausgaben der Kaffeerunde.
+  def get_expenses_data
+    # Alle abgerechneten Monate ermitteln (sind Monate mit Kaffeepreis)
+    months = Array.new
+    self.price_of_coffees.each do |price|
+      months.append price.date
+    end
+    data = Hash.new
+    expenses = Array.new
+    incomes = Array.new
+    months.each do |month|
+      expense = Array.new
+      income = Array.new
+      # Ausgaben für diesen Monat summieren
+      total = self.expenses.where(date: month.beginning_of_month .. month.end_of_month).sum("value")
+      expense.append(month.to_time.to_i * 1000 + (1000 * 60 * 60))
+      expense.append(total.to_f)
+      expenses.append(expense)
+
+      # Einnahmen für jeden Monat berechnen = Tassenpreis für Monat * konsumierte Tassen im Monat
+      cup_data = self.get_coffee_cup_consume_data(month.month, month.year)
+      cups_per_month = 0
+      cup_data.each do |cups_per_day|
+        cups_per_month += cups_per_day[1]
+      end
+
+      # Tassenpreis für aktuellen Monat
+      price = self.price_of_coffees.where(date: month.beginning_of_month..month.end_of_month).first.price
+
+      income.append(month.to_time.to_i * 1000 + (1000 * 60 * 60))
+      income.append((cups_per_month * price).to_f)
+
+      incomes.append(income)
+
+    end
+    data[:expenses] = expenses
+    data[:incomes] = incomes
+
+    return data
+  end
+
+  def get_income_date
+
   end
 
 

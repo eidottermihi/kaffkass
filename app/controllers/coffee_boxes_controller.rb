@@ -35,6 +35,9 @@ class CoffeeBoxesController < ApplicationController
   def show
     @coffee_box = CoffeeBox.find(params[:id])
     if @coffee_box
+      # Akt. Monat und Jahr in View geben (für Charts)
+      @month = Date.today.month.to_i
+      @year = Date.today.year.to_i
       render "show"
     else
       flash[:alert] = "Kaffeerunde nicht vorhanden."

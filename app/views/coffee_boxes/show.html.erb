@@ -1,9 +1,14 @@
 <script type="text/javascript" charset="utf-8">
+    var month = <%= @month %>;
+    var year = <%= @year %>;
+    var coffee_box_id = <%= @coffee_box.id %>;
     var coffee_price_chart;
     var coffee_cup_consume_chart;
+    var coffee_income_expense_chart;
     $(function () {
+
         // Coffee-Price Chart
-       coffee_price_chart =  new Highcharts.Chart({
+        coffee_price_chart = new Highcharts.Chart({
             chart:{
                 renderTo:"coffee_price_chart",
                 type:"spline"
@@ -12,8 +17,6 @@
                 text:"Tassenpreis"
             },
             xAxis:{
-                minPadding:0.05,
-                maxPadding:0.05,
                 type:"datetime"
             },
             yAxis:{
@@ -30,14 +33,48 @@
             series:[
                 {
                     name:"Tassenpreis",
-                    data: <%= raw @coffee_box.get_cup_price_data.inspect %>
+                    data: <%= @coffee_box.get_cup_price_data.inspect %>
                 }
             ]
+        })
 
+        // Einnahmen / Ausgaben
+        coffee_income_expense_chart = new Highcharts.Chart({
+            chart:{
+                renderTo:"coffee_income_expense_chart",
+                type: "spline"
+            },
+            title:{
+                text:"Einnahmen / Ausgaben"
+            },
+            xAxis:{
+                type:"datetime"
+            },
+            yAxis:{
+                title:{
+                    text:"Euro"
+                },
+                min:0
+            },
+            tooltip:{
+                formatter:function () {
+                    return '<b>' + Highcharts.dateFormat('%b %Y', this.x) + ': </b>' + this.y + ' €';
+                }
+            },
+            series:[
+                {
+                    name:"Einnahmen",
+                    data: <%= @coffee_box.get_expenses_data[:incomes].inspect %>
+                },
+                {
+                    name: "Ausgaben",
+                    data: <%= @coffee_box.get_expenses_data[:expenses].inspect %>
+                }
+            ]
         })
 
         // Coffee-Cup-Consume Chart
-        coffee_cup_consume_chart = new Highcharts.Chart({
+        var consume_chart_options = {
             chart:{
                 renderTo:"coffee_cup_consume_chart",
                 type:"spline"
@@ -46,8 +83,6 @@
                 text:"Tassenkonsum"
             },
             xAxis:{
-                minPadding:0.05,
-                maxPadding:0.05,
                 type:"datetime"
             },
             yAxis:{
@@ -63,14 +98,55 @@
             },
             series:[
                 {
-                    name:"Konsumierte Tassen am Tag",
-                    // TODO Parameter für Monatsauswahl
-                    data: <%= raw @coffee_box.get_coffee_cup_consume_data(12,2012).inspect %>
+                    name:"Tassenkonsum pro Tag",
+                    data: <%= @coffee_box.get_coffee_cup_consume_data(@month, @year).inspect %>
                 }
             ]
+        }
 
-        })
+        coffee_cup_consume_chart = new Highcharts.Chart(consume_chart_options);
+
+
     });
+
+    function updateConsumeChart(coffee_box_id, year, month) {
+        $.getJSON('/coffee_boxes/' + coffee_box_id + "/consume_chart/" + year + "/" + month + ".json", function (data) {
+            if (data.length == 0) {
+                // Für den Monat sind keine Verbrauchswerte verfügbar
+                $("#no_data").text("Für den ausgewählten Monat sind keine Daten verfügbar.");
+            } else {
+                $("#no_data").text();
+            }
+            coffee_cup_consume_chart.series[0].setData(data);
+            // Monatsanzeige updaten
+            $("#month_year").attr( "value" , month.toString() + " / " + year.toString());
+        });
+    }
+
+    $(document).ready(function () {
+        $("#next_month").click(function () {
+            if (month == 12) {
+                month = 1;
+                year = year + 1;
+            } else {
+                month = month + 1;
+            }
+            updateConsumeChart(coffee_box_id, year, month);
+        });
+
+        $("#prev_month").click(function () {
+            if (month == 1) {
+                month = 12;
+                year = year - 1;
+            } else {
+                month = month - 1;
+            }
+            updateConsumeChart(coffee_box_id, year, month);
+        });
+
+    });
+
+
 </script>
 
 <% @title = "Kaffeerunde anzeigen" %>
@@ -110,11 +186,19 @@
 </fieldset>
 <fieldset>
   <legend>Statistiken</legend>
-  <div id="coffee_price_chart" style="width: 560px; height: 300px;"></div>
+  <div id="coffee_price_chart" style="height: 300px;"></div>
+  <br/>
+  <div id="coffee_income_expense_chart" style="height: 300px;"></div>
+  <br/>
 
-  <div id="coffee_cup_consume_chart" style="width: 560px; height: 300px;"></div>
+  <div class="center">
+    <span id="prev_month" class="textlink"> < </span>
+    <input id="month_year" type="text" disabled="true" value="<%= "#{@month} / #{@year}" %>" size="10" />
+    <span id="next_month" class="textlink"> > </span>
+    <div id="no_data"></div>
+  </div>
+
+
+
+  <div id="coffee_cup_consume_chart" style="height: 300px;"></div>
 </fieldset>
-
-
-
-
