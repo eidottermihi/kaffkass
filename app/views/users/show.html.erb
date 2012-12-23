@@ -1,37 +1,51 @@
-<p>
-  <b>Email:</b>
-  <%=h @user.email %>
-</p>
+<fieldset>
+  <legend>Benutzerprofil</legend>
+  <div class="info">
+    <p>
+      <b>Email:</b>
+      <%= @user.email %>
+    </p>
 
-<p>
-  <b>Login count:</b>
-  <%=h @user.login_count %>
-</p>
+    <p>
+      <b>Login count:</b>
+      <%= @user.login_count %>
+    </p>
 
-<p>
-  <b>Last request at:</b>
-  <%=h @user.last_request_at %>
-</p>
+    <p>
+      <b>Letzte Anfrage:</b>
+      <%= l @user.last_request_at, format: :short %>
+    </p>
 
-<p>
-  <b>Last login at:</b>
-  <%=h @user.last_login_at %>
-</p>
+    <p>
+      <b>Letzter Login:</b>
+      <%= l @user.last_login_at, format: :short %>
+    </p>
 
-<p>
-  <b>Current login at:</b>
-  <%=h @user.current_login_at %>
-</p>
+    <p>
+      <b>Aktueller Login:</b>
+      <%= l @user.current_login_at, format: :short %>
+    </p>
 
-<p>
-  <b>Last login ip:</b>
-  <%=h @user.last_login_ip %>
-</p>
+    <p>
+      <b>Letzte Login IP:</b>
+      <%= @user.last_login_ip %>
+    </p>
 
-<p>
-  <b>Current login ip:</b>
-  <%=h @user.current_login_ip %>
-</p>
+    <p>
+      <b>Aktuelle Login IP:</b>
+      <%= @user.current_login_ip %>
+    </p>
+  </div>
+  <div class="actions right">
+    <ul>
+      <li>
+        <%= link_to "Bearbeiten", edit_account_path %>
+      </li>
+      <li>
+        <%= link_to "Urlaub verwalten", user_holidays_path(current_user) %>
+      </li>
+    </ul>
+  </div>
 
-<%= link_to "Bearbeiten", edit_account_path %>
-<%= link_to "Urlaub verwalten", user_holidays_path(current_user) %>
+</fieldset>
+

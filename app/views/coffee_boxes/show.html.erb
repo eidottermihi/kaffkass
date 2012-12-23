@@ -1,28 +1,9 @@
-<% @title = "Kaffeerunde anzeigen" %>
-
-<h2>Details zur Kaffeerunde</h2>
-
-<p>Location: <%= @coffee_box.location %></p>
-<p>Uhrzeit: <%= @coffee_box.time %></p>
-<p>Beschreibung: <%= @coffee_box.description %></p>
-<p>Ersteller: <%= @coffee_box.admin.email %></p>
-<%= link_to "Konsum bearbeiten", coffee_box_consumptions_path(@coffee_box) %>
-<% if @coffee_box.get_consumption_model(current_user) %>
-    <%= link_to "Zum hinterlegten Konsummodell", coffee_box_model_of_consumption_path(@coffee_box, @coffee_box.get_consumption_model(current_user)) %>
-<% else %>
-    <%= link_to "Konsummodell hinterlegen", new_coffee_box_model_of_consumption_path(@coffee_box) %>
-<% end %>
-<%= link_to "Ausgaben verwalten", coffee_box_expenses_path(@coffee_box) %>
-<%= link_to "Zurück zur Liste", coffee_boxes_path %>
-<br/>
-<hr/>
-<h2>Statistiken</h2>
-
 <script type="text/javascript" charset="utf-8">
-
+    var coffee_price_chart;
+    var coffee_cup_consume_chart;
     $(function () {
         // Coffee-Price Chart
-        new Highcharts.Chart({
+       coffee_price_chart =  new Highcharts.Chart({
             chart:{
                 renderTo:"coffee_price_chart",
                 type:"spline"
@@ -56,7 +37,7 @@
         })
 
         // Coffee-Cup-Consume Chart
-        new Highcharts.Chart({
+        coffee_cup_consume_chart = new Highcharts.Chart({
             chart:{
                 renderTo:"coffee_cup_consume_chart",
                 type:"spline"
@@ -92,8 +73,48 @@
     });
 </script>
 
-<div id="coffee_price_chart" style="width: 560px; height: 300px;"></div>
+<% @title = "Kaffeerunde anzeigen" %>
 
-<br/>
+<fieldset>
+  <legend>Details zur Kaffeerunde</legend>
+  <div class="info left">
 
-<div id="coffee_cup_consume_chart" style="width: 560px; height: 300px;"></div>
+    <p>Location: <%= @coffee_box.location %></p>
+
+    <p>Uhrzeit: <%= @coffee_box.time %></p>
+
+    <p>Beschreibung: <%= @coffee_box.description %></p>
+
+    <p>Ersteller: <%= @coffee_box.admin.email %></p>
+  </div>
+  <div class="actions right">
+    <ul>
+      <li>
+        <%= link_to "Konsum bearbeiten", coffee_box_consumptions_path(@coffee_box) %>
+      </li>
+      <li>
+        <% if @coffee_box.get_consumption_model(current_user) %>
+            <%= link_to "Zum hinterlegten Konsummodell", coffee_box_model_of_consumption_path(@coffee_box, @coffee_box.get_consumption_model(current_user)) %>
+        <% else %>
+            <%= link_to "Konsummodell hinterlegen", new_coffee_box_model_of_consumption_path(@coffee_box) %>
+        <% end %>
+      </li>
+      <li>
+        <%= link_to "Ausgaben verwalten", coffee_box_expenses_path(@coffee_box) %>
+      </li>
+      <li>
+        <%= link_to "Zurück zur Liste", coffee_boxes_path %>
+      </li>
+    </ul>
+  </div>
+</fieldset>
+<fieldset>
+  <legend>Statistiken</legend>
+  <div id="coffee_price_chart" style="width: 560px; height: 300px;"></div>
+
+  <div id="coffee_cup_consume_chart" style="width: 560px; height: 300px;"></div>
+</fieldset>
+
+
+
+

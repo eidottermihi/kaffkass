@@ -16,7 +16,7 @@ class ConsumptionsController < ApplicationController
         @date = @date>>1
       end
       #Consumptions für den Monat erzeugen
-      Consumption.new.createMonth(@date, current_user, @coffee_box)
+      Consumption.new.create_month(@date, current_user, @coffee_box)
       @consumption = Consumption.new
       @consumptions = current_user.consumptions.where(coffee_box_id: @coffee_box).all
       respond_to do |format|

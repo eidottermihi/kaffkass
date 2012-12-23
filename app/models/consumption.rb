@@ -1,8 +1,8 @@
 class Consumption < ActiveRecord::Base
-  belongs_to(:user)
-  belongs_to(:coffee_box)
+  belongs_to :user
+  belongs_to :coffee_box
 
-  def createMonth(date, current_user, coffee_box)
+  def create_month(date, current_user, coffee_box)
     from = date.beginning_of_month-1
     to = date.end_of_month-1
     tmp = from
@@ -18,7 +18,7 @@ class Consumption < ActiveRecord::Base
           # Für die Kaffeerunde existiert ein Konsummodell
           # Anzahl der Tassen vorbelegen
           @model = current_user.model_of_consumptions.where(coffee_box_id: coffee_box).first;
-          @temp_consumption.numberOfCups = getCupsForWeekday(tmp, @model)
+          @temp_consumption.numberOfCups = get_cups_for_weekday(tmp, @model)
         else
           @temp_consumption.numberOfCups = 0
         end
@@ -35,8 +35,8 @@ class Consumption < ActiveRecord::Base
     end while tmp <= to
   end
 
-  def getCupsForWeekday(date, model)
-
+  # Gibt in für ein Datum den Wert des Konsummodells für dieses Datum zurück.
+  def get_cups_for_weekday(date, model)
     if (date.wday == 1)
       return model.mo
     elsif (date.wday == 2)
@@ -54,6 +54,12 @@ class Consumption < ActiveRecord::Base
     else
       return 0
     end
+  end
+
+  # Gibt true zurück, wenn die Consumption schon abgerechnet wurde.
+  def is_cleared?
+    # Wenn für Monat/User/CoffeeBox schon eine Bill existiert, dann wurde die Consumption schon abgerechnet
+    return Bill.where(user_id: self.user.id, coffee_box_id: self.coffee_box.id, date: self.day.beginning_of_month..self.day.end_of_month).exists?
   end
 
 end

@@ -127,33 +127,33 @@ a.navibar:link a.navibar:visited a.navibar:active {
   font-size: 0.8em;
 }
 
-form {
-  fieldset {
-    background-color: $light_brown;
-    margin-bottom: 10px;
-    ol {
-      margin: 0;
-      padding: 0;
-    }
-    li {
-      list-style: none;
-      padding: 5px;
-      margin: 0;
-    }
+fieldset {
+  background-color: $light_brown;
+  margin-bottom: 10px;
+  ol {
+    margin: 0;
+    padding: 0;
   }
-  legend {
-    padding: 0 2px;
-    font-weight: bold;
-    color: $white;
-    border: 1px solid $black;
-    background-color: $coffee;
+  li {
+    list-style: none;
+    padding: 2px;
+    margin: 0;
   }
-  label {
-    vertical-align: top;
-    line-height: 1.8;
-    display: inline-block;
-    width: 20%;
-  }
+}
+
+legend {
+  padding: 0 2px;
+  font-weight: bold;
+  color: $white;
+  border: 1px solid $black;
+  background-color: $coffee;
+}
+
+label {
+  vertical-align: top;
+  line-height: 1.8;
+  display: inline-block;
+  width: 20%;
 }
 
 .achtel {
@@ -164,15 +164,15 @@ form {
   width: 20%;
 }
 
-.viertel{
+.viertel {
   width: 25%;
 }
 
-.drittel{
+.drittel {
   width: 33%;
 }
 
-.haelfte{
+.haelfte {
   width: 50%;
 }
 
@@ -199,11 +199,11 @@ form {
   }
 }
 
-#consumption_table{
-  tbody{
-    tr{
-      td{
-        input{
+#consumption_table {
+  tbody {
+    tr {
+      td {
+        input {
           width: 3em;
         }
       }
@@ -211,9 +211,50 @@ form {
   }
 }
 
-#no_consumption_model{
-  label{
+#no_consumption_model {
+  label {
     float: right;
     width: 100%;
   }
+}
+
+#coffee_box_statistics {
+  margin: 5px;
+  border: 1px solid $coffee;
+}
+
+.info {
+  float: left;
+
+}
+
+.actions {
+  vertical-align: bottom;
+  ul {
+    list-style: none;
+    li {
+      a {
+        text-decoration: none;
+      }
+      a:hover {
+        color: $black;
+        text-decoration: underline;
+        background-color: $white;
+      }
+
+      a:link a:visited a:active {
+        color: $white;
+      }
+    }
+  }
+
+
+}
+
+.left {
+  text-align: left;
+}
+
+.right {
+  text-align: right;
 }
