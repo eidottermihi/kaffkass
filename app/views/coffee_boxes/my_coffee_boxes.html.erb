@@ -14,44 +14,47 @@
       </thead>
       <tbody>
       <% count = 0 %>
-      <% @coffee_boxes.each do |coffee_box| %>
-          <% if count.even? %>
-            <tr>
-          <% else %>
-            <tr class="alt">
+          <% @coffee_boxes.each do |coffee_box| %>
+              <% if count.even? %>
+                  <tr>
+              <% else %>
+                  <tr class="alt">
+              <% end %>
+              <% count += 1 %>
+              <td><%= coffee_box.id %></td>
+              <td><%= coffee_box.location %></td>
+              <td><%= l coffee_box.time, format: :very_short %></td>
+              <td><%= number_to_currency coffee_box.current_coffee_price, :unit => "&euro;", :separator => ",", :precision => 2 %></td>
+              <td>
+                <%= coffee_box.admin.fullname_lastname_first %>
+              </td>
+              <td>
+                <%= link_to "anzeigen", coffee_box_path(coffee_box) %>
+                <% if can? :update, coffee_box %>
+                    <%= link_to "bearbeiten", edit_coffee_box_path(coffee_box) %>
+                <% end %>
+                <% if can? :destroy, coffee_box %>
+                    <%= link_to "löschen", coffee_box, confirm: "Wirklich löschen?", method: :delete %>
+                <% end %>
+                <% if can? :participate, coffee_box and !coffee_box.users.exists?(current_user.id) %>
+                    <%= link_to "teilnehmen", participate_path(coffee_box) %>
+                <% end %>
+                <% if can? :unparticipate, coffee_box and coffee_box.users.exists?(current_user.id) %>
+                    <%= link_to "abmelden", unparticipate_path(coffee_box) %>
+                <% end %>
+              </td>
+              </tr>
           <% end %>
-          <% count += 1 %>
-            <td><%= coffee_box.id %></td>
-            <td><%= coffee_box.location %></td>
-            <td><%= l coffee_box.time, format: :very_short %></td>
-            <td><%= number_to_currency coffee_box.current_coffee_price, :unit => "&euro;", :separator => ",", :precision => 2 %></td>
-            <td>
-              <%= coffee_box.admin.fullname_lastname_first %>
-            </td>
-            <td>
-              <%= link_to "anzeigen", coffee_box_path(coffee_box)%>
-              <% if can? :update, coffee_box   %>
-                <%= link_to "bearbeiten", edit_coffee_box_path(coffee_box) %>
-              <% end %>
-              <% if can? :destroy, coffee_box %>
-                <%= link_to "löschen", coffee_box, confirm: "Wirklich löschen?", method: :delete %>
-              <% end %>
-              <% if can? :participate, coffee_box and !coffee_box.users.exists?(current_user.id) %>
-                <%= link_to "teilnehmen", participate_path(coffee_box) %>
-              <% end %>
-              <% if can? :unparticipate, coffee_box and coffee_box.users.exists?(current_user.id)%>
-                  <%= link_to "abmelden", unparticipate_path(coffee_box) %>
-              <% end %>
-            </td>
-          </tr>
-      <% end %>
-      </tbody>
-    </table>
-    <p>Nicht zufrieden mit deiner Kaffeerunde? Starte doch eine <%= link_to "eigene Kaffeerunde", new_coffee_box_path %>!</p>
+          </tbody>
+          </table>
+      <p>Nicht zufrieden mit deiner Kaffeerunde? Starte doch
+        eine <%= link_to "eigene Kaffeerunde", new_coffee_box_path %>
+        !</p>
 <% else %>
     <p>
       Du bist zu keiner Kaffeerunde angmeldet.<br/>
-      <%= link_to "Suche", coffee_boxes_path %> eine passende, oder starte gleich eine <%= link_to "eigene Kaffeerunde", new_coffee_box_path %>!
+      <%= link_to "Suche", coffee_boxes_path %> eine passende, oder starte gleich
+      eine <%= link_to "eigene Kaffeerunde", new_coffee_box_path %>!
     </p>
 
 <% end %>

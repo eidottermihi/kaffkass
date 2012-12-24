@@ -12,7 +12,8 @@
             <%= f.text_area :description %></li>
           <li>
             <%= label_tag :price, "Tassenpreis" %>
-            <%= number_field_tag :price, 1.00 , :min => 0.01, :step => 0.01 %> €
+            <%price = @coffee_box.price_of_coffees.order("date DESC").first.price%>
+            <%= number_field_tag :price, price , :min => 0.01, :step => 0.01 %> €
           </li>
           <li><%= f.submit %></li>
         </ol>

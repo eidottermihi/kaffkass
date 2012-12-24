@@ -53,9 +53,10 @@ class CoffeeBoxesController < ApplicationController
   def update
     @coffee_box = CoffeeBox.find(params[:id])
     # Tassenpreis speichern
-    price = PriceOfCoffee.create(price: params[:price])
     if @coffee_box.update_attributes(params[:coffee_box])
-      @coffee_box.price_of_coffees << price
+      price = @coffee_box.price_of_coffees.order("date DESC").first
+      price.price =   params[:price];
+      price.save
       redirect_to coffee_box_path(@coffee_box), :notice => "Änderungen erfolgreich gespeichert."
     else
       render "edit"

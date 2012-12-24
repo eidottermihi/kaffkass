@@ -2,6 +2,9 @@ class Consumption < ActiveRecord::Base
   belongs_to :user
   belongs_to :coffee_box
 
+  #Legt für einen Monat und User und Kaffee_box alle Consumptions an.
+  #Die Konsumptions werden dabei abhängig von einem hinterlgeten Konsummodell und eingetragenem Urlaub vorbefüllt
+  #Wird nicht ausgeführt, wenn der Monat vor dem Erstellungsdatum der coffee_box liegt oder die consumption für den Tag bereits existiert
   def create_month(date, current_user, coffee_box)
     from = date.beginning_of_month-1
     to = date.end_of_month-1
@@ -35,7 +38,7 @@ class Consumption < ActiveRecord::Base
     end while tmp <= to
   end
 
-  # Gibt in für ein Datum den Wert des Konsummodells für dieses Datum zurück.
+  # Gibt für ein Datum und ein Konsummodell den Wert des Konsummodells für dieses Datum zurück.
   def get_cups_for_weekday(date, model)
     if (date.wday == 1)
       return model.mo

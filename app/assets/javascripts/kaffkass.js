@@ -28,7 +28,7 @@ $(document).ready(function () {
     $("#no_consumption_model[type='checkbox']").click(function() {
         $("[id^=model_of_consumption]").toggleDisabled()
     });
-
+    //Bländet das load.gif beim aufrufen des nächsten monats der consumptions ein
     $(document).on("click","a.loader",function () {
         $("#loadGif").show();
     });
