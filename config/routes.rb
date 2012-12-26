@@ -27,7 +27,7 @@ Kaffkass::Application.routes.draw do
   resources :coffee_boxes do
     resources :model_of_consumptions
     resources :consumptions, :only => [:index,:update]
-    resources :bills, :only => [:show,:index]
+    resources :bills, :only => [:index]
     resources :expenses
   end
   match 'coffee_boxes/:id/new_participate' => 'coffee_boxes#new_participate', :as => :new_participate
@@ -39,6 +39,7 @@ Kaffkass::Application.routes.draw do
 
   get '/coffee_boxes/:coffee_box_id/consume_chart/:year/:month' => 'statistics#consume_chart', :as => :coffee_box_consume_chart
 
+  match '/coffee_boxes/:coffee_box_id/mark_as_paid/:id' => 'bills#mark_as_paid', :as => :mark_as_paid
 
   # Root wird auf Home#home geroutet
   root :to => 'home#home'

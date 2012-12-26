@@ -1,0 +1,2 @@
+Month: <%= @bill.date %>
+Value: <%= number_to_currency @bill.value, :unit => "Euro", :separator => ",", :precision => 2 %>

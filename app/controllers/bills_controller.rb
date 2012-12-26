@@ -1,26 +1,27 @@
 class BillsController < ApplicationController
-  # GET /bills
-  # GET /bills.json
+
+  before_filter :require_user, :only => [:index, :mark_as_paid]
+
+  #TODO: cancan
+
   def index
     @coffee_box = CoffeeBox.find(params[:coffee_box_id])
     @bills = @coffee_box.bills.where(coffee_box_id: @coffee_box).all
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
       format.json { render json: @bills }
     end
   end
 
-  # GET /bills/1
-  # GET /bills/1.json
-  def show
+  def mark_as_paid
     @coffee_box = CoffeeBox.find(params[:coffee_box_id])
     @bill = @coffee_box.bills.where(coffee_box_id: @coffee_box).find(params[:id])
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @bill }
-    end
+    @bill.isPaid=true
+    @bill.save
+
+    redirect_to coffee_box_bills_path(@coffee_box.id)
   end
 
 end

@@ -1,28 +1,24 @@
 <h1>Listing bills</h1>
 
-<table>
+<table id="ktable">
   <tr>
+    <th>E-Mail</th>
     <th>Value</th>
-    <th>Ispaid</th>
     <th>Date</th>
     <th></th>
-    <th></th>
-    <th></th>
   </tr>
 
-<% @bills.each do |bill| %>
-  <tr>
-    <td><%= bill.userl %></td>
-    <td><%= bill.value %></td>
-    <td><%= bill.isPaid %></td>
-    <td><%= bill.date %></td>
-    <td><%= link_to 'Show', coffee_box_bill_path(@coffee_box,bill) %></td>
-    <td><%= link_to 'Edit', edit_coffee_box_bill_path(@coffee_box,bill) %></td>
-    <td><%= link_to 'Destroy', coffee_box_bill_path(@coffee_box,bill), confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
-<% end %>
+  <% @bills.each do |bill| %>
+      <% if  (!bill.isPaid) %>
+          <tr>
+            <td><%= bill.user.email %></td>
+            <td><%= number_to_currency bill.value, :unit => "&euro;", :separator => ",", :precision => 2 %></td>
+            <td><%= bill.date %></td>
+            <td><%= link_to 'Mark as paid', mark_as_paid_path(@coffee_box.id, bill.id), confirm: 'Are you sure?'%></td>
+          </tr>
+      <% end %>
+  <% end %>
 </table>
 
-<br />
+<br/>
 
-<%= link_to 'New Bill', new_coffee_box_bill_path %>

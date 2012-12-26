@@ -4,7 +4,6 @@ class ActivationsController < ApplicationController
   def create
     @user = User.find_by_persistence_token(params[:activation_code], 1.week) || (raise Exception)
     raise Exception if @user.active?
-    #TODO: mit Fehler umgehen
     if @user.activate!
       flash[:notice] = "Your account has been activated!"
       @user.deliver_welcome!

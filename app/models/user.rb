@@ -47,6 +47,10 @@ class User < ActiveRecord::Base
     Notifier.welcome(self).deliver
   end
 
+  def deliver_bill!(bill)
+    Notifier.bill(bill,self).deliver
+  end
+
   def activate!
     self.active = true
     save

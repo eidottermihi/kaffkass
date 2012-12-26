@@ -18,6 +18,7 @@ class Bill < ActiveRecord::Base
       price = coffee_box.price_of_coffees.where(date: from .. to).first
       @bill.value = sumCups * price.price
       if (@bill.save)
+        current_user.deliver_bill!(@bill)
         tmp = (from-1)
         begin
           tmp += 1.day
