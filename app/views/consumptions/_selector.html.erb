@@ -9,6 +9,7 @@
      exists = @coffee_box.price_of_coffees.where(date: @date.beginning_of_month .. @date.end_of_month).exists?
      next_month = @date>>1
      exists_next_mont = @coffee_box.price_of_coffees.where(date:  next_month.beginning_of_month ..  next_month.end_of_month).exists?
+     exists_bill = @coffee_box.bills.where(user_id: current_user,date: @date.beginning_of_month .. @date.end_of_month).exists?
   %>
-  <%= link_to_if exists && !exists_next_mont, "Monat abschließen", closeMonth_coffee_box_path(@coffee_box, :month => @date.strftime("%Y/%m")) %>
+  <%= link_to_if exists && !exists_next_mont && !exists_bill, "Monat abschließen", closeMonth_coffee_box_path(@coffee_box, :month => @date.strftime("%Y/%m")) %>
 </div>
