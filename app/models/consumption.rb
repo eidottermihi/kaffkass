@@ -2,6 +2,9 @@ class Consumption < ActiveRecord::Base
   belongs_to :user
   belongs_to :coffee_box
 
+  ## Validierungen
+  validates :numberOfCups, :numericality => { :only_integer => true }
+
   #Legt für einen Monat und User und Kaffee_box alle Consumptions an.
   #Die Konsumptions werden dabei abhängig von einem hinterlgeten Konsummodell und eingetragenem Urlaub vorbefüllt
   #Wird nicht ausgeführt, wenn der Monat vor dem Erstellungsdatum der coffee_box liegt oder die consumption für den Tag bereits existiert
