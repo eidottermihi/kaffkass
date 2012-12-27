@@ -38,6 +38,11 @@
     <% if flash[:alert] %>
         <div id="alert"><%= flash[:alert] %></div>
     <% end %>
+
+    <% if (@coffee_box != nil) %>
+        <%= render partial:"layouts/details" %>
+    <% end %>
+
     <%= yield %>
   </div>
   <div id="footer">

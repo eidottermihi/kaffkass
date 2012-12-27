@@ -151,39 +151,7 @@
 
 <% @title = "Kaffeerunde anzeigen" %>
 
-<fieldset>
-  <legend>Details zur Kaffeerunde</legend>
-  <div class="info left">
 
-    <p>Location: <%= @coffee_box.location %></p>
-
-    <p>Uhrzeit: <%= @coffee_box.time %></p>
-
-    <p>Beschreibung: <%= @coffee_box.description %></p>
-
-    <p>Ersteller: <%= @coffee_box.admin.email %></p>
-  </div>
-  <div class="actions right">
-    <ul>
-      <li>
-        <%= link_to "Konsum bearbeiten", coffee_box_consumptions_path(@coffee_box) %>
-      </li>
-      <li>
-        <% if @coffee_box.get_consumption_model(current_user) %>
-            <%= link_to "Zum hinterlegten Konsummodell", coffee_box_model_of_consumption_path(@coffee_box, @coffee_box.get_consumption_model(current_user)) %>
-        <% else %>
-            <%= link_to "Konsummodell hinterlegen", new_coffee_box_model_of_consumption_path(@coffee_box) %>
-        <% end %>
-      </li>
-      <li>
-        <%= link_to "Ausgaben verwalten", coffee_box_expenses_path(@coffee_box) %>
-      </li>
-      <li>
-        <%= link_to "Zurück zur Liste", coffee_boxes_path %>
-      </li>
-    </ul>
-  </div>
-</fieldset>
 <fieldset>
   <legend>Statistiken</legend>
   <div id="coffee_price_chart" style="height: 300px;"></div>
