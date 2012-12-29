@@ -15,7 +15,7 @@ class UsersController < ApplicationController
     # the User has not yet been activated
     if @user.save_without_session_maintenance
       @user.deliver_activation_instructions!
-      flash[:notice] = "Ihr Account wurde erstellt. Bitte prüfen Sie ihren E-Mail-Eingang!"
+      flash[:notice] = "Ihr Account wurde erstellt. Bitte pruefen Sie ihren E-Mail-Eingang!"
       redirect_to root_url
     else
       flash[:notice] = "Beim Erstellen ihres Accounts ist ein Problem aufgetreten."
