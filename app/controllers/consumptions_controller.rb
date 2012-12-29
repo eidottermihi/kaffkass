@@ -1,3 +1,4 @@
+# encoding: utf-8
 class ConsumptionsController < ApplicationController
 
   before_filter :require_user, :only => [:index]
@@ -24,7 +25,7 @@ class ConsumptionsController < ApplicationController
       end
     else
       respond_to do |format|
-        format.html { redirect_to coffee_boxes_path, notice: 'You have to participate to the event' }
+        format.html { redirect_to coffee_boxes_path, notice: 'Zugriff verweigert. Sie müssen an der Kaffeerunde teilnehmen.' }
       end
     end
   end
@@ -34,6 +35,7 @@ class ConsumptionsController < ApplicationController
   def edit
     @coffee_box = CoffeeBox.find(params[:coffee_box_id])
     @consumption = current_user.consumptions.find(params[:id])
+    authorize! :edit, @consumption, :message => 'Zugriff auf fremden Konsumeintrag verweigert.'
     respond_to do |format|
       format.js
       format.html
@@ -44,6 +46,7 @@ class ConsumptionsController < ApplicationController
   def update
     @consumption = current_user.consumptions.find(params[:id])
     @coffee_box = CoffeeBox.find(params[:coffee_box_id])
+    authorize! :edit, @consumption, :message => 'Zugriff auf fremden Konsumeintrag verweigert.'
     @consumption.flagTouched = true
     respond_to do |format|
       if @consumption.update_attributes(params[:consumption])
@@ -58,21 +61,29 @@ class ConsumptionsController < ApplicationController
   end
 
 
-  def closeMonth
+  def close_month
     #Monat der im Kalender ausgewählt ist
     @date = params[:month] ? Date.parse(params[:month]) : Date.today
     #Aktuelle coffee_box
     @coffee_box = CoffeeBox.find(params[:coffee_box_id])
     #abschließen nur möglich wenn auch ein price besteht
     if (@coffee_box.price_of_coffees.where(date: @date.beginning_of_month .. @date.end_of_month).exists?)
-      Bill.new.createBillForMonth(@date, current_user, @coffee_box)
-      PriceOfCoffee.new.createPriceForNextMonth(@date, @coffee_box,@current_user)
+      Bill.new.create_bill_for_month(@date, current_user, @coffee_box)
+      PriceOfCoffee.new.create_price_for_next_month(@date, @coffee_box)
     end
     respond_to do |format|
       format.html { redirect_to coffee_box_consumptions_url(month: @date.strftime("%Y/%m")) }
       format.json { head :no_content }
     end
-
+  end
+  
+  def close_month_for_all
+    @coffee_box = CoffeeBox.find(params[:coffee_box_id])
+    closed_month = @coffee_box.close_latest_month_for_all
+    respond_to do |format|
+      format.html { redirect_to coffee_box_path(@coffee_box), notice: "Der Monat #{closed_month} wurde abgeschlossen." }
+      format.json { head :ok }
+    end
   end
 
 end

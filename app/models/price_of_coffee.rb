@@ -1,7 +1,8 @@
+# encoding: utf-8
 class PriceOfCoffee < ActiveRecord::Base
   belongs_to(:coffee_box)
 
-  def createPriceForNextMonth(date, coffee_box, current_user)
+  def create_price_for_next_month(date, coffee_box)
     from = date.beginning_of_month
     to = date.end_of_month
     #Prüfe ob jetzt im Monat für jeden User der Coffeebox eine Bill existiert..
@@ -31,19 +32,21 @@ class PriceOfCoffee < ActiveRecord::Base
       #berechne neuen Preis
       price_of_coffee = PriceOfCoffee.new
       price_of_coffee.date=date>>1
-      price_of_coffee.price= self.calculate_new_price(current_user, date, coffee_box, ausgaben)
+      price_of_coffee.price=self.calculate_new_price(date, coffee_box, ausgaben)
       price_of_coffee.coffee_box_id=coffee_box.id
       price_of_coffee.save
     end
   end
 
 
-  def calculate_new_price(current_user, date, coffee_box, ausgaben)
+  def calculate_new_price(date, coffee_box, ausgaben)
+    logger.debug "## Berechne neuen Preis für CoffeeBox #{coffee_box.id}"
     from = date.beginning_of_month
     to = date.end_of_month
-    sumCups = current_user.consumptions.where(coffee_box_id: coffee_box, day: from .. to).sum(:numberOfCups)
+    sumCups = coffee_box.consumptions.where(day: from .. to).sum(:numberOfCups)
     #TODO: Angestrebter Increment(increment) einführen   (atm fest auf 1€)
-    new_price = ((ausgaben+1)-coffee_box.cash_position)/sumCups
+    new_price = ((ausgaben + 1) - coffee_box.cash_position) / sumCups
+    logger.debug "## Neuer Preis: #{new_price}"
     if (new_price > 0)
       return new_price
     else
