@@ -3,6 +3,7 @@
 <p>Datum: <%= l @expense.date %></p>
 <p>Abgerechnet: <%= @expense.flag_abgerechnet? ? "Ja" : "Nein" %></p>
 <p>Erfasst von: <%= @expense.user.email %></p>
-
-<%= link_to 'Bearbeiten', edit_coffee_box_expense_path(@coffee_box.id, @expense) %> |
+<% if current_user.expenses.include?(@expense) %>
+    <%= link_to('Bearbeiten', edit_coffee_box_expense_path(@coffee_box.id, @expense)) %>
+<% end %>
 <%= link_to 'Zurück zu allen Ausgaben', coffee_box_expenses_path(@coffee_box.id) %>

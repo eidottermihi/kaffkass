@@ -4,20 +4,22 @@ class ExpensesController < ApplicationController
 
   before_filter :require_user
 
-  # TODO Authorisierung
-  #load_and_authorize_resource :coffee_box
-  #load_and_authorize_resource :expense, :through => :coffee_box
-
   # GET /expenses
   # GET /expenses.json
   def index
     @expenses = Expense.where(coffee_box_id: params[:coffee_box_id])
     @coffee_box = CoffeeBox.find(params[:coffee_box_id])
-
     respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @expenses }
+      if current_user.participates?(@coffee_box)
+        format.html # index.html.erb
+        format.json { render json: @expenses }
+      else
+        format.html { redirect_to coffee_box_path(@coffee_box), :notice => "Zugriff verweigert." }
+        format.json { render json: 'Access denied' }
+      end
     end
+
+
   end
 
   # GET /expenses/1
@@ -27,8 +29,13 @@ class ExpensesController < ApplicationController
     @coffee_box = CoffeeBox.find(params[:coffee_box_id])
 
     respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @expense }
+      if current_user.participates?(@coffee_box)
+        format.html # show.html.erb
+        format.json { render json: @expense }
+      else
+        format.html { redirect_to coffee_box_path(@coffee_box), :notice => "Zugriff verweigert." }
+        format.json { render json: 'Access denied' }
+      end
     end
   end
 
@@ -38,8 +45,13 @@ class ExpensesController < ApplicationController
     @coffee_box = CoffeeBox.find(params[:coffee_box_id])
     @expense = @coffee_box.expenses.build
     respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @expense }
+      if current_user.participates?(@coffee_box)
+        format.html # new.html.erb
+        format.json { render json: @expense }
+      else
+        format.html { redirect_to coffee_box_path(@coffee_box), :notice => "Zugriff verweigert." }
+        format.json { render json: 'Access denied' }
+      end
     end
   end
 
@@ -47,6 +59,9 @@ class ExpensesController < ApplicationController
   def edit
     @expense = Expense.find(params[:id])
     @coffee_box = CoffeeBox.find(params[:coffee_box_id])
+    if not current_user.participates?(@coffee_box) or not current_user.expenses.all.include?(@expense)
+      redirect_to coffee_box_expenses_path(@coffee_box), :notice => "Zugriff verweigert."
+    end
   end
 
   # POST /expenses
@@ -56,8 +71,12 @@ class ExpensesController < ApplicationController
     @expense = @coffee_box.expenses.build(params[:expense])
     @expense.user_id = current_user.id
 
+
     respond_to do |format|
-      if @expense.save
+      if not current_user.participates?(@coffee_box)
+        format.html { redirect_to coffee_box_path(@coffee_box), notice: "Zugriff verweigert." }
+        format.json { render json: 'Access denied' }
+      elsif @expense.save
         format.html { redirect_to coffee_box_expense_path(@coffee_box, @expense), notice: 'Die Ausgabe wurde gespeichert.' }
         format.json { render json: @expense, status: :created, location: @expense }
       else
@@ -75,7 +94,10 @@ class ExpensesController < ApplicationController
 
 
     respond_to do |format|
-      if @expense.flag_abgerechnet?
+      if not current_user.participates?(@coffee_box) or not current_user.expenses.all.include?(@expense)
+        format.html { redirect_to coffee_box_path(@coffee_box), notice: "Zugriff verweigert." }
+        format.json { render json: 'Access denied' }
+      elsif @expense.flag_abgerechnet?
         format.html { redirect_to coffee_box_expense_path(@coffee_box, @expense), flash.alert => "Ausgabe wurde bereits abgerechnet. Eine nachträgliche Änderung ist nicht erlaubt." }
       elsif @expense.update_attributes(params[:expense])
         format.html { redirect_to coffee_box_expense_path(@coffee_box, @expense), notice: "Änderungen gespeichert." }
@@ -92,11 +114,16 @@ class ExpensesController < ApplicationController
   def destroy
     @expense = Expense.find(params[:id])
     @coffee_box = CoffeeBox.find(params[:coffee_box_id])
-    @expense.destroy
 
     respond_to do |format|
-      format.html { redirect_to coffee_box_expenses_path(@coffee_box), notice: 'Ausgabe wurde erfolgreich gelöscht.' }
-      format.json { head :no_content }
+      if not current_user.participates?(@coffee_box) or not current_user.expenses.all.include?(@expense)
+        format.html { redirect_to coffee_box_path(@coffee_box), notice: "Zugriff verweigert." }
+        format.json { render json: 'Access denied' }
+      else
+        @expense.destroy
+        format.html { redirect_to coffee_box_expenses_path(@coffee_box), notice: 'Ausgabe wurde erfolgreich gelöscht.' }
+        format.json { head :no_content }
+      end
     end
   end
 end

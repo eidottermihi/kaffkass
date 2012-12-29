@@ -4,27 +4,38 @@
 
     <p>Location: <%= @coffee_box.location %></p>
 
-    <p>Uhrzeit: <%= @coffee_box.time %></p>
+    <p>Uhrzeit: <%= l @coffee_box.time, format: :very_short %></p>
 
     <p>Beschreibung: <%= @coffee_box.description %></p>
 
     <p>Ersteller: <%= @coffee_box.admin.email %></p>
+
+    <p>Aktueller Tassenpreis: <%= number_to_currency(@coffee_box.current_coffee_price, :locale => "de") %></p>
   </div>
   <div class="actions right">
     <ul>
-      <li>
-        <%= link_to "Konsum bearbeiten", coffee_box_consumptions_path(@coffee_box) %>
-      </li>
-      <li>
-        <% if @coffee_box.get_consumption_model(current_user) %>
-            <%= link_to "Zum hinterlegten Konsummodell", coffee_box_model_of_consumption_path(@coffee_box, @coffee_box.get_consumption_model(current_user)) %>
-        <% else %>
-            <%= link_to "Konsummodell hinterlegen", new_coffee_box_model_of_consumption_path(@coffee_box) %>
-        <% end %>
-      </li>
-      <li>
-        <%= link_to "Ausgaben verwalten", coffee_box_expenses_path(@coffee_box) %>
-      </li>
+      <% if current_user.participates?(@coffee_box) %>
+          <li>
+            <%= link_to "Von Kaffeerunde abmelden", unparticipate_path(@coffee_box) %>
+          </li>
+          <li>
+            <%= link_to "Konsum bearbeiten", coffee_box_consumptions_path(@coffee_box) %>
+          </li>
+          <li>
+            <% if @coffee_box.get_consumption_model(current_user) %>
+                <%= link_to "Zum hinterlegten Konsummodell", coffee_box_model_of_consumption_path(@coffee_box, @coffee_box.get_consumption_model(current_user)) %>
+            <% else %>
+                <%= link_to "Konsummodell hinterlegen", new_coffee_box_model_of_consumption_path(@coffee_box) %>
+            <% end %>
+          </li>
+          <li>
+            <%= link_to "Ausgaben verwalten", coffee_box_expenses_path(@coffee_box) %>
+          </li>
+      <% else %>
+          <li>
+            <%= link_to "Für Kaffeerunde anmelden", participate_path(@coffee_box) %>
+          </li>
+      <% end %>
       <li>
         <%= link_to "Zurück zur Liste", coffee_boxes_path %>
       </li>

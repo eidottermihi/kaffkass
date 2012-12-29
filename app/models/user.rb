@@ -55,4 +55,17 @@ class User < ActiveRecord::Base
     self.active = true
     save
   end
+
+  # Gibt true zurück, wenn der User für die übergebene CoffeeBox angemeldet ist.
+  # @param coffee_box CoffeeBox
+  def participates?(coffee_box)
+    # Kaffeerunden holen
+    coffee_boxes = self.coffee_boxes.all
+    coffee_boxes.each do |c|
+      if(c.id == coffee_box.id)
+        return true
+      end
+    end
+    return false
+  end
 end

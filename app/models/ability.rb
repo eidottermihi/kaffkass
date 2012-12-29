@@ -52,13 +52,16 @@ class Ability
       # User kann seine eigenen Kaffeerunden komplett bearbeiten (Bedingung: user_id der CoffeeBox ist gleich ID des angemeldeten Users)
       can :manage, CoffeeBox, :user_id => user.id
       # User kann alle Kaffeerunden betrachten und Liste anzeigen
-      can [:show, :index], CoffeeBox
+      can [:show, :index, :read], CoffeeBox
       # User kann an Kaffeerunde teilnehmen / sich abmelden
       can [:participate, :unparticipate, :new_participate], CoffeeBox
       # User kann für sich selbst Urlaub verwalten
       can :manage, Holiday, :user_id => user.id
+      # User kann Ausgaben eintragen
+      # -> manuell im Controller
 
-      ## TODO Authorisierung für Expenses, Bills, Consumptions
+
+      ## TODO Authorisierung für Bills, Consumptions
     end
   end
 

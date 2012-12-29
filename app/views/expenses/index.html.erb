@@ -18,8 +18,8 @@
     <td><%= expense.flag_abgerechnet? ? "Ja" : "Nein" %></td>
     <td><%= expense.user.email %></td>
     <td><%= link_to 'anzeigen', coffee_box_expense_path( @coffee_box.id, expense ) %></td>
-    <td><%= (expense.flag_abgerechnet? == false) ? (link_to 'bearbeiten', edit_coffee_box_expense_path( @coffee_box.id, expense )) : nil  %></td>
-    <td><%= (expense.flag_abgerechnet? == false) ? (link_to 'löschen', coffee_box_expense_path( @coffee_box.id, expense ), confirm: 'Wirklich löschen?', method: :delete) : nil %></td>
+    <td><%= (not expense.flag_abgerechnet? and current_user.expenses.all.include?(expense)) ? (link_to 'bearbeiten', edit_coffee_box_expense_path( @coffee_box.id, expense )) : nil  %></td>
+    <td><%= (not expense.flag_abgerechnet? and current_user.expenses.all.include?(expense)) ? (link_to 'löschen', coffee_box_expense_path( @coffee_box.id, expense ), confirm: 'Wirklich löschen?', method: :delete) : nil %></td>
   </tr>
 <% end %>
 </table>

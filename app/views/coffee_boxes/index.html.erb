@@ -24,7 +24,7 @@
             <td><%= coffee_box.id %></td>
             <td><%= coffee_box.location %></td>
             <td><%= l coffee_box.time, format: :very_short %></td>
-            <td><%= number_to_currency coffee_box.current_coffee_price, :unit => "&euro;", :separator => ",", :precision => 2 %></td>
+            <td><%= number_to_currency coffee_box.current_coffee_price, :locale => "de" %></td>
             <td>
               <%= coffee_box.admin.fullname_lastname_first %>
             </td>
