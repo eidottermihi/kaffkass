@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
 
   ## Beziehungen
   # Rechnungen
-  has_many(:bills)
+  has_many :bills
   # Zwischentabelle für Teilnahme an Kaffeerunden
   has_many :participations
   # Direkter Zugriff auf alle Kaffeerunden, an denen der User teilnimmt

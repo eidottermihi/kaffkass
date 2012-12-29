@@ -1,6 +1,4 @@
 class UsersController < ApplicationController
-  #before_filter :require_no_user, :only => [:new, :create]
-  #before_filter :require_user, :only => [:show, :edit, :update]
 
   # Authorisierung über Cancan
   load_and_authorize_resource
@@ -17,10 +15,10 @@ class UsersController < ApplicationController
     # the User has not yet been activated
     if @user.save_without_session_maintenance
       @user.deliver_activation_instructions!
-      flash[:notice] = "Your account has been created. Please check your e-mail for your account activation instructions!"
+      flash[:notice] = "Ihr Account wurde erstellt. Bitte prüfen Sie ihren E-Mail-Eingang!"
       redirect_to root_url
     else
-      flash[:notice] = "There was a problem creating your account"
+      flash[:notice] = "Beim Erstellen ihres Accounts ist ein Problem aufgetreten."
           render :action => :new
     end
 
@@ -37,7 +35,7 @@ class UsersController < ApplicationController
   def update
     @user = current_user # makes our views "cleaner" and more consistent
     if @user.update_attributes(params[:user])
-      flash[:notice] = "Account updated!"
+      flash[:notice] = "Account aktualisiert!"
       redirect_to account_url
     else
       render :action => :edit

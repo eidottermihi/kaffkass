@@ -1,10 +1,10 @@
-<h1>Listing bills</h1>
+<h1>Rechnungen</h1>
 
 <table id="ktable">
   <tr>
     <th>E-Mail</th>
-    <th>Value</th>
-    <th>Date</th>
+    <th>Betrag</th>
+    <th>Datum</th>
     <th></th>
   </tr>
 
@@ -14,7 +14,7 @@
             <td><%= bill.user.email %></td>
             <td><%= number_to_currency bill.value, :unit => "&euro;", :separator => ",", :precision => 2 %></td>
             <td><%= bill.date %></td>
-            <td><%= link_to 'Mark as paid', mark_as_paid_path(@coffee_box.id, bill.id), confirm: 'Are you sure?'%></td>
+            <td><%= link_to 'Als bezahlt markieren', mark_as_paid_path(@coffee_box.id, bill.id), confirm: 'Sind Sie sicher?'%></td>
           </tr>
       <% end %>
   <% end %>

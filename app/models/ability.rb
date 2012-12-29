@@ -4,29 +4,6 @@ class Ability
 
   # @param [User] user
   def initialize(user)
-    # Define abilities for the passed in user here. For example:
-    #
-    #   user ||= User.new # guest user (not logged in)
-    #   if user.admin?
-    #     can :manage, :all
-    #   else
-    #     can :read, :all
-    #   end
-    #
-    # The first argument to `can` is the action you are giving the user permission to do.
-    # If you pass :manage it will apply to every action. Other common actions here are
-    # :read, :create, :update and :destroy.
-    #
-    # The second argument is the resource the user can perform the action on. If you pass
-    # :all it will apply to every resource. Otherwise pass a Ruby class of the resource.
-    #
-    # The third argument is an optional hash of conditions to further filter the objects.
-    # For example, here the user can only update published articles.
-    #
-    #   can :update, Article, :published => true
-    #
-    # See the wiki for details: https://github.com/ryanb/cancan/wiki/Defining-Abilities
-
     # user wird von Cancan automatisch per Aufruf von current_user befüllt
     if user.nil?
       ### Gast
@@ -59,9 +36,10 @@ class Ability
       can :manage, Holiday, :user_id => user.id
       # User kann Ausgaben eintragen
       # -> manuell im Controller
-
-
-      ## TODO Authorisierung für Bills, Consumptions
+      # Verwalter einer Kaffeerunde kann Bills als bezahlt markieren
+      can :mark_as_paid, Bill if user.administrated_coffee_box_ids.include?(:coffee_box_id)
+      # User kann eigene Consumptions bearbeiten
+      can [:edit, :update], Consumption, :user_id => user.id
     end
   end
 

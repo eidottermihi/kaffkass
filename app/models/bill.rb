@@ -5,7 +5,7 @@ class Bill < ActiveRecord::Base
 
   validates :value, :presence => true
 
-  def createBillForMonth(date, current_user, coffee_box)
+  def create_bill_for_month(date, current_user, coffee_box)
     from = date.beginning_of_month
     to = date.end_of_month
     if (!current_user.bills.where(coffee_box_id: coffee_box, date: from .. to).exists?)
