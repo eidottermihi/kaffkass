@@ -12,6 +12,8 @@ de:
         time: "Uhrzeit"
         admin: "Verwalter"
         description: "Beschreibung"
+        cash_position: "Kassenstand"
+        saldo: "Saldo"
       user:
         firstname: "Vorname"
         lastname: "Nachname"

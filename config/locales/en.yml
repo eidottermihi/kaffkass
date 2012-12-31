@@ -12,6 +12,8 @@ en:
         time: "Time"
         admin: "Administrator"
         description: "Description"
+        cash_position: "Cash position"
+        saldo: "Saldo"
       user:
         firstname: "Firstname"
         lastname: "Lastname"

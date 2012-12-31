@@ -39,7 +39,7 @@
         <div id="alert"><%= flash[:alert] %></div>
     <% end %>
 
-    <% if (@coffee_box != nil) %>
+    <% if (@coffee_box != nil && @coffee_box.id != nil) %>
         <%= render partial:"layouts/details" %>
     <% end %>
 

@@ -1,6 +1,6 @@
 <%= render "shared/error_messages", :target => @model_of_consumption %>
 
-<p><%= t "text.consumption_model" %></p>
+<p><%= t "text.consumption_model" %></p><br/>
 
 <%= form_for [@coffee_box, @model_of_consumption] do |f| %>
     <%= field_set_tag "Konsummodell hinterlegen" do %>
@@ -30,8 +30,12 @@
           </tr>
           </tbody>
         </table>
-        <p id="no_consumption_model"><%= check_box_tag :no_consumption_model %>
-          <%= label_tag :no_consumption_model, t("text.no_consumption_model") %>
+        <div>
+          <%= check_box_tag :no_consumption_model %>
+          <%= label_tag :no_consumption_model, "Kein Konsummodell", :class => "checkbox inline" %>
+          <div class="description"><%= t("text.no_consumption_model")  %></div>
+        </div>
+        <p id="no_consumption_model">
         </p>
         <p><%= f.submit %></p>
     <% end %>

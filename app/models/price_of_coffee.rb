@@ -23,7 +23,7 @@ class PriceOfCoffee < ActiveRecord::Base
       end
 
       ausgaben = 0
-      coffee_box.expenses.where(coffee_box_id: coffee_box, date: from .. to).each do |ausgabe|
+      coffee_box.expenses.where(coffee_box_id: coffee_box, flag_abgerechnet: false).each do |ausgabe|
         ausgaben += ausgabe.value
       end
       coffee_box.cash_position = coffee_box.cash_position - ausgaben + einnahmen
@@ -44,8 +44,7 @@ class PriceOfCoffee < ActiveRecord::Base
     from = date.beginning_of_month
     to = date.end_of_month
     sumCups = coffee_box.consumptions.where(day: from .. to).sum(:numberOfCups)
-    #TODO: Angestrebter Increment(increment) einführen   (atm fest auf 1€)
-    new_price = ((ausgaben + 1) - coffee_box.cash_position) / sumCups
+    new_price = ((ausgaben + coffee_box.saldo) - coffee_box.cash_position) / sumCups
     logger.debug "## Neuer Preis: #{new_price}"
     if (new_price > 0)
       return new_price

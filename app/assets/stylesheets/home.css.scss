@@ -139,6 +139,12 @@ fieldset {
     padding: 2px;
     margin: 0;
   }
+  div.description {
+    padding: 5px;
+    font-size: 0.9em;
+    border: 2px dotted green;
+    background-color: $white;
+  }
 }
 
 legend {
@@ -154,6 +160,10 @@ label {
   line-height: 1.8;
   display: inline-block;
   width: 20%;
+}
+
+.text_label {
+  width: 100%;
 }
 
 .achtel {
@@ -261,4 +271,8 @@ label {
 
 .center {
   text-align: center;
+}
+
+.textlink {
+  cursor: pointer;
 }

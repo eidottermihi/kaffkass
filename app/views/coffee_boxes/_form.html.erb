@@ -9,12 +9,25 @@
           <li><%= f.label :time %>
             <%= f.time_select :time %></li>
           <li><%= f.label :description %>
-            <%= f.text_area :description %></li>
+            <%= f.text_area :description, :size => "25x5" %></li>
           <li>
-            <%= label_tag :price, "Tassenpreis" %>
-            <%price = @coffee_box.price_of_coffees.order("date DESC").first.price%>
-            <%= number_field_tag :price, price , :min => 0.01, :step => 0.01 %> €
+            <%= f.label :saldo %>
+            <%= f.number_field :saldo, :step => 0.01 %> €
+            <div class="description">Mit dem Saldo kann angegeben werden, ob ein Überschuss bzw. Fehlbetrag pro Monat erwirtschaftet werden soll. Der
+            Preis wird dann dementsprechend so berechnet, dass das Saldo am Ende des Monats entsteht. So kann z.B. für eine neue Kaffeemaschine
+            gespart werden, in dem man z.B. pro Monat 5 € Überschuss erwirtschaftet.</div>
           </li>
+          <li>
+            <%= f.label :cash_position %>
+            <%= f.number_field :cash_position, :min => 0.00, :step => 0.01 %> €
+            <div class="description">Falls die Kaffeerunde schon zuvor existierte, kann hier der aktuelle Kassenstand eingetragen werden.</div>
+          </li>
+          <% if @coffee_box.id == nil %>
+          <li>
+            <%= label_tag :price, "Initialer Tassenpreis" %>
+            <%= number_field_tag :price, nil , :min => 0.01, :step => 0.01 %> €
+          </li>
+          <% end %>
           <li><%= f.submit %></li>
         </ol>
 

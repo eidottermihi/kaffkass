@@ -90,4 +90,5 @@ class CoffeeBoxesController < ApplicationController
   def my_coffee_boxes
     @coffee_boxes = CoffeeBox.get_coffee_boxes current_user
   end
+
 end

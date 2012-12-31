@@ -27,7 +27,7 @@
             },
             tooltip:{
                 formatter:function () {
-                    return '<b>' + Highcharts.dateFormat('%b %Y', this.x) + ': </b>' + this.y + ' €';
+                    return '<b>' + Highcharts.dateFormat('%b %Y', this.x) + ': </b>' + Highcharts.numberFormat(this.y, 2, ',', '.') + ' €';
                 }
             },
             series:[
@@ -115,7 +115,7 @@
                 // Für den Monat sind keine Verbrauchswerte verfügbar
                 $("#no_data").text("Für den ausgewählten Monat sind keine Daten verfügbar.");
             } else {
-                $("#no_data").text();
+                $("#no_data").text("");
             }
             coffee_cup_consume_chart.series[0].setData(data);
             // Monatsanzeige updaten
