@@ -8,6 +8,7 @@ class Consumption < ActiveRecord::Base
   #Legt für einen Monat und User und Kaffee_box alle Consumptions an.
   #Die Konsumptions werden dabei abhängig von einem hinterlgeten Konsummodell und eingetragenem Urlaub vorbefüllt
   #Wird nicht ausgeführt, wenn der Monat vor dem Erstellungsdatum der coffee_box liegt oder die consumption für den Tag bereits existiert
+  # TODO Consumptions nur erstellen, wenn Monat noch nicht abgerechnet wurde!
   def create_month(date, current_user, coffee_box)
     from = date.beginning_of_month-1
     to = date.end_of_month-1
