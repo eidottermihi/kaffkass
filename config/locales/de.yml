@@ -33,7 +33,7 @@ de:
         sa: "Samstag"
         su: "Sonntag"
       holiday:
-        from: "Von"
+        beginning: "Von"
         till: "Bis"
   text:
     consumption_model: "Sie können für die Teilnahme an Kaffeerunden ein \"Konsummodell\" hinterlegen. Damit wird für die Kaffeerunde ihr Konsum in Form von Tassen pro Tag automatisch anhand einer Wochentabelle vorbelegt."

@@ -33,7 +33,7 @@ en:
         sa: "Saturday"
         su: "Sunday"
       holiday:
-        from: "From"
+        beginning: "From"
         till: "Till"
   text:
     consumption_model: "You can specify a consumption model for coffee boxes. A consumption model predefines your consumption of coffee cups per day on a weekly basis."

@@ -7,7 +7,7 @@ Kaffkass::Application.routes.draw do
   match 'logout' => "user_sessions#destroy", :as => :logout
 
   resources :users do
-    resources :holidays
+    resources :holidays, :only => [:index, :new, :create, :destroy]
   end
   resource :user, :as => 'account'
 

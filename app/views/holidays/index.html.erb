@@ -17,9 +17,7 @@
           <tr>
             <td><%= l holiday.beginning %></td>
             <td><%= l holiday.till %></td>
-            <td><%= link_to 'Show', user_holiday_path(current_user, holiday) %></td>
-            <td><%= link_to 'Edit', edit_user_holiday_path(current_user, holiday) %></td>
-            <td><%= link_to 'Destroy', user_holiday_path(current_user, holiday), confirm: 'Are you sure?', method: :delete %></td>
+            <td><%= link_to 'Löschen', user_holiday_path(current_user, holiday), confirm: 'Wirklich löschen?', method: :delete %></td>
           </tr>
       <% end %>
   <% end %>
