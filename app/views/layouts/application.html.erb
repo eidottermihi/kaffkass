@@ -13,8 +13,12 @@
   </div>
   <div id="navibar">
     <span id="navigationbar">
+      <% if can? :my_coffee_boxes, CoffeeBox %>
         <%= link_to "meine kaffeerunden", my_coffee_boxes_path, :class => "navibar" %>
-      / <%= link_to "kaffeerunde suchen", coffee_boxes_path, :class => "navibar" %>
+        / <%= link_to "kaffeerunde suchen", coffee_boxes_path, :class => "navibar" %>
+      <% else %>
+         <%= link_to "kaffeerunde suchen", coffee_boxes_path, :class => "navibar" %>
+      <% end %>
     </span>
     <span id="userbar">
       <% if current_user %>
@@ -40,7 +44,7 @@
     <% end %>
 
     <% if (@coffee_box != nil && @coffee_box.id != nil) %>
-        <%= render partial:"layouts/details" %>
+        <%= render partial: "layouts/details" %>
     <% end %>
 
     <%= yield %>
