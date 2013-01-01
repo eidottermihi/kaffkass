@@ -1,7 +1,5 @@
+# encoding: utf-8
 class UserSessionsController < ApplicationController
-  #before_filter :require_no_user, :only => [:new, :create]
-  #before_filter :require_user, :only => :destroy
-
   load_and_authorize_resource
 
   def new
@@ -14,7 +12,10 @@ class UserSessionsController < ApplicationController
       flash[:notice] = "Login erfolgreich!"
       redirect_back_or_default account_url(@current_user)
     else
-      render :action => :new
+      @user_session.errors.full_messages.each do |msg|
+        flash[:notice] = msg
+      end
+      render "new"
     end
   end
 

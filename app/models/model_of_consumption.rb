@@ -1,5 +1,4 @@
 class ModelOfConsumption < ActiveRecord::Base
-  attr_accessible :mo, :tue, :wed, :th, :fr, :sa, :su
   belongs_to :coffee_box
   belongs_to :user
 
@@ -27,13 +26,34 @@ class ModelOfConsumption < ActiveRecord::Base
         if not c.flagTouched?
           ## Tag wurde noch nicht manuell bearbeitet
           # -> Tag updaten
-          c.numberOfCups = c.get_cups_for_weekday(c.day, consumption_model)
+          c.numberOfCups = consumption_model.get_cups_for_weekday(c.day)
           c.save
         end
       end
       return true
     else
       return false
+    end
+  end
+
+  # Gibt die Anzahl der Tassen zurück, die laut Konsummodell an diesem Tag konsumiert werden.
+  def get_cups_for_weekday(date)
+    if (date.wday == 1)
+      return self.mo
+    elsif (date.wday == 2)
+      return self.tue
+    elsif (date.wday == 3)
+      return self.wed
+    elsif (date.wday == 4)
+      return self.th
+    elsif (date.wday == 5)
+      return self.fr
+    elsif (date.wday == 6)
+      return self.sa
+    elsif (date.wday == 0)
+      return self.su
+    else
+      return 0
     end
   end
 end
