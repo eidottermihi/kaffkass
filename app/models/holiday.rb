@@ -12,7 +12,7 @@ class Holiday < ActiveRecord::Base
   def self.new_holiday(holiday)
     # Holiday speichern
     holiday.save
-    # Für den Zeitraum des Urlaubs Consumptions finden und disablen
+    # Für den Zeitraum des Urlaubs Consumptions finden und flag_holiday setzen
     participations = Participation.find_all_by_user_id(holiday.user_id)
     participations.each do |p|
       consumptions = Consumption.where(user_id: holiday.user_id, coffee_box_id: p.coffee_box).all

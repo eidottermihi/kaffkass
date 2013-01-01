@@ -8,11 +8,17 @@ class Consumption < ActiveRecord::Base
   #Legt für einen Monat und User und Kaffee_box alle Consumptions an.
   #Die Konsumptions werden dabei abhängig von einem hinterlgeten Konsummodell und eingetragenem Urlaub vorbefüllt
   #Wird nicht ausgeführt, wenn der Monat vor dem Erstellungsdatum der coffee_box liegt oder die consumption für den Tag bereits existiert
-  # TODO Consumptions nur erstellen, wenn Monat noch nicht abgerechnet wurde!
   def create_month(date, current_user, coffee_box)
     from = date.beginning_of_month-1
     to = date.end_of_month-1
     tmp = from
+    # Wenn für den nächsten Monat bereits ein Preis existiert, dann wurde der akt. Monat schon abgerechnet
+    flag_abgerechnet = false
+    next_month = date>>1
+    if (coffee_box.price_of_coffees.where(date: next_month.beginning_of_month .. next_month.end_of_month).exists?)
+      logger.debug "## Monat #{date} der CoffeeBox #{coffee_box.id} bereits abgeschlossen, alle Consumptions werden disabled."
+      flag_abgerechnet = true
+    end
     begin
       tmp += 1.day
       if (!current_user.consumptions.where(coffee_box_id: coffee_box, day: tmp).exists? && coffee_box.created_at < tmp+1)
@@ -28,6 +34,10 @@ class Consumption < ActiveRecord::Base
           @temp_consumption.numberOfCups = get_cups_for_weekday(tmp, @model)
         else
           @temp_consumption.numberOfCups = 0
+        end
+        if flag_abgerechnet
+          # Monat wurde bereits abgeschlossen, alle Consumptions disablen
+          @temp_consumption.flagDisabled = true
         end
         if Holiday.is_holiday tmp, current_user
           # Für den aktuellen Tag ist ein Urlaub hinterlegt
