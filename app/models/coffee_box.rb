@@ -171,53 +171,36 @@ class CoffeeBox < ActiveRecord::Base
     return data
   end
 
-  def close_latest_month_for_all
-    # TODO: Monat nur abschließen, wenn in dem Monat auch bereits Consumptions vorhanden sind
-    # TODO: Fehler, wenn Monat abgeschloßen werden soll an dem ein einzelnern User noch keine Consumptions hat
-    # Monat suchen, in dem für nicht alle Teilnehmer eine Bill besteht
-    if Bill.where(:coffee_box_id => self.id).order("date DESC").exists?
-      logger.debug "## Es bestehen bereits Bills für die CoffeeBox."
-      start_date = self.created_at.to_date
-      from = start_date.beginning_of_month
-      to = start_date.end_of_month
-      month_found = false
-      logger.debug "## Starte Suche mit Monat #{start_date}"
-      while (month_found == false) do
-        logger.debug "## From: #{from}"
-        logger.debug "## To: #{to}"
-        self.users.all.each do |user|
-          logger.debug "##Suche Bill für User #{user.id}"
-          if not user.bills.where(date: from..to).exists?
-            # Monat gefunden, an dem für einen User noch keine Rechnung exisitiert
-            logger.debug "##User #{user.id} hat im Monat #{start_date} noch keine Bill."
-            month_found = true
-          end
-        end
-        if not month_found
-          logger.debug "##Im Monat #{start_date} hat jeder User bereits eine Bill"
-          start_date = start_date >> 1
-          from = start_date.beginning_of_month
-          to = start_date.end_of_month
-          logger.debug "##Suche weiter im Monat #{start_date}"
-        end
-      end
-      self.users.all.each do |user|
-        logger.debug "## Erzeuge Bill für User #{user.id}, CoffeeBox #{self.id} und Monat #{start_date}"
-        Bill.new.create_bill_for_month(start_date, user, self)
-      end
-      # Neuen Preis berechnen
-      PriceOfCoffee.new.create_price_for_next_month(start_date, self)
-      return start_date
-    else
-      # Es besteht noch überhaupt keine Bill -> ersten Monat abschließen
-      # Für jeden Teilnehmer eine neue Bill für den ersten Monat erstellen
-      logger.debug "Es existieren keine Bills für die CoffeeBox, schließe ersten Monat ab."
-      self.users.all.each do |user|
-        Bill.new.create_bill_for_month(self.created_at, user, self)
-      end
-      # Neuen Preis berechnen
-      PriceOfCoffee.new.create_price_for_next_month(self.created_at.to_date, self)
+  # Gibt die Anzahl der Teilnehmer der Kaffeerunde zurück
+  def count_participants
+    self.users.count
+  end
+
+  # Liefert ein Array, in dem für jeden Teilnehmer ein Hash enthalten ist. Der Hash enthält zwei Felder, name mit dem Namen des Teilnehmers,
+  # und data mit einem Array, das den Wert seiner gesamten Anzahl an getrunkenen Tassen enthält.
+  def get_consume_by_user
+    # Consumption Bereich: Start der Kaffeerunde bis Ende des vorherigen Monats des aktuellsten Kaffeepreises
+    min = self.created_at.beginning_of_day
+    max_date = self.current_coffe_price_object.date
+    max_date = max_date<<1
+    max_date = max_date.end_of_month
+
+    overall_consume = Array.new
+    # Alle Teilnehmer der Kaffeerunde, Consumptions suchen und nrOfCups aufsummieren
+    self.user_ids.each do |participant_id|
+      hash = Hash.new
+      username = User.find(participant_id).fullname
+      hash["name"] = username
+      logger.debug "## Summiere Kaffeetassen für User #{username}"
+      sum = self.consumptions.where(user_id: participant_id, day: min .. max_date ).sum("numberOfCups")
+      data = Array.new
+      data.push(sum)
+      hash["data"] = data
+      logger.debug "## Kaffeetassen: #{sum}"
+      overall_consume.push(hash)
     end
+    return overall_consume
+
   end
 
 end

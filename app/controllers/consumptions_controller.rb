@@ -18,7 +18,7 @@ class ConsumptionsController < ApplicationController
       #Consumptions für den Monat erzeugen falls nicht vorhanden
       Consumption.new.create_month(@date, current_user, @coffee_box)
       #Consumptions laden
-      @consumptions = current_user.consumptions.where(coffee_box_id: @coffee_box, day:@date.beginning_of_month..@date.end_of_month).all
+      @consumptions = current_user.consumptions.where(coffee_box_id: @coffee_box, day: @date.beginning_of_month..@date.end_of_month).all
       respond_to do |format|
         format.html
         format.js
@@ -29,7 +29,6 @@ class ConsumptionsController < ApplicationController
       end
     end
   end
-
 
 
   def edit
@@ -74,15 +73,6 @@ class ConsumptionsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to coffee_box_consumptions_url(month: @date.strftime("%Y/%m")) }
       format.json { head :no_content }
-    end
-  end
-  
-  def close_month_for_all
-    @coffee_box = CoffeeBox.find(params[:coffee_box_id])
-    closed_month = @coffee_box.close_latest_month_for_all
-    respond_to do |format|
-      format.html { redirect_to coffee_box_path(@coffee_box), notice: "Der Monat #{closed_month} wurde abgeschlossen." }
-      format.json { head :ok }
     end
   end
 

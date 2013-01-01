@@ -11,6 +11,8 @@
     <p>Ersteller: <%= @coffee_box.admin.email %></p>
 
     <p>Aktueller Tassenpreis: <%= number_to_currency(@coffee_box.current_coffee_price, :locale => "de") %></p>
+
+    <p>Teilnehmerzahl: <%= @coffee_box.count_participants %></p>
   </div>
   <div class="actions right">
     <ul>
@@ -34,11 +36,6 @@
           <% if can? :index_bills, @coffee_box %>
               <li>
                 <%= link_to "Rechnungen verwalten", coffee_box_bills_path(@coffee_box) %>
-              </li>
-          <% end %>
-          <% if can? :close_latest_month, @coffee_box %>
-              <li>
-                <%= link_to "Letzten Monat abschliessen", close_month_for_all_coffee_box_path(@coffee_box) %>
               </li>
           <% end %>
       <% else %>

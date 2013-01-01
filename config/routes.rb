@@ -42,9 +42,6 @@ Kaffkass::Application.routes.draw do
   # Route für Markieren von Rechnungen als bezahlt
   match '/coffee_boxes/:coffee_box_id/mark_as_paid/:id' => 'bills#mark_as_paid', :as => :mark_as_paid
 
-  # Route zum Monatsabschluss für den letzten Monat, an dem noch keine Bill vorliegt
-  match '/coffee_boxes/:coffee_box_id/close_month_for_all' => 'consumptions#close_month_for_all', :as => :close_month_for_all_coffee_box
-
   # Root wird auf Home#home geroutet
   root :to => 'home#home'
 end
