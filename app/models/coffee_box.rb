@@ -1,5 +1,4 @@
 # encoding : utf-8
-
 class CoffeeBox < ActiveRecord::Base
   ## Beziehungen
   # Admin
@@ -22,7 +21,7 @@ class CoffeeBox < ActiveRecord::Base
   ## Validierungen
   validates :location, :presence => true
   validates :time, :presence => true
-
+  validates :cash_position, :presence => true
 
   ## Methoden
 
@@ -41,12 +40,12 @@ class CoffeeBox < ActiveRecord::Base
   def do_participate(user)
     if self.users.exists?(user.id)
       # User ist bereits angemeldet
-      return false
+      false
     else
       # User ist noch nicht angemeldet
       logger.debug "User[#{user.email}] meldet sich für CoffeeBox[ID=#{self.id}] an."
       self.participations.create(is_active: true, user_id: user.id)
-      return true
+      true
     end
   end
 
@@ -64,11 +63,10 @@ class CoffeeBox < ActiveRecord::Base
         logger.debug "Lösche ModelOfConsumption[ID=#{c.id}]."
         c.destroy
       end
-
-      return true
+      true
     else
       # User ist nicht angemeldet
-      return false
+      false
     end
   end
 
@@ -89,8 +87,7 @@ class CoffeeBox < ActiveRecord::Base
   # kein Konsummodell hinterlegt ist.
   # @param [User] user der aktuell angemeldete User
   def get_consumption_model(user)
-    consumption_model = ModelOfConsumption.where(:user_id => user.id, :coffee_box_id => self.id).limit(1).first
-    return consumption_model
+    self.model_of_consumptions.where(user_id: user.id).limit(1).first
   end
 
   # Liefert eine Array mit Daten zu den Tassenpreis der Kaffeerunde.
@@ -106,7 +103,7 @@ class CoffeeBox < ActiveRecord::Base
       price.append(y_value)
       prices.append(price)
     end
-    return prices
+    prices
   end
 
   # Liefert ein Array mit Daten zum Tassenkonsum dieser Kaffeerunde für einen Monat.
@@ -123,10 +120,9 @@ class CoffeeBox < ActiveRecord::Base
       # Y-Wert ist die Anzahl der konsumierten Tassen an diesem Tag
       y_value = res.total_cups
       consume.append(y_value)
-
       consumes.append(consume)
     end
-    return consumes
+    consumes
   end
 
   # Liefert einen Hash mit zwei Arrays. Der Hash enthält für jeden abgerechneten Monat die Summe aller Einnahmen und
@@ -177,7 +173,7 @@ class CoffeeBox < ActiveRecord::Base
     data[:expenses] = expenses
     data[:incomes] = incomes
 
-    return data
+    data
   end
 
   # Gibt die Anzahl der Teilnehmer der Kaffeerunde zurück
@@ -208,8 +204,7 @@ class CoffeeBox < ActiveRecord::Base
       logger.debug "## Kaffeetassen: #{sum}"
       overall_consume.push(hash)
     end
-    return overall_consume
-
+    overall_consume
   end
 
 end

@@ -12,6 +12,8 @@
 
     <p>Aktueller Tassenpreis: <%= number_to_currency(@coffee_box.current_coffee_price, :locale => "de") %></p>
 
+    <p>Aktueller Kassenstand: <%= number_to_currency(@coffee_box.cash_position, :locale => "de") %></p>
+
     <p>Teilnehmerzahl: <%= @coffee_box.count_participants %></p>
   </div>
   <div class="actions right">
