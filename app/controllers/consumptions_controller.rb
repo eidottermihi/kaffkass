@@ -6,13 +6,13 @@ class ConsumptionsController < ApplicationController
 
   def index
     #überprüfe ob der User an der Kaffeerunde teilnimmt
-    if (@current_user.participations.where(coffee_box_id: params[:coffee_box_id]).exists?)
+    if @current_user.participations.where(coffee_box_id: params[:coffee_box_id]).exists?
       #Aktuelle coffee_box
       @coffee_box = CoffeeBox.find(params[:coffee_box_id])
       #Monat im Kalender setzen oder verändern
       @date = params[:month] ? Date.parse(params[:month]) : Date.today
       #Keinen Monat anzeigen der vor dem erstellungdatum liegt
-      if (@date.month < @coffee_box.created_at.month && @date.year <= @coffee_box.created_at.year)
+      if @date.month < @coffee_box.created_at.month && @date.year <= @coffee_box.created_at.year
         @date = Date.today
       end
       #Consumptions für den Monat erzeugen falls nicht vorhanden
@@ -46,7 +46,7 @@ class ConsumptionsController < ApplicationController
     @consumption = current_user.consumptions.find(params[:id])
     @coffee_box = CoffeeBox.find(params[:coffee_box_id])
     authorize! :edit, @consumption, :message => 'Zugriff auf fremden Konsumeintrag verweigert.'
-    @consumption.flagTouched = true
+    @consumption.flag_touched = true
     respond_to do |format|
       if @consumption.update_attributes(params[:consumption])
         format.html { redirect_to coffee_box_consumptions_path, notice: 'Consumption was successfully updated.' }
@@ -66,7 +66,7 @@ class ConsumptionsController < ApplicationController
     # Aktuelle coffee_box
     @coffee_box = CoffeeBox.find(params[:coffee_box_id])
     # Abschließen nur möglich wenn auch ein price besteht
-    if (@coffee_box.price_of_coffees.where(date: @date.beginning_of_month .. @date.end_of_month).exists?)
+    if @coffee_box.price_of_coffees.where(date: @date.beginning_of_month .. @date.end_of_month).exists?
       Bill.new.create_bill_for_month(@date, current_user, @coffee_box)
       PriceOfCoffee.new.create_price_for_next_month(@date, @coffee_box)
     end

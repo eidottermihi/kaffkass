@@ -3,7 +3,7 @@ class Consumption < ActiveRecord::Base
   belongs_to :coffee_box
 
   ## Validierungen
-  validates :numberOfCups, :numericality => { :only_integer => true }
+  validates :number_of_cups, :numericality => {:only_integer => true}
 
   #Legt für einen Monat und User und Kaffee_box alle Consumptions an.
   #Die Konsumptions werden dabei abhängig von einem hinterlgeten Konsummodell und eingetragenem Urlaub vorbefüllt
@@ -24,25 +24,25 @@ class Consumption < ActiveRecord::Base
       if !current_user.consumptions.where(coffee_box_id: coffee_box, day: tmp).exists? && coffee_box.created_at < tmp+1
         @temp_consumption = current_user.consumptions.build
         @temp_consumption.coffee_box=coffee_box
-        @temp_consumption.flagTouched= false
+        @temp_consumption.flag_touched= false
         @temp_consumption.day= tmp
-        @temp_consumption.flagDisabled= false
+        @temp_consumption.flag_disabled= false
         if current_user.model_of_consumptions.where(coffee_box_id: coffee_box).exists?
           # Für die Kaffeerunde existiert ein Konsummodell
           # Anzahl der Tassen vorbelegen
-          @model = current_user.model_of_consumptions.where(coffee_box_id: coffee_box).first;
-          @temp_consumption.numberOfCups = @model.get_cups_for_weekday(tmp)
+          @model = current_user.model_of_consumptions.where(coffee_box_id: coffee_box).first
+          @temp_consumption.number_of_cups = @model.get_cups_for_weekday(tmp)
         else
-          @temp_consumption.numberOfCups = 0
+          @temp_consumption.number_of_cups = 0
         end
         if flag_abgerechnet
           # Monat wurde bereits abgeschlossen, alle Consumptions disablen
-          @temp_consumption.flagDisabled = true
+          @temp_consumption.flag_disabled = true
         end
         if Holiday.is_holiday tmp, current_user
           # Für den aktuellen Tag ist ein Urlaub hinterlegt
           # Tag als Urlaub markieren, Tassen auf 0 setzen
-          @temp_consumption.numberOfCups = 0
+          @temp_consumption.number_of_cups = 0
           @temp_consumption.flag_holiday = true
         end
 
@@ -55,7 +55,7 @@ class Consumption < ActiveRecord::Base
   # Gibt true zurück, wenn die Consumption schon abgerechnet wurde.
   def is_cleared?
     # Wenn für Monat/User/CoffeeBox schon eine Bill existiert, dann wurde die Consumption schon abgerechnet
-    return Bill.where(user_id: self.user.id, coffee_box_id: self.coffee_box.id, date: self.day.beginning_of_month..self.day.end_of_month).exists?
+    Bill.where(user_id: self.user.id, coffee_box_id: self.coffee_box.id, date: self.day.beginning_of_month..self.day.end_of_month).exists?
   end
 
 end

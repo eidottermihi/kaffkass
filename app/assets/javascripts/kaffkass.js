@@ -22,7 +22,7 @@ $(document).ready(function () {
     // Notification-Bar spätestens nach 15 Sekunden ausblenden
     setTimeout(function () {
         $("#notice").slideUp("normal");
-    }, 15000)
+    }, 15000);
 
     // Wochenfelder ausgrauen, wenn kein Konsummodell angegeben wird
     $("#no_consumption_model[type='checkbox']").click(function () {

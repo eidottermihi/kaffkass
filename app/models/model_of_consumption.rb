@@ -23,10 +23,10 @@ class ModelOfConsumption < ActiveRecord::Base
       end
 
       non_cleared_consumptions.each do |c|
-        if not c.flagTouched?
+        if not c.flag_touched?
           ## Tag wurde noch nicht manuell bearbeitet
           # -> Tag updaten
-          c.numberOfCups = consumption_model.get_cups_for_weekday(c.day)
+          c.number_of_cups = consumption_model.get_cups_for_weekday(c.day)
           c.save
         end
       end
@@ -38,22 +38,22 @@ class ModelOfConsumption < ActiveRecord::Base
 
   # Gibt die Anzahl der Tassen zurück, die laut Konsummodell an diesem Tag konsumiert werden.
   def get_cups_for_weekday(date)
-    if (date.wday == 1)
-      return self.mo
-    elsif (date.wday == 2)
-      return self.tue
-    elsif (date.wday == 3)
-      return self.wed
-    elsif (date.wday == 4)
-      return self.th
-    elsif (date.wday == 5)
-      return self.fr
-    elsif (date.wday == 6)
-      return self.sa
-    elsif (date.wday == 0)
-      return self.su
+    if date.wday == 1
+      self.mo
+    elsif date.wday == 2
+      self.tue
+    elsif date.wday == 3
+      self.wed
+    elsif date.wday == 4
+      self.th
+    elsif date.wday == 5
+      self.fr
+    elsif date.wday == 6
+      self.sa
+    elsif date.wday == 0
+      self.su
     else
-      return 0
+       0
     end
   end
 end

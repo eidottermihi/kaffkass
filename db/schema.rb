@@ -11,11 +11,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121231135832) do
+ActiveRecord::Schema.define(:version => 20130102153241) do
 
   create_table "bills", :force => true do |t|
     t.decimal  "value",         :precision => 8, :scale => 2
-    t.boolean  "isPaid"
+    t.boolean  "is_paid"
     t.datetime "created_at",                                  :null => false
     t.datetime "updated_at",                                  :null => false
     t.integer  "user_id"
@@ -36,13 +36,13 @@ ActiveRecord::Schema.define(:version => 20121231135832) do
 
   create_table "consumptions", :force => true do |t|
     t.date     "day"
-    t.integer  "numberOfCups"
-    t.boolean  "flagTouched"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.integer  "number_of_cups"
+    t.boolean  "flag_touched"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
     t.integer  "user_id"
     t.integer  "coffee_box_id"
-    t.boolean  "flagDisabled"
+    t.boolean  "flag_disabled"
     t.boolean  "flag_holiday"
   end
 

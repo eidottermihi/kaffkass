@@ -9,7 +9,7 @@
   </tr>
 
   <% @bills.each do |bill| %>
-      <% if  (!bill.isPaid) %>
+      <% if  (!bill.is_paid) %>
           <tr>
             <td><%= bill.user.email %></td>
             <td><%= number_to_currency bill.value, :unit => "&euro;", :separator => ",", :precision => 2 %></td>
