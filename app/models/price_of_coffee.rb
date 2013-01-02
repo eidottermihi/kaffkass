@@ -30,10 +30,12 @@ class PriceOfCoffee < ActiveRecord::Base
       coffee_box.bills.where(coffee_box_id: coffee_box, date: from .. to).each do |einnahme|
         einnahmen += einnahme.value
       end
-      # Ausgaben aufsummieren
+      # Ausgaben aufsummieren, Expense als abgerechnet markieren
       ausgaben = 0
       coffee_box.expenses.where(coffee_box_id: coffee_box, flag_abgerechnet: false).each do |ausgabe|
         ausgaben += ausgabe.value
+        ausgabe.flag_abgerechnet = true
+        ausgabe.save
       end
       # Neuer Kassenstand = Alter Kassenstand - Ausgaben + Einnahmen
       coffee_box.cash_position = coffee_box.cash_position - ausgaben + einnahmen

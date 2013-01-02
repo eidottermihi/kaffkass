@@ -61,17 +61,17 @@ class ConsumptionsController < ApplicationController
 
 
   def close_month
-    #Monat der im Kalender ausgewählt ist
+    # Monat der im Kalender ausgewählt ist
     @date = params[:month] ? Date.parse(params[:month]) : Date.today
-    #Aktuelle coffee_box
+    # Aktuelle coffee_box
     @coffee_box = CoffeeBox.find(params[:coffee_box_id])
-    #abschließen nur möglich wenn auch ein price besteht
+    # Abschließen nur möglich wenn auch ein price besteht
     if (@coffee_box.price_of_coffees.where(date: @date.beginning_of_month .. @date.end_of_month).exists?)
       Bill.new.create_bill_for_month(@date, current_user, @coffee_box)
       PriceOfCoffee.new.create_price_for_next_month(@date, @coffee_box)
     end
     respond_to do |format|
-      format.html { redirect_to coffee_box_consumptions_url(month: @date.strftime("%Y/%m")) }
+      format.html { redirect_to coffee_box_consumptions_url(month: @date.strftime("%Y/%m")), notice: 'Monat erfolgreich abgeschlossen.' }
       format.json { head :no_content }
     end
   end

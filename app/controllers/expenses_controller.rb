@@ -77,7 +77,7 @@ class ExpensesController < ApplicationController
         format.html { redirect_to coffee_box_path(@coffee_box), notice: "Zugriff verweigert." }
         format.json { render json: 'Access denied' }
       elsif @expense.save
-        format.html { redirect_to coffee_box_expense_path(@coffee_box, @expense), notice: 'Die Ausgabe wurde gespeichert.' }
+        format.html { redirect_to coffee_box_expenses_path(@coffee_box), notice: 'Die Ausgabe wurde gespeichert.' }
         format.json { render json: @expense, status: :created, location: @expense }
       else
         format.html { render action: "new" }

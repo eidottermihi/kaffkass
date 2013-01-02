@@ -45,4 +45,18 @@ class Holiday < ActiveRecord::Base
     end
   end
 
+  # Löscht den Urlaub, wenn möglich.
+  def delete_holiday
+    # Wenn Bills im Zeitraum des Urlaubs existieren, wurde ein Monat bereits abgeschlossen,
+    # d.h. Urlaub kann nicht mehr gelöscht werden.
+    min = self.beginning.beginning_of_month
+    max = self.till.end_of_month
+    if Bill.where(user_id: self.user.id, date: min..max).exists?
+      false
+    else
+      self.destroy
+      true
+    end
+  end
+
 end

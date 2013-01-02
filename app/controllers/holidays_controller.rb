@@ -1,36 +1,24 @@
+# encoding: utf-8
 class HolidaysController < ApplicationController
 
   load_and_authorize_resource :user
   load_and_authorize_resource :holiday, :through => :user
 
-  # GET /users/:user_id/holidays
-  # GET /users/:user_id/holidays.json
   def index
-    #@holidays = Holiday.all
-
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @holidays }
     end
   end
 
-  # GET /holidays/new
-  # GET /holidays/new.json
   def new
-    #@holiday = Holiday.new
-
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @holiday }
     end
   end
 
-  # POST /holidays
-  # POST /holidays.json
   def create
-    #@holiday = Holiday.new(params[:holiday])
-
-
     respond_to do |format|
       if Holiday.new_holiday(@holiday)
         format.html { redirect_to user_holidays_path(@user), notice: 'Urlaub wurde erfolgreich eingetragen.' }
@@ -42,15 +30,16 @@ class HolidaysController < ApplicationController
     end
   end
 
-
-  # DELETE /holidays/1
-  # DELETE /holidays/1.json
   def destroy
     @holiday = Holiday.find(params[:id])
-    @holiday.destroy
     respond_to do |format|
-      format.html { redirect_to user_holidays_url(@user) }
-      format.json { head :no_content }
+      if @holiday.delete_holiday
+        format.html { redirect_to user_holidays_url(@user), notice: 'Urlaub wurde erfolgreich gelöscht.' }
+        format.json { head :no_content }
+      else
+        format.html { redirect_to user_holidays_path(@user), notice: 'Urlaub kann nicht gelöscht werden, Monat bereits abgeschlossen.'}
+        format.json { render json: @holiday.errors, status: :unprocessable_entity}
+      end
     end
   end
 end
