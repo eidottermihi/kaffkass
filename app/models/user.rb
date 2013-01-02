@@ -68,4 +68,9 @@ class User < ActiveRecord::Base
     end
     return false
   end
+
+  # Liefert ein Array mit noch nicht bezahlten Bills des Users zurück.
+  def get_open_bills
+    self.bills.where(isPaid: false)
+  end
 end

@@ -24,7 +24,7 @@ class BillsController < ApplicationController
     @bill.isPaid=true
     @bill.save
 
-    redirect_to coffee_box_bills_path(@coffee_box.id)
+    redirect_to coffee_box_bills_path(@coffee_box.id), notice: "Rechnung wurde als bezahlt markiert."
   end
 
 end

@@ -1,24 +1,23 @@
+# encoding: utf-8
 class Notifier < ActionMailer::Base
 
   def activation_instructions(user)
     @user = user
     mail(to: user.email, from: 'no-reply@kaffkass.com',
-         subject: "Activation Instructions")
+         subject: "KaffKass Accountaktivierung")
   end
 
   def welcome(user)
     @user = user
     mail(to: user.email, from: 'no-reply@kaffkass.com',
-         subject: "Welcome to KaffKass")
+         subject: "Willkommen bei KaffKass!")
   end
 
-  def bill(bill,user)
+  def bill(bill, user)
     @user = user
     @bill = bill
     mail(to: user.email, from: 'no-reply@kaffkass.com',
-         subject: "Bill for #{bill.date}")
+         subject: "KaffKass - Rechnung für #{bill.date}")
   end
-
-
 
 end

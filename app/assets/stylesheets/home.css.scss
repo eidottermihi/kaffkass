@@ -276,3 +276,28 @@ label {
 .textlink {
   cursor: pointer;
 }
+
+.button {
+  margin: 0px;
+}
+
+.open_close {
+  text-align: center;
+  background-color: $light_brown;
+  color: $black;
+  text-decoration: none;
+}
+
+.open_close:hover {
+  background: $coffee;
+  color: $white;
+}
+
+.active {
+  background: $coffee;
+  color: $white;
+}
+
+#security_info {
+  display: none;
+}

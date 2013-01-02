@@ -5,9 +5,9 @@
  * Time: 08:35
  * To change this template use File | Settings | File Templates.
  */
-(function($) {
-    $.fn.toggleDisabled = function(){
-        return this.each(function(){
+(function ($) {
+    $.fn.toggleDisabled = function () {
+        return this.each(function () {
             this.disabled = !this.disabled;
         });
     };
@@ -25,12 +25,18 @@ $(document).ready(function () {
     }, 15000)
 
     // Wochenfelder ausgrauen, wenn kein Konsummodell angegeben wird
-    $("#no_consumption_model[type='checkbox']").click(function() {
+    $("#no_consumption_model[type='checkbox']").click(function () {
         $("[id^=model_of_consumption]").toggleDisabled()
     });
-    //Bländet das load.gif beim aufrufen des nächsten monats der consumptions ein
-    $(document).on("click","a.loader",function () {
+    //Blendet das load.gif beim Aufrufen des nächsten monats der consumptions ein
+    $(document).on("click", "a.loader", function () {
         $("#loadGif").show();
+    });
+
+    // Ein/Ausblende-Toggle im Userprofil
+    $(".open_close").on("click", function () {
+        $("#security_info").slideToggle("medium");
+        $(this).toggleClass("active");
     });
 
 });

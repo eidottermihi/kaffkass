@@ -1,37 +1,94 @@
 <fieldset>
   <legend>Benutzerprofil</legend>
   <div class="info">
-    <p>
-      <b>Email:</b>
-      <%= @user.email %>
-    </p>
+    <h3>Hallo, <%= @user.fullname %>!</h3>
 
-    <p>
-      <b>Login count:</b>
-      <%= @user.login_count %>
-    </p>
+    <table id="ktable">
+      <thead>
+      <tr>
+        <th colspan="2">Ihre Daten</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <th>Vorname</th>
+        <td><%= @user.firstname %></td>
+      </tr>
+      <tr>
+        <th>Nachname</th>
+        <td><%= @user.lastname %></td>
+      </tr>
+      <tr>
+        <th>E-Mail</th>
+        <td><%= @user.email %></td>
+      </tr>
+      <tr>
+        <th>Mitglied seit</th>
+        <td><%= l @user.created_at %></td>
+      </tr>
+      <tr>
+        <th>Status</th>
+        <td><%= @user.active? ? "Aktiviert" : "Nicht aktiviert" %></td>
+      </tr>
+      </tbody>
+    </table>
 
-    <p>
-      <b>Letzte Anfrage:</b>
-      <%= l @user.last_request_at, format: :short %>
-    </p>
+    <br/>
+
+    <% if not @user.get_open_bills.empty? %>
+        <h3>Offene Rechnungen</h3>
+        <table id="ktable">
+          <thead>
+            <tr>
+              <th>Kaffeerunde</th>
+              <th>Datum</th>
+              <th>Betrag</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @user.get_open_bills.each do |bill| %>
+                <tr>
+                  <td><%= link_to bill.coffee_box.location, coffee_box_path(bill.coffee_box) %></td>
+                  <td><%= l bill.date %></td>
+                  <td><%= number_to_currency bill.value %></td>
+                </tr>
+            <% end %>
+          </tbody>
+        </table>
+    <% end %>
+
+    <br/>
+
+    <p class="button"><a href="#" class="open_close">[+] Sicherheitsinformationen</a></p>
+
+    <div id="security_info">
+      <p>
+        <b>Login-Anzahl:</b>
+        <%= @user.login_count %>
+      </p>
+
+      <p>
+        <b>Letzte Anfrage:</b>
+        <%= l @user.last_request_at, format: :short %>
+      </p>
 
 
+      <p>
+        <b>Aktueller Login:</b>
+        <%= l @user.current_login_at, format: :short %>
+      </p>
 
-    <p>
-      <b>Aktueller Login:</b>
-      <%= l @user.current_login_at, format: :short %>
-    </p>
+      <p>
+        <b>Letzte Login IP:</b>
+        <%= @user.last_login_ip %>
+      </p>
 
-    <p>
-      <b>Letzte Login IP:</b>
-      <%= @user.last_login_ip %>
-    </p>
+      <p>
+        <b>Aktuelle Login IP:</b>
+        <%= @user.current_login_ip %>
+      </p>
+    </div>
 
-    <p>
-      <b>Aktuelle Login IP:</b>
-      <%= @user.current_login_ip %>
-    </p>
   </div>
   <div class="actions right">
     <ul>

@@ -1,0 +1,23 @@
+de:
+  authlogic:
+    error_messages:
+      login_blank: darf nicht leer sein.
+      login_not_found: ist nicht valide.
+      login_invalid: darf nur Buchstaben, Ziffern und .-_@ enthalten.
+      consecutive_failed_logins_limit_exceeded: Maximale Anzahl an Login-Versuchen erreicht, Account deaktiviert.
+      email_invalid: ist keine gültige E-Mail-Adresse.
+      password_blank: darf nicht leer sein.
+      password_invalid: ist nicht valide.
+      not_active: Ihr Account ist nicht aktiviert.
+      not_confirmed: Ihr Account wurde noch nicht bestätigt.
+      not_approved: Ihr Account wurde noch nicht bestätigt.
+      no_authentication_details: Sie haben keine Informationen zu Ihrer Authentifizierung spezifiziert.
+      general_credentials_error: E-Mail/Passwort-Kombination nicht gefunden.
+    models:
+      user_session: Anmeldung
+    attributes:
+      user_session:
+        login: Login
+        email: E-Mail
+        password: Passwort
+        remember_me: Dauerhaft anmelden

@@ -132,9 +132,18 @@ class CoffeeBox < ActiveRecord::Base
   # Liefert einen Hash mit zwei Arrays. Der Hash enthält für jeden abgerechneten Monat die Summe aller Einnahmen und
   # die Summe aller Ausgaben der Kaffeerunde.
   def get_expenses_data
-    # Alle abgerechneten Monate ermitteln (sind Monate mit Kaffeepreis)
+    # Alle abgerechneten Monate ermitteln (sind alle Monate bis auf den letzten Eintrag mit Kaffeepreis)
     months = Array.new
-    self.price_of_coffees.each do |price|
+    all_months = self.price_of_coffees.order("date DESC").all
+    length = all_months.length
+    if length > 0
+      logger.debug all_months
+      # Erstes Element entfernen = letzter Monat
+      all_months.shift
+      all_months.reverse!
+      logger.debug all_months
+    end
+    all_months.each do |price|
       months.append price.date
     end
     data = Hash.new
