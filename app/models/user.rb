@@ -62,15 +62,15 @@ class User < ActiveRecord::Base
     # Kaffeerunden holen
     coffee_boxes = self.coffee_boxes.all
     coffee_boxes.each do |c|
-      if(c.id == coffee_box.id)
+      if c.id == coffee_box.id
         return true
       end
     end
-    return false
+    false
   end
 
   # Liefert ein Array mit noch nicht bezahlten Bills des Users zurück.
   def get_open_bills
-    self.bills.where(isPaid: false)
+    self.bills.where(is_paid: false)
   end
 end

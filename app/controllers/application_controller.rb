@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
       store_location
       flash[:notice] = "Sie müssen angemeldet sein, um diese Seite zu sehen."
       redirect_to new_user_session_url
-      return false
+      false
     end
   end
 
@@ -33,7 +33,7 @@ class ApplicationController < ActionController::Base
       store_location
       flash[:notice] = "Sie müssen abgemeldet sein, um diese Seite zu sehen."
       redirect_to account_url
-      return false
+      false
     end
   end
 

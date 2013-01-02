@@ -111,7 +111,7 @@ class CoffeeBox < ActiveRecord::Base
     day_min = Date.new(year, month, 1)
     day_max = day_min.end_of_month
     consumes = Array.new
-    c = self.consumptions.select("date(day) as day, sum(numberOfCups) as total_cups").where("day >= :day_min and day <= :day_max", {day_min: day_min, day_max: day_max}).group("date(day)")
+    c = self.consumptions.select("date(day) as day, sum(number_of_cups) as total_cups").where("day >= :day_min and day <= :day_max", {day_min: day_min, day_max: day_max}).group("date(day)")
     c.each do |res|
       consume = Array.new
       # X-Wert ist Zeitstempel des Tages (in ms, UTC) => Addiere 1 Stunden für Zeitzone Berlin
@@ -197,7 +197,7 @@ class CoffeeBox < ActiveRecord::Base
       username = User.find(participant_id).fullname
       hash["name"] = username
       logger.debug "## Summiere Kaffeetassen für User #{username}"
-      sum = self.consumptions.where(user_id: participant_id, day: min .. max_date ).sum("numberOfCups")
+      sum = self.consumptions.where(user_id: participant_id, day: min .. max_date ).sum("number_of_cups")
       data = Array.new
       data.push(sum)
       hash["data"] = data

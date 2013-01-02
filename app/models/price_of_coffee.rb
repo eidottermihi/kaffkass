@@ -57,7 +57,7 @@ class PriceOfCoffee < ActiveRecord::Base
     from = date.beginning_of_month
     to = date.end_of_month
     # Tassenkonsum des letzten Monats herausfinden
-    sum_cups = coffee_box.consumptions.where(day: from .. to).sum(:numberOfCups)
+    sum_cups = coffee_box.consumptions.where(day: from .. to).sum(:number_of_cups)
     # Annahme: Ausgaben bleiben im neuen Monat gleich
     # Annahme: Tassenkonsum bleibt im neuen Monat gleich
     # Neuer Tassenpreis: ((Ausgaben + Saldo) - Kassenstand ) / Anzahl Tassen letzter Monat
