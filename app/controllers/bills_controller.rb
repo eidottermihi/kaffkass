@@ -21,7 +21,7 @@ class BillsController < ApplicationController
 
     authorize! :mark_as_paid, @bill
 
-    @bill.isPaid=true
+    @bill.is_paid=true
     @bill.save
 
     redirect_to coffee_box_bills_path(@coffee_box.id), notice: "Rechnung wurde als bezahlt markiert."

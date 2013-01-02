@@ -17,12 +17,12 @@ class Holiday < ActiveRecord::Base
       participations.each do |p|
         consumptions = Consumption.where(user_id: holiday.user_id, coffee_box_id: p.coffee_box).all
         consumptions.each do |c|
-          if not c.flagDisabled?
+          if not c.flag_disabled?
             # Tag wurde noch nicht abgerechnet, d.h. noch nicht disabled
             if c.day.between? holiday.beginning, holiday.till
               # Consumption liegt im Urlaub
               c.flag_holiday = true
-              c.numberOfCups = 0
+              c.number_of_cups = 0
               c.save
             end
           end

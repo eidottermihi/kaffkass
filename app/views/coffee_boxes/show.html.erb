@@ -37,7 +37,7 @@
                     data: <%= @coffee_box.get_cup_price_data.inspect %>
                 }
             ]
-        })
+        });
 
         // Einnahmen / Ausgaben
         coffee_income_expense_chart = new Highcharts.Chart({
@@ -72,7 +72,7 @@
                     data: <%= @coffee_box.get_expenses_data[:expenses].inspect %>
                 }
             ]
-        })
+        });
 
         // Coffee-Cup-Consume Chart
         var consume_chart_options = {
@@ -103,7 +103,7 @@
                     data: <%= @coffee_box.get_coffee_cup_consume_data(@month, @year).inspect %>
                 }
             ]
-        }
+        };
 
         coffee_cup_consume_chart = new Highcharts.Chart(consume_chart_options);
 

@@ -9,7 +9,7 @@ class ModelOfConsumptionsController < ApplicationController
 
   def create
     @coffee_box = CoffeeBox.find(params[:coffee_box_id])
-    if (params[:no_consumption_model])
+    if params[:no_consumption_model]
       redirect_to coffee_boxes_path, notice: "Kein Konsummodell hinterlegt."
     else
       @model_of_consumption = current_user.model_of_consumptions.build(params[:model_of_consumption])

@@ -2,8 +2,8 @@
 
 one:
   value: 1.5
-  isPaid: false
+  is_paid: false
 
 two:
   value: 1.5
-  isPaid: false
+  is_paid: false
