@@ -1,10 +1,3 @@
-/**
- * Created with JetBrains RubyMine.
- * User: ruby
- * Date: 15.11.12
- * Time: 08:35
- * To change this template use File | Settings | File Templates.
- */
 (function ($) {
     $.fn.toggleDisabled = function () {
         return this.each(function () {
@@ -35,7 +28,7 @@ $(document).ready(function () {
 
     // Ein/Ausblende-Toggle im Userprofil
     $(".open_close").on("click", function () {
-        $("#security_info").slideToggle("medium");
+        $("#security_info").slideToggle("slow");
         $(this).toggleClass("active");
     });
 
