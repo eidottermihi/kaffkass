@@ -46,12 +46,12 @@ Expense.create(coffee_box: kf1, user: user_obi, flag_abgerechnet: false, item: "
 Expense.create(coffee_box: kf1, user: user_han, flag_abgerechnet: false, item: "Kaffeemilch", value: "7.29", date: Date.today())
 
 # Ersten Monat abschließen
-Bill.new.create_bill_for_month(Date.today(), user_admin, kf1)
-Bill.new.create_bill_for_month(Date.today(), user_luke, kf1)
-Bill.new.create_bill_for_month(Date.today(), user_han, kf1)
-Bill.new.create_bill_for_month(Date.today(), user_obi, kf1)
+Bill.create_bill_for_month(Date.today(), user_admin, kf1)
+Bill.create_bill_for_month(Date.today(), user_luke, kf1)
+Bill.create_bill_for_month(Date.today(), user_han, kf1)
+Bill.create_bill_for_month(Date.today(), user_obi, kf1)
 # Neuen Preis erzeugen
-PriceOfCoffee.new.create_price_for_next_month(Date.today(), kf1)
+PriceOfCoffee.create_price_for_next_month(Date.today(), kf1)
 
 
 
