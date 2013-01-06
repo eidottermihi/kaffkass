@@ -9,7 +9,7 @@ class PriceOfCoffee < ActiveRecord::Base
 
   # Erzeugt einen neuen Tassenpreis. Der neue Tassenpreis wird nur erzeugt, wenn alle Teilnehmer der Kaffeerunde
   # den akt. Monat abgeschlossen haben, d.h. das für jeden Teilnehmer für den letzten Monat eine Bill existiert.
-  def create_price_for_next_month(date, coffee_box)
+  def self.create_price_for_next_month(date, coffee_box)
     from = date.beginning_of_month
     to = date.end_of_month
     #Prüfe ob jetzt im Monat für jeden User der Coffeebox eine Bill existiert..
@@ -25,20 +25,22 @@ class PriceOfCoffee < ActiveRecord::Base
     # Wenn alle Teilnehmer den Monat abgeschlossen haben und noch kein Preis für den nächsten Monat berechnet wurde, berechne ihn
     if all_bills_exist and not coffee_box.price_of_coffees.where(date: next_month.beginning_of_month .. next_month.end_of_month).exists?
       #Passe neuen Kassenstand an
-      # Einnahmen aus Rechnungen summieren
-      einnahmen = 0
+      # Einnahmen bzw. Ausgaben aus Rechnungen summieren
+      rechnungsbetraege = 0
       coffee_box.bills.where(coffee_box_id: coffee_box, date: from .. to).each do |einnahme|
-        einnahmen += einnahme.value
+        rechnungsbetraege += einnahme.value
       end
       # Ausgaben aufsummieren, Expense als abgerechnet markieren
       ausgaben = 0
-      coffee_box.expenses.where(coffee_box_id: coffee_box, flag_abgerechnet: false).each do |ausgabe|
+      coffee_box.expenses.where(coffee_box_id: coffee_box, flag_abgerechnet: nil).each do |ausgabe|
+        logger.debug "## Ausgabe #{ausgabe.value}"
         ausgaben += ausgabe.value
         ausgabe.flag_abgerechnet = true
         ausgabe.save
       end
-      # Neuer Kassenstand = Alter Kassenstand - Ausgaben + Einnahmen
-      coffee_box.cash_position = coffee_box.cash_position - ausgaben + einnahmen
+      # Neuer Kassenstand = Alter Kassenstand + rechnungsbetraege
+      logger.debug "Kassenstand #{coffee_box.cash_position} -## Rechungssumme #{rechnungsbetraege}"
+      coffee_box.cash_position = coffee_box.cash_position + rechnungsbetraege
       coffee_box.save
 
       # Berechne neuen Preis
@@ -52,7 +54,7 @@ class PriceOfCoffee < ActiveRecord::Base
 
 
   # Berechnet anhand der Ausgaben des letzten Monats den neuen Tassenpreis.
-  def calculate_new_price(date, coffee_box, ausgaben)
+  def self.calculate_new_price(date, coffee_box, ausgaben)
     logger.debug "## Berechne neuen Preis für CoffeeBox #{coffee_box.id}"
     from = date.beginning_of_month
     to = date.end_of_month
@@ -62,6 +64,9 @@ class PriceOfCoffee < ActiveRecord::Base
     # Annahme: Tassenkonsum bleibt im neuen Monat gleich
     # Neuer Tassenpreis: ((Ausgaben + Saldo) - Kassenstand ) / Anzahl Tassen letzter Monat
     new_price = ((ausgaben + coffee_box.saldo) - coffee_box.cash_position) / sum_cups
+    logger.debug "## Ausgaben: #{ausgaben}"
+    logger.debug "## Saldo: #{coffee_box.saldo}"
+    logger.debug "## Kassenstand: #{coffee_box.cash_position}"
     logger.debug "## Neuer Preis: #{new_price}"
     if new_price > 0
       new_price

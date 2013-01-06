@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   validates :firstname, :presence => true
   validates :lastname, :presence => true
   validates :email, :presence => true, :uniqueness => true
+  validates_format_of :password, :with => /^(?=.*\d)(?=.*([a-z]|[A-Z]))([\x20-\x7E]){4,}$/, :if => :require_password?, :message => "muss mindestens eine Nummer und einen Buchstaben enthalten"
 
   ## Beziehungen
   # Rechnungen

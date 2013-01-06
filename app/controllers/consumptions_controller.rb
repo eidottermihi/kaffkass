@@ -67,8 +67,8 @@ class ConsumptionsController < ApplicationController
     @coffee_box = CoffeeBox.find(params[:coffee_box_id])
     # Abschließen nur möglich wenn auch ein price besteht
     if @coffee_box.price_of_coffees.where(date: @date.beginning_of_month .. @date.end_of_month).exists?
-      Bill.new.create_bill_for_month(@date, current_user, @coffee_box)
-      PriceOfCoffee.new.create_price_for_next_month(@date, @coffee_box)
+      Bill.create_bill_for_month(@date, current_user, @coffee_box)
+      PriceOfCoffee.create_price_for_next_month(@date, @coffee_box)
     end
     respond_to do |format|
       format.html { redirect_to coffee_box_consumptions_url(month: @date.strftime("%Y/%m")), notice: 'Monat erfolgreich abgeschlossen.' }

@@ -2,7 +2,7 @@ class Consumption < ActiveRecord::Base
   belongs_to :user
   belongs_to :coffee_box
 
-  ## Validierungen
+  # Validierungen
   validates :number_of_cups, :numericality => {:only_integer => true}
 
   #Legt für einen Monat und User und Kaffee_box alle Consumptions an.

@@ -4,10 +4,10 @@
 # Bei Rake db:setup werden Seeds ebenfalls eingespielt
 
 # User
-user_admin = User.create(firstname: "Darth", lastname: "Vader", email: "admin@kaffkass.com", password: "cisco", password_confirmation: "cisco", admin: "true", active:"true")
-user_luke = User.create(firstname: "Luke", lastname: "Skywalker", email: "luke@kaffkass.com", password: "cisco", password_confirmation: "cisco", active:"true")
-user_han = User.create(firstname: "Han", lastname: "Solo", email: "han@kaffkass.com", password: "cisco", password_confirmation: "cisco", active:"true")
-user_obi = User.create(firstname: "Obi-Wan", lastname: "Kenobi", email: "obi-wan@kaffkass.com", password: "cisco", password_confirmation: "cisco", active:"true")
+user_admin = User.create(firstname: "Darth", lastname: "Vader", email: "admin@kaffkass.com", password: "cisco1", password_confirmation: "cisco1", admin: "true", active:"true")
+user_luke = User.create(firstname: "Luke", lastname: "Skywalker", email: "luke@kaffkass.com", password: "cisco1", password_confirmation: "cisco1", active:"true")
+user_han = User.create(firstname: "Han", lastname: "Solo", email: "han@kaffkass.com", password: "cisco1", password_confirmation: "cisco1", active:"true")
+user_obi = User.create(firstname: "Obi-Wan", lastname: "Kenobi", email: "obi-wan@kaffkass.com", password: "cisco1", password_confirmation: "cisco1", active:"true")
 
 # Kaffeerunden
 kf1 = CoffeeBox.create(location: "Zr. 205", time: "2012-01-01 09:00:00", description: "Gemütliche Kaffeerunde!", saldo: 5.00, cash_position: 0)
