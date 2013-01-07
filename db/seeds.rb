@@ -41,9 +41,15 @@ ModelOfConsumption.create(coffee_box: kf1, user: user_obi, mo: 2, tue: 0, wed: 1
 Consumption.create_month(Date.today(), user_obi, kf1)
 
 # Expense eintragen
-Expense.create(coffee_box: kf1, user: user_admin, flag_abgerechnet: false, item: "Kaffeepulver", value: "19.90", date: Date.today())
-Expense.create(coffee_box: kf1, user: user_obi, flag_abgerechnet: false, item: "Filterpapier", value: "3.30", date: Date.today())
-Expense.create(coffee_box: kf1, user: user_han, flag_abgerechnet: false, item: "Kaffeemilch", value: "7.29", date: Date.today())
+e1 = 19.9
+e2 = 5.3
+e3 = 12.29
+sum_e = e1 + e2 + e3
+Expense.create(coffee_box: kf1, user: user_admin, flag_abgerechnet: false, item: "Kaffeepulver", value: e1, date: Date.today())
+Expense.create(coffee_box: kf1, user: user_obi, flag_abgerechnet: false, item: "Filterpapier", value: e2, date: Date.today())
+Expense.create(coffee_box: kf1, user: user_han, flag_abgerechnet: false, item: "Kaffeemilch", value: e3, date: Date.today())
+kf1.cash_position = kf1.cash_position - sum_e
+kf1.save
 
 # Ersten Monat abschließen
 Bill.create_bill_for_month(Date.today(), user_admin, kf1)

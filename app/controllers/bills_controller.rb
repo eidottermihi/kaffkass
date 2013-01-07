@@ -15,14 +15,15 @@ class BillsController < ApplicationController
   end
 
   def mark_as_paid
-
     @coffee_box = CoffeeBox.find(params[:coffee_box_id])
     @bill = @coffee_box.bills.where(coffee_box_id: @coffee_box).find(params[:id])
-
     authorize! :mark_as_paid, @bill
 
     @bill.is_paid=true
     @bill.save
+    # Neuer Kassenstand: alter Kassenstand + Rechnungssumme die bezahlt wurde
+    @coffee_box.cash_position = @coffee_box.cash_position + @bill.value
+    @coffee_box.save
 
     redirect_to coffee_box_bills_path(@coffee_box.id), notice: "Rechnung wurde als bezahlt markiert."
   end

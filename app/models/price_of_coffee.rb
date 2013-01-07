@@ -24,23 +24,14 @@ class PriceOfCoffee < ActiveRecord::Base
     next_month = date>>1
     # Wenn alle Teilnehmer den Monat abgeschlossen haben und noch kein Preis für den nächsten Monat berechnet wurde, berechne ihn
     if all_bills_exist and not coffee_box.price_of_coffees.where(date: next_month.beginning_of_month .. next_month.end_of_month).exists?
-      #Passe neuen Kassenstand an
-      # Einnahmen bzw. Ausgaben aus Rechnungen summieren
-      rechnungsbetraege = 0
-      coffee_box.bills.where(coffee_box_id: coffee_box, date: from .. to).each do |einnahme|
-        rechnungsbetraege += einnahme.value
-      end
       # Ausgaben aufsummieren, Expense als abgerechnet markieren
       ausgaben = 0
-      coffee_box.expenses.where(coffee_box_id: coffee_box, flag_abgerechnet: nil).each do |ausgabe|
+      coffee_box.expenses.where(coffee_box_id: coffee_box, flag_abgerechnet: false).each do |ausgabe|
         logger.debug "## Ausgabe #{ausgabe.value}"
         ausgaben += ausgabe.value
         ausgabe.flag_abgerechnet = true
         ausgabe.save
       end
-      # Neuer Kassenstand = Alter Kassenstand + rechnungsbetraege
-      logger.debug "Kassenstand #{coffee_box.cash_position} -## Rechungssumme #{rechnungsbetraege}"
-      coffee_box.cash_position = coffee_box.cash_position + rechnungsbetraege
       coffee_box.save
 
       # Berechne neuen Preis
@@ -60,10 +51,13 @@ class PriceOfCoffee < ActiveRecord::Base
     to = date.end_of_month
     # Tassenkonsum des letzten Monats herausfinden
     sum_cups = coffee_box.consumptions.where(day: from .. to).sum(:number_of_cups)
+    # Summe offener Rechnungen
+    sum_open_bills = coffee_box.bills.where(is_paid: false).sum(:value)
     # Annahme: Ausgaben bleiben im neuen Monat gleich
     # Annahme: Tassenkonsum bleibt im neuen Monat gleich
-    # Neuer Tassenpreis: ((Ausgaben + Saldo) - Kassenstand ) / Anzahl Tassen letzter Monat
-    new_price = ((ausgaben + coffee_box.saldo) - coffee_box.cash_position) / sum_cups
+    # Annhame: offene Rechnungen werden noch bezahlt
+    # Neuer Tassenpreis: ((Ausgaben + Saldo) - (Kassenstand + Summe offener Rechnungen )) / Anzahl Tassen letzter Monat
+    new_price = ((ausgaben + coffee_box.saldo) - (coffee_box.cash_position + sum_open_bills)) / sum_cups
     logger.debug "## Ausgaben: #{ausgaben}"
     logger.debug "## Saldo: #{coffee_box.saldo}"
     logger.debug "## Kassenstand: #{coffee_box.cash_position}"

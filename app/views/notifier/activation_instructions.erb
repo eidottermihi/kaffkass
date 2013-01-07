@@ -1,5 +1,10 @@
-Thank you for creating an account! Click the url below to activate your account!
+<html>
+<p>
 
-localhost:3000<%= @account_activation_path %><%= activate_path(@user.persistence_token) %>
+Vielen Dank für Ihre Registrierung! Klicken sie auf folgende URL, um Ihren Account zu aktivieren: <br/> <br/>
 
-If the above URL does not work try copying and pasting it into your browser. If you continue to have problem, please feel free to contact us.
+<a href="http://localhost:3000<%= @account_activation_path %><%= activate_path(@user.persistence_token) %>">http://localhost:3000<%= @account_activation_path %><%= activate_path(@user.persistence_token) %></a> <br/> <br/>
+
+Sollte der Link nicht funktionieren, versuchen Sie den Link zu kopieren und in die Adresszeile Ihres Browser einzufügen.
+</p>
+</html>
