@@ -26,7 +26,7 @@ class PriceOfCoffee < ActiveRecord::Base
     if all_bills_exist and not coffee_box.price_of_coffees.where(date: next_month.beginning_of_month .. next_month.end_of_month).exists?
       # Ausgaben aufsummieren, Expense als abgerechnet markieren
       ausgaben = 0
-      coffee_box.expenses.where(coffee_box_id: coffee_box, flag_abgerechnet: false).each do |ausgabe|
+      coffee_box.expenses.where(coffee_box_id: coffee_box, date: from .. to,flag_abgerechnet: false).each do |ausgabe|
         logger.debug "## Ausgabe #{ausgabe.value}"
         ausgaben += ausgabe.value
         ausgabe.flag_abgerechnet = true

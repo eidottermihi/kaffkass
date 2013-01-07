@@ -37,7 +37,7 @@ class Ability
       # User kann Ausgaben eintragen
       # -> manuell im Controller
       # Verwalter einer Kaffeerunde kann Bills als bezahlt markieren
-      can :mark_as_paid, Bill if user.administrated_coffee_box_ids.include?(:coffee_box_id)
+      #can :mark_as_paid, Bill if user.administrated_coffee_box_ids.include?(:coffee_box_id)
       # User kann eigene Consumptions bearbeiten
       can [:edit, :update, :index], Consumption, :user_id => user.id
     end

@@ -17,7 +17,7 @@ class Bill < ActiveRecord::Base
       @bill.date = date
 
       sum_cups = current_user.consumptions.where(coffee_box_id: coffee_box, day: from .. to).sum(:number_of_cups)
-      sum_ausgaben = current_user.expenses.where(coffee_box_id: coffee_box, flag_abgerechnet: nil).sum(:value)
+      sum_ausgaben = current_user.expenses.where(coffee_box_id: coffee_box, date: from .. to,flag_abgerechnet: false).sum(:value)
       price = coffee_box.price_of_coffees.where(date: from .. to).first
       #Preis berechnen
       @bill.value = sum_cups * price.price - sum_ausgaben
