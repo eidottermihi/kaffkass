@@ -5,18 +5,22 @@
     <th>E-Mail</th>
     <th>Betrag</th>
     <th>Datum</th>
+    <th>Bezahlt?</th>
     <th></th>
   </tr>
 
   <% @bills.each do |bill| %>
-      <% if  (!bill.is_paid) %>
-          <tr>
-            <td><%= bill.user.email %></td>
-            <td><%= number_to_currency bill.value, :unit => "&euro;", :separator => ",", :precision => 2 %></td>
-            <td><%= bill.date %></td>
-            <td><%= link_to 'Als bezahlt markieren', mark_as_paid_path(@coffee_box.id, bill.id), confirm: 'Sind Sie sicher?'%></td>
-          </tr>
-      <% end %>
+      <tr>
+        <td><%= bill.user.email %></td>
+        <td><%= number_to_currency bill.value, :unit => "&euro;", :separator => ",", :precision => 2 %></td>
+        <td><%= bill.date %></td>
+        <td><%= (bill.is_paid? ? "ja" : "nein") %></td>
+        <td>
+          <% if can? :mark_as_paid, bill %>
+              <%= link_to 'Als bezahlt markieren', mark_as_paid_path(@coffee_box.id, bill.id), confirm: 'Sind Sie sicher?' %>
+          <% end %>
+        </td>
+      </tr>
   <% end %>
 </table>
 

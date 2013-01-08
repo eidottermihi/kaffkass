@@ -34,10 +34,16 @@ class Ability
       can [:participate, :unparticipate, :new_participate], CoffeeBox
       # User kann für sich selbst Urlaub verwalten
       can :manage, Holiday, :user_id => user.id
-      # User kann Ausgaben eintragen
-      # -> manuell im Controller
+      # User kann Ausgaben für seine Kaffeerunden anzeigen und erstellen
+      can [:index, :show, :new, :create], Expense, :coffee_box => { :id => user.coffee_box_ids }
+      # User kann Ausgaben bearbeiten, die ihm gehören und noch nicht abgerechnet wurden
+      can [:edit, :update, :destroy], Expense do |expense|
+        (!expense.flag_abgerechnet? && expense.user_id == user.id)
+      end
       # Verwalter einer Kaffeerunde kann Bills als bezahlt markieren
-      #can :mark_as_paid, Bill if user.administrated_coffee_box_ids.include?(:coffee_box_id)
+      can :mark_as_paid, Bill do |bill|
+        user.administrated_coffee_box_ids.include?(bill.coffee_box_id) && !bill.is_paid
+      end
       # User kann eigene Consumptions bearbeiten
       can [:edit, :update, :index], Consumption, :user_id => user.id
     end

@@ -15,11 +15,6 @@ kf1.admin=user_admin
 kf1.price_of_coffees << PriceOfCoffee.create(price: 0.50, date: Date.today())
 kf1.save
 
-kf2 = CoffeeBox.create(location: "Zr. 110", time: "2012-01-01 13:00:00", description: "Mittagsrunde", saldo: 0, cash_position: 3.12)
-kf2.admin=user_luke
-kf2.price_of_coffees << PriceOfCoffee.create(price: 0.55, date: Date.today())
-kf2.save
-
 # Teilnahmen Darth
 Participation.create(coffee_box: kf1, user: user_admin, is_active: true)
 ModelOfConsumption.create(coffee_box: kf1, user: user_admin, mo: 2, tue: 4, wed: 1, th: 2 , fr: 2, sa: 0, su: 0)
@@ -44,11 +39,9 @@ Consumption.create_month(Date.today(), user_obi, kf1)
 e1 = 19.9
 e2 = 5.3
 e3 = 12.29
-sum_e = e1 + e2 + e3
 Expense.create(coffee_box: kf1, user: user_admin, flag_abgerechnet: false, item: "Kaffeepulver", value: e1, date: Date.today())
-Expense.create(coffee_box: kf1, user: user_obi, flag_abgerechnet: false, item: "Filterpapier", value: e2, date: Date.today())
+Expense.create(coffee_box: kf1, user: user_han, flag_abgerechnet: false, item: "Filterpapier", value: e2, date: Date.today())
 Expense.create(coffee_box: kf1, user: user_han, flag_abgerechnet: false, item: "Kaffeemilch", value: e3, date: Date.today())
-kf1.cash_position = kf1.cash_position - sum_e
 kf1.save
 
 # Ersten Monat abschließen

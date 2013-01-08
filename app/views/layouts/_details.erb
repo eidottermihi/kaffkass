@@ -32,17 +32,19 @@
                 <%= link_to "Konsummodell hinterlegen", new_coffee_box_model_of_consumption_path(@coffee_box) %>
             <% end %>
           </li>
-          <li>
-            <%= link_to "Ausgaben verwalten", coffee_box_expenses_path(@coffee_box) %>
-          </li>
-          <% if can? :index_bills, @coffee_box %>
-              <li>
-                <%= link_to "Rechnungen verwalten", coffee_box_bills_path(@coffee_box) %>
-              </li>
-          <% end %>
       <% else %>
           <li>
             <%= link_to "Für Kaffeerunde anmelden", participate_path(@coffee_box) %>
+          </li>
+      <% end %>
+      <% if can? :index, @coffee_box.expenses.build %>
+          <li>
+            <%= link_to "Ausgaben verwalten", coffee_box_expenses_path(@coffee_box) %>
+          </li>
+      <% end %>
+      <% if can? :index_bills, @coffee_box %>
+          <li>
+            <%= link_to "Rechnungen verwalten", coffee_box_bills_path(@coffee_box) %>
           </li>
       <% end %>
       <li>
