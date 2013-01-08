@@ -77,9 +77,6 @@ class ExpensesController < ApplicationController
         format.html { redirect_to coffee_box_path(@coffee_box), notice: "Zugriff verweigert." }
         format.json { render json: 'Access denied' }
       elsif @expense.save
-        # Expense verringert Kassenstand
-        @coffee_box.cash_position = @coffee_box.cash_position - @expense.value
-        @coffee_box.save
         format.html { redirect_to coffee_box_expenses_path(@coffee_box), notice: 'Die Ausgabe wurde gespeichert.' }
         format.json { render json: @expense, status: :created, location: @expense }
       else
@@ -94,8 +91,6 @@ class ExpensesController < ApplicationController
   def update
     @expense = Expense.find(params[:id])
     @coffee_box = CoffeeBox.find(params[:coffee_box_id])
-    alter_betrag = @expense.value
-
 
     respond_to do |format|
       if not current_user.participates?(@coffee_box) or not current_user.expenses.all.include?(@expense)
@@ -104,9 +99,6 @@ class ExpensesController < ApplicationController
       elsif @expense.flag_abgerechnet?
         format.html { redirect_to coffee_box_expense_path(@coffee_box, @expense), flash.alert => "Ausgabe wurde bereits abgerechnet. Eine nachträgliche Änderung ist nicht erlaubt." }
       elsif @expense.update_attributes(params[:expense])
-        # Alten Betrag Kassenstand wieder gutschreiben, neuen Betrag abziehen
-        @coffee_box.cash_position = @coffee_box.cash_position + alter_betrag - @expense.value
-        @coffee_box.save
         format.html { redirect_to coffee_box_expense_path(@coffee_box, @expense), notice: "Änderungen gespeichert." }
         format.json { head :no_content }
       else
@@ -129,9 +121,6 @@ class ExpensesController < ApplicationController
       elsif @expense.flag_abgerechnet?
         format.html { redirect_to coffee_box_expense_path(@coffee_box, @expense), flash.alert => "Ausgabe wurde bereits abgerechnet. Eine nachträgliche Änderung ist nicht erlaubt." }
       else
-        # Alten Betrag Kassenstand wieder gutschreiben, neuen Betrag abziehen
-        @coffee_box.cash_position = @coffee_box.cash_position + @expense.value
-        @coffee_box.save
         @expense.destroy
         format.html { redirect_to coffee_box_expenses_path(@coffee_box), notice: 'Ausgabe wurde erfolgreich gelöscht.' }
         format.json { head :no_content }

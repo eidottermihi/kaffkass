@@ -24,7 +24,7 @@ class BillsController < ApplicationController
     # Neuer Kassenstand: alter Kassenstand + Rechnungssumme die bezahlt wurde + Ausgaben(um sie nicht doppelt abzurechnen)
     from = @bill.date.beginning_of_month
     to = @bill.date.end_of_month
-    @coffee_box.cash_position = @coffee_box.cash_position + @bill.value + current_user.expenses.where(coffee_box_id: @coffee_box, date: from .. to).sum(:value)
+    @coffee_box.cash_position = @coffee_box.cash_position + @bill.value
     @coffee_box.save
 
     redirect_to coffee_box_bills_path(@coffee_box.id), notice: "Rechnung wurde als bezahlt markiert."

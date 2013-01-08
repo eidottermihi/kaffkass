@@ -56,8 +56,8 @@ class PriceOfCoffee < ActiveRecord::Base
     # Annahme: Ausgaben bleiben im neuen Monat gleich
     # Annahme: Tassenkonsum bleibt im neuen Monat gleich
     # Annhame: offene Rechnungen werden noch bezahlt
-    # Neuer Tassenpreis: ((Ausgaben + Saldo) - (Kassenstand + Summe offener Rechnungen )) / Anzahl Tassen letzter Monat
-    new_price = ((ausgaben + coffee_box.saldo) - (coffee_box.cash_position + sum_open_bills)) / sum_cups
+    # Neuer Tassenpreis: ((Saldo) - (Kassenstand + Summe offener Rechnungen(beinhaltet Ausgabe) )) / Anzahl Tassen letzter Monat
+    new_price = ((coffee_box.saldo) - (coffee_box.cash_position + sum_open_bills)) / sum_cups
     logger.debug "## Ausgaben: #{ausgaben}"
     logger.debug "## Saldo: #{coffee_box.saldo}"
     logger.debug "## Kassenstand: #{coffee_box.cash_position}"
