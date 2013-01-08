@@ -16,7 +16,7 @@
         <td><%= bill.date %></td>
         <td><%= (bill.is_paid? ? "ja" : "nein") %></td>
         <td>
-          <% if can? :mark_as_paid, bill %>
+          <% if (can? :mark_as_paid, bill) && (!bill.is_paid?) %>
               <%= link_to 'Als bezahlt markieren', mark_as_paid_path(@coffee_box.id, bill.id), confirm: 'Sind Sie sicher?' %>
           <% end %>
         </td>

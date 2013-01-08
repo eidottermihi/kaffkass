@@ -13,7 +13,7 @@
   <% @expenses.each do |expense| %>
       <tr>
         <td><%= expense.item %></td>
-        <td><%= expense.value %></td>
+        <td><%= number_to_currency expense.value, unit: "&euro;", separator: ",", precision: 2 %></td>
         <td><%= l expense.date %></td>
         <td><%= expense.flag_abgerechnet? ? "Ja" : "Nein" %></td>
         <td><%= expense.user.email %></td>
