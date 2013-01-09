@@ -3,7 +3,6 @@
     <%= calendar.day(:day_method => :day) do |date, consumptions| %>
         <%= date.day %>
         <% for consumption in consumptions %>
-            <% if @date.month == consumption.day.month %>
                 <% if !consumption.flag_disabled && !consumption.flag_holiday %>
                     <div class="numberOfCups">
                       <%= image_tag("cup.png", id: 'cupPng') %>
@@ -19,7 +18,6 @@
                       <%= image_tag("cup.png", id: 'cupPng') %> </br>
                       <div id="inner"> <%=  consumption.number_of_cups %> </div>
                     </div>
-                <% end %>
             <% end %>
         <% end %>
     <% end %>
