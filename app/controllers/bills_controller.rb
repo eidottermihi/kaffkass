@@ -6,7 +6,7 @@ class BillsController < ApplicationController
   def index
     @coffee_box = CoffeeBox.find(params[:coffee_box_id])
     @bills = @coffee_box.bills.where(coffee_box_id: @coffee_box).all
-    #authorize! :index_bills, @coffee_box
+    authorize! :index_bills, @coffee_box
 
     respond_to do |format|
       format.html
@@ -17,7 +17,7 @@ class BillsController < ApplicationController
   def mark_as_paid
     @coffee_box = CoffeeBox.find(params[:coffee_box_id])
     @bill = @coffee_box.bills.where(coffee_box_id: @coffee_box).find(params[:id])
-    #authorize! :mark_as_paid, @bill
+    authorize! :mark_as_paid, @bill
 
     @bill.is_paid=true
     @bill.save

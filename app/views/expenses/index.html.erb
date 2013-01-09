@@ -10,20 +10,28 @@
     <th colspan="3"></th>
   </tr>
 
-<% @expenses.each do |expense| %>
-  <tr>
-    <td><%= expense.item %></td>
-    <td><%= expense.value %></td>
-    <td><%= l expense.date %></td>
-    <td><%= expense.flag_abgerechnet? ? "Ja" : "Nein" %></td>
-    <td><%= expense.user.email %></td>
-    <td><%= link_to 'anzeigen', coffee_box_expense_path( @coffee_box.id, expense ) %></td>
-    <td><%= (not expense.flag_abgerechnet? and current_user.expenses.all.include?(expense)) ? (link_to 'bearbeiten', edit_coffee_box_expense_path( @coffee_box.id, expense )) : nil  %></td>
-    <td><%= (not expense.flag_abgerechnet? and current_user.expenses.all.include?(expense)) ? (link_to 'löschen', coffee_box_expense_path( @coffee_box.id, expense ), confirm: 'Wirklich löschen?', method: :delete) : nil %></td>
-  </tr>
-<% end %>
+  <% @expenses.each do |expense| %>
+      <tr>
+        <td><%= expense.item %></td>
+        <td><%= number_to_currency expense.value, unit: "&euro;", separator: ",", precision: 2 %></td>
+        <td><%= l expense.date %></td>
+        <td><%= expense.flag_abgerechnet? ? "Ja" : "Nein" %></td>
+        <td><%= expense.user.email %></td>
+        <td><%= link_to 'anzeigen', coffee_box_expense_path(@coffee_box.id, expense) %></td>
+        <td>
+          <% if can? :edit, expense %>
+              <%= link_to 'bearbeiten', edit_coffee_box_expense_path(@coffee_box.id, expense) %>
+          <% end %>
+        </td>
+        <td>
+          <% if can? :destroy, expense %>
+              <%= link_to 'löschen', coffee_box_expense_path(@coffee_box.id, expense), confirm: 'Wirklich löschen?', method: :delete %>
+          <% end %>
+        </td>
+      </tr>
+  <% end %>
 </table>
 
-<br />
+<br/>
 
 <%= link_to 'Neue Ausgabe eintragen', new_coffee_box_expense_path(@coffee_box) %>
